@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    FUTURE UPDATES:
+    Edit this XML file to update profile information.
+    Do not modify index.html unless changing the website design/structure.
+-->
+<portfolio>
+    <personal>
+        <name>MD ARIFUL ISLAM</name>
+        <title>COATING TECHNICIAN</title>
+        <positioning>Pharmaceutical Manufacturing Professional</positioning>
+        <location>Gazipur, Dhaka, Bangladesh</location>
+        <photo>assets/profile.jpg</photo>
+        <badge>8+ YEARS EXPERIENCE</badge>
+        <website>https://www.hiarif.com</website>
+        <linkedin>https://www.linkedin.com/in/md-ariful-islam-226816407</linkedin>
+        <email>arispramanik@gmail.com</email>
+        <phone>+8801845873227</phone>
+    </personal>
+
+    <profile>
+        <summary>Experienced pharmaceutical manufacturing professional with hands-on experience in coating operations, solid dosage production, GMP-compliant manufacturing, equipment operation, production documentation, process monitoring, and operational coordination.</summary>
+    </profile>
+
+    <statistics>
+        <stat>
+            <value>8+ Years</value>
+            <label>Pharmaceutical Manufacturing Experience</label>
+        </stat>
+        <stat>
+            <value>2014</value>
+            <label>Career Start</label>
+        </stat>
+        <stat>
+            <value>GMP</value>
+            <label>Compliant Manufacturing Environment</label>
+        </stat>
+        <stat>
+            <value>Solid Dosage</value>
+            <label>Production Experience</label>
+        </stat>
+    </statistics>
+
+    <expertise>
+        <item>Coating Operations</item>
+        <item>Coating Equipment Operation</item>
+        <item>Solid Dosage Manufacturing</item>
+        <item>GMP Compliance</item>
+        <item>Production Operations</item>
+        <item>Process Monitoring</item>
+        <item>Equipment Cleaning</item>
+        <item>Production Documentation</item>
+        <item>Production Scheduling</item>
+        <item>Batch Allocation</item>
+        <item>Team Coordination</item>
+        <item>Operational Guidance</item>
+    </expertise>
+
+    <manufacturingEnvironment>
+        <title>MANUFACTURING ENVIRONMENT</title>
+        <highlights>
+            <highlight>
+                <name>WHO-GMP Environment</name>
+                <description>Operating strictly under World Health Organization Good Manufacturing Practice standards.</description>
+            </highlight>
+            <highlight>
+                <name>Potent Product Manufacturing</name>
+                <description>Specialized experience working within specialized potent product facilities.</description>
+            </highlight>
+            <highlight>
+                <name>Multi-Regulatory Compliance Exposure</name>
+                <description>Familiarity with rigorous quality management and regulatory production guidelines.</description>
+            </highlight>
+            <highlight>
+                <name>Controlled Pharmaceutical Production</name>
+                <description>Execution of controlled solid dosage operations ensuring high product safety and yield.</description>
+            </highlight>
+        </highlights>
+    </manufacturingEnvironment>
+
+    <experience>
+        <job>
+            <period>2019 - Present</period>
+            <title>Junior Officer</title>
+            <area>Coating Area</area>
+            <company>
+                <name>Renata PLC</name>
+                <website>https://renata-ltd.com/</website>
+            </company>
+            <facility>Rajendrapur Potent Product Facility</facility>
+            <responsibilities>
+                <item>Supervision &amp; Operational Guidance</item>
+                <item>Process Parameter Optimization</item>
+                <item>Production Scheduling &amp; Batch Allocation</item>
+                <item>Review Documentation</item>
+            </responsibilities>
+        </job>
+        <job>
+            <period>2017 - 2019</period>
+            <title>Contractual Production Operator</title>
+            <area>Coating &amp; Solid Dosage</area>
+            <company>
+                <name>Renata Limited</name>
+                <formerName>Formerly Pfizer Bangladesh</formerName>
+                <website>https://renata-ltd.com/</website>
+            </company>
+            <facility>Rajendrapur Potent Product Facility</facility>
+            <responsibilities>
+                <item>Equipment Operation</item>
+                <item>Equipment Cleaning</item>
+                <item>Documentation</item>
+            </responsibilities>
+        </job>
+        <job>
+            <period>2014 - 2017</period>
+            <title>Apprentice</title>
+            <area>Manufacturing Operations</area>
+            <company>
+                <name>Renata Limited</name>
+                <formerName>Formerly Pfizer Bangladesh</formerName>
+                <website>https://renata-ltd.com/</website>
+            </company>
+            <facility>Rajendrapur Potent Product Facility</facility>
+            <responsibilities>
+                <item>Process Learning</item>
+                <item>Operational Assistance</item>
+                <item>Hands-on Skill Acquisition</item>
+            </responsibilities>
+        </job>
+    </experience>
+
+    <skills>
+        <skill>5S</skill>
+        <skill>Basic Computer</skill>
+        <skill>Teamwork</skill>
+        <skill>Time Management</skill>
+        <skill>Effective Communication</skill>
+        <skill>Problem Solving</skill>
+    </skills>
+
+    <education>
+        <degree>Secondary School Certificate</degree>
+        <institution>Goal Manda High School</institution>
+        <group>Science Group</group>
+        <year>2012</year>
+        <gpa>GPA: 5.00 / 5.00</gpa>
+    </education>
+
+    <languages>
+        <language>
+            <name>Bangla</name>
+            <level>Native</level>
+        </language>
+        <language>
+            <name>English</name>
+            <level>Fluent</level>
+        </language>
+        <language>
+            <name>Hindi</name>
+            <level>Basic</level>
+        </language>
+        <language>
+            <name>German</name>
+            <level>Learner / Beginner</level>
+        </language>
+    </languages>
+
+    <cv>
+        <url>assets/MD-Ariful-Islam-CV.pdf</url>
+        <enabled>true</enabled>
+    </cv>
+
+    <references>
+        <note>Professional references are available upon request.</note>
+        <!-- Un-comment/populate to store contacts internally if needed
+        <reference>
+            <name>Abul Kalam Azad</name>
+            <title>Head of Production, Oncology unit</title>
+            <organization>Healthcare Pharmaceuticals Limited</organization>
+        </reference>
+        <reference>
+            <name>Debashish Mitra</name>
+            <title>Deputy Manager, Production</title>
+            <organization>Renata PLC</organization>
+        </reference>
+        -->
+    </references>
+</portfolio>
