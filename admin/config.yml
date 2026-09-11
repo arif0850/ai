@@ -1,19 +1,32 @@
 backend:
   name: git-gateway
-  branch: main # আপনার গিটহাবের মেইন ব্রাঞ্চের নাম
+  branch: main
 
-media_folder: "assets/blog" # ব্লগ ইমেজ কোথায় সেভ হবে
-public_folder: "assets/blog"
+media_folder: "assets/blog"
+public_folder: "/assets/blog"
+
+site_url: https://www.hiarif.com
+display_url: https://www.hiarif.com
 
 collections:
   - name: "blog"
     label: "Blog Posts"
-    folder: "content/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Cover Image", name: "image", widget: "image" }
-      - { label: "Summary", name: "summary", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
+    label_singular: "Blog Post"
+    description: "Manage all blog posts shown on the website"
+    files:
+      - name: "posts"
+        label: "All Blog Posts"
+        file: "content/blogs.json"
+        fields:
+          - label: "Blog Posts"
+            name: "posts"
+            label_singular: "Post"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string", hint: "Unique identifier (e.g., 1, 2, 3)" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+              - { label: "Featured Image", name: "image", widget: "image", required: false, hint: "Recommended size: 800x500" }
+              - { label: "Summary", name: "summary", widget: "text", hint: "Short preview text shown on the blog card" }
+              - { label: "Content", name: "content", widget: "text", hint: "Full blog content. Use blank lines to create new paragraphs." }
