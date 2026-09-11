@@ -67,10 +67,38 @@
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
     @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Password Gate Styles */
+    #passwordGate {
+      position: fixed; inset: 0; background: var(--primary-dark);
+      display: flex; justify-content: center; align-items: center; z-index: 9999;
+    }
+    .password-box {
+      background: var(--card); padding: 2.5rem; border-radius: 12px;
+      text-align: center; max-width: 400px; width: 90%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .password-box h2 { color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.5rem; }
+    .password-box p { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .password-box input { text-align: center; font-size: 1.1rem; letter-spacing: 2px; }
+    .password-box .error { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- Password Protection Gate -->
+  <div id="passwordGate">
+    <div class="password-box">
+      <h2>🔒 Admin Access</h2>
+      <p>Please enter the password to access the dashboard.</p>
+      <input type="password" id="passwordInput" placeholder="Enter password" autocomplete="off">
+      <div class="error" id="passwordError">Incorrect password. Please try again.</div>
+      <button class="btn btn-dark" id="loginBtn" style="width: 100%; margin-top: 1rem;">Unlock Dashboard</button>
+    </div>
+  </div>
+
+  <!-- Main Admin Dashboard (Hidden by default) -->
+  <div class="container" id="dashboard" style="display: none;">
     <h1>📝 Blog Admin Dashboard</h1>
 
     <div class="grid-2">
@@ -154,6 +182,41 @@
   </div>
 
   <script>
+    // --- Password Protection Logic ---
+    // আপনি চাইলে এখানে পাসওয়ার্ড পরিবর্তন করতে পারেন:
+    const ADMIN_PASSWORD = "arif0850"; 
+
+    const passwordGate = document.getElementById('passwordGate');
+    const dashboard = document.getElementById('dashboard');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const passwordError = document.getElementById('passwordError');
+
+    // চেক করুন সেশন স্টোরেজে লগইন করা আছে কি না
+    if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+      passwordGate.style.display = 'none';
+      dashboard.style.display = 'block';
+    }
+
+    function checkPassword() {
+      if (passwordInput.value === ADMIN_PASSWORD) {
+        sessionStorage.setItem('isAdminLoggedIn', 'true');
+        passwordGate.style.display = 'none';
+        dashboard.style.display = 'block';
+        loadDraft();
+        loadPosts();
+      } else {
+        passwordError.style.display = 'block';
+        passwordInput.value = '';
+      }
+    }
+
+    loginBtn.addEventListener('click', checkPassword);
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    // --- Admin Dashboard Logic (আগের মতোই) ---
     let posts = [];
     const form = document.getElementById('postForm');
     const editId = document.getElementById('editId');
@@ -376,8 +439,11 @@
       showMessage('blogs.json downloaded!', 'success');
     });
 
-    loadDraft();
-    loadPosts();
+    // Initialize only if already logged in
+    if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+      loadDraft();
+      loadPosts();
+    }
   </script>
 </body>
 </html>
