@@ -172,17 +172,17 @@
 
     <references>
         <note>Professional references are available upon request.</note>
-        <!-- Un-comment/populate to store contacts internally if needed
-        <reference>
-            <name>Abul Kalam Azad</name>
-            <title>Head of Production, Oncology unit</title>
-            <organization>Healthcare Pharmaceuticals Limited</organization>
-        </reference>
-        <reference>
-            <name>Debashish Mitra</name>
-            <title>Deputy Manager, Production</title>
-            <organization>Renata PLC</organization>
-        </reference>
-        -->
     </references>
+
+    <!-- ===== BLOG POSTS (Fallback / Manual) ===== -->
+    <blogs>
+        <post>
+            <id>1</id>
+            <title>Welcome to My Blog</title>
+            <date>2026-01-15</date>
+            <image>assets/blog1.jpg</image>
+            <summary>My first blog post — thoughts on pharmaceutical manufacturing and GMP practices.</summary>
+            <content>This is a fallback blog post stored inside data.xml. New posts will appear from content/blogs.json managed via Decap CMS.</content>
+        </post>
+    </blogs>
 </portfolio>
