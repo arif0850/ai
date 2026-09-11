@@ -1,8 +1,9 @@
 backend:
   name: git-gateway
-  branch: main # আপনার গিটহাব ব্রাঞ্চের নাম main না হয়ে master হলে সেটি দিন
+  branch: main
+  identity_url: "https://bejewelled-axolotl-c19836.netlify.app/.netlify/identity"
+  gateway_url: "https://bejewelled-axolotl-c19836.netlify.app/.netlify/git/github"
 
-# Identity API Connection Fix for Custom Domain
 site_url: https://hiarif.com
 display_url: https://hiarif.com
 
