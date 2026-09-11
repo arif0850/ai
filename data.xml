@@ -1,188 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    FUTURE UPDATES:
-    Edit this XML file to update profile information.
-    Do not modify index.html unless changing the website design/structure.
--->
 <portfolio>
-    <personal>
-        <name>MD ARIFUL ISLAM</name>
-        <title>COATING TECHNICIAN</title>
-        <positioning>Pharmaceutical Manufacturing Professional</positioning>
-        <location>Gazipur, Dhaka, Bangladesh</location>
-        <photo>assets/profile.jpg</photo>
-        <badge>8+ YEARS EXPERIENCE</badge>
-        <website>https://www.hiarif.com</website>
-        <linkedin>https://www.linkedin.com/in/md-ariful-islam-226816407</linkedin>
-        <email>arispramanik@gmail.com</email>
-        <phone>+8801845873227</phone>
-    </personal>
+  <personal>
+    <name>Md. Ariful Islam</name>
+    <title>Coating Technician</title>
+    <tagline>Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.</tagline>
+    <summary>Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure. Focused on coating machine operation, strict GMP discipline, and efficient, high-quality solid dosage production.</summary>
+    <location>Gazipur, Dhaka, Bangladesh</location>
+    <phone>+8801845873227</phone>
+    <email>arispramanik@gmail.com</email>
+    <website>www.hiarif.com</website>
+  </personal>
 
-    <profile>
-        <summary>Experienced pharmaceutical manufacturing professional with hands-on experience in coating operations, solid dosage production, GMP-compliant manufacturing, equipment operation, production documentation, process monitoring, and operational coordination.</summary>
-    </profile>
+  <social>
+    <whatsapp>https://wa.me/8801845873227</whatsapp>
+    <telegram>https://t.me/+8801845873227</telegram>
+    <linkedin>https://www.linkedin.com/in/md-ariful-islam-226816407</linkedin>
+    <email>arispramanik@gmail.com</email>
+  </social>
 
-    <statistics>
-        <stat>
-            <value>8+ Years</value>
-            <label>Pharmaceutical Manufacturing Experience</label>
-        </stat>
-        <stat>
-            <value>2014</value>
-            <label>Career Start</label>
-        </stat>
-        <stat>
-            <value>GMP</value>
-            <label>Compliant Manufacturing Environment</label>
-        </stat>
-        <stat>
-            <value>Solid Dosage</value>
-            <label>Production Experience</label>
-        </stat>
-    </statistics>
+  <stats>
+    <experience>11+ years</experience>
+    <start>2014</start>
+    <certification>GMP/cGMP</certification>
+    <specialization>Coating</specialization>
+  </stats>
 
-    <expertise>
-        <item>Coating Operations</item>
-        <item>Coating Equipment Operation</item>
-        <item>Solid Dosage Manufacturing</item>
-        <item>GMP Compliance</item>
-        <item>Production Operations</item>
-        <item>Process Monitoring</item>
-        <item>Equipment Cleaning</item>
-        <item>Production Documentation</item>
-        <item>Production Scheduling</item>
-        <item>Batch Allocation</item>
-        <item>Team Coordination</item>
-        <item>Operational Guidance</item>
-    </expertise>
+  <experience>
+    <job>
+      <period>2019 - PRESENT</period>
+      <title>Junior Officer, Coating Area</title>
+      <company>Renata PLC</company>
+      <companyUrl>https://www.renata-ltd.com/</companyUrl>
+      <facility>Rajendrapur Potent Product Facility</facility>
+      <responsibilities>
+        <responsibility>Supervision and operational guidance</responsibility>
+        <responsibility>Process parameter optimization</responsibility>
+        <responsibility>Production scheduling and batch allocation</responsibility>
+        <responsibility>Review documentation</responsibility>
+      </responsibilities>
+    </job>
+    <job>
+      <period>2017 - 2019</period>
+      <title>Contractual, Production Operator</title>
+      <company>Renata Limited</company>
+      <companyUrl>https://www.renata-ltd.com/</companyUrl>
+      <facility>Rajendrapur Potent Product Facility</facility>
+      <responsibilities>
+        <responsibility>Equipment operation</responsibility>
+        <responsibility>Equipment cleaning</responsibility>
+        <responsibility>Documentation</responsibility>
+      </responsibilities>
+    </job>
+    <job>
+      <period>2014 - 2017</period>
+      <title>Apprentice</title>
+      <company>Renata Limited</company>
+      <companyUrl>https://www.renata-ltd.com/</companyUrl>
+      <facility>Rajendrapur Potent Product Facility</facility>
+      <responsibilities>
+        <responsibility>Process learning</responsibility>
+        <responsibility>Operational assistance</responsibility>
+        <responsibility>Hands-on skill acquisition</responsibility>
+      </responsibilities>
+    </job>
+  </experience>
 
-    <manufacturingEnvironment>
-        <title>MANUFACTURING ENVIRONMENT</title>
-        <highlights>
-            <highlight>
-                <name>WHO-GMP Environment</name>
-                <description>Operating strictly under World Health Organization Good Manufacturing Practice standards.</description>
-            </highlight>
-            <highlight>
-                <name>Potent Product Manufacturing</name>
-                <description>Specialized experience working within specialized potent product facilities.</description>
-            </highlight>
-            <highlight>
-                <name>Multi-Regulatory Compliance Exposure</name>
-                <description>Familiarity with rigorous quality management and regulatory production guidelines.</description>
-            </highlight>
-            <highlight>
-                <name>Controlled Pharmaceutical Production</name>
-                <description>Execution of controlled solid dosage operations ensuring high product safety and yield.</description>
-            </highlight>
-        </highlights>
-    </manufacturingEnvironment>
+  <expertise>
+    <item>
+      <title>Coating operations</title>
+      <description>Practical operation and supervision of coating-area workflows for solid dosage production.</description>
+    </item>
+    <item>
+      <title>Process parameters</title>
+      <description>Attentive monitoring and optimization of operating conditions that influence batch quality.</description>
+    </item>
+    <item>
+      <title>GMP documentation</title>
+      <description>Clear, reviewable production records that support traceability and shift handover.</description>
+    </item>
+    <item>
+      <title>Potent products</title>
+      <description>Experience within a controlled potent product facility and multi-regulatory environment.</description>
+    </item>
+  </expertise>
 
-    <experience>
-        <job>
-            <period>2019 - Present</period>
-            <title>Junior Officer</title>
-            <area>Coating Area</area>
-            <company>
-                <name>Renata PLC</name>
-                <website>https://renata-ltd.com/</website>
-            </company>
-            <facility>Rajendrapur Potent Product Facility</facility>
-            <responsibilities>
-                <item>Supervision &amp; Operational Guidance</item>
-                <item>Process Parameter Optimization</item>
-                <item>Production Scheduling &amp; Batch Allocation</item>
-                <item>Review Documentation</item>
-            </responsibilities>
-        </job>
-        <job>
-            <period>2017 - 2019</period>
-            <title>Contractual Production Operator</title>
-            <area>Coating &amp; Solid Dosage</area>
-            <company>
-                <name>Renata Limited</name>
-                <formerName>Formerly Pfizer Bangladesh</formerName>
-                <website>https://renata-ltd.com/</website>
-            </company>
-            <facility>Rajendrapur Potent Product Facility</facility>
-            <responsibilities>
-                <item>Equipment Operation</item>
-                <item>Equipment Cleaning</item>
-                <item>Documentation</item>
-            </responsibilities>
-        </job>
-        <job>
-            <period>2014 - 2017</period>
-            <title>Apprentice</title>
-            <area>Manufacturing Operations</area>
-            <company>
-                <name>Renata Limited</name>
-                <formerName>Formerly Pfizer Bangladesh</formerName>
-                <website>https://renata-ltd.com/</website>
-            </company>
-            <facility>Rajendrapur Potent Product Facility</facility>
-            <responsibilities>
-                <item>Process Learning</item>
-                <item>Operational Assistance</item>
-                <item>Hands-on Skill Acquisition</item>
-            </responsibilities>
-        </job>
-    </experience>
+  <environment>
+    <item>
+      <title>WHO-approved facility exposure</title>
+      <description>Comfortable working within a regulated pharmaceutical manufacturing environment with high standards for quality and compliance.</description>
+    </item>
+    <item>
+      <title>Clean and controlled operations</title>
+      <description>A disciplined approach to equipment cleaning, orderly production areas, and dependable operational routines.</description>
+    </item>
+    <item>
+      <title>Team-based production</title>
+      <description>Hands-on collaboration across production activities, scheduling, allocation, and documentation review.</description>
+    </item>
+  </environment>
 
-    <skills>
-        <skill>5S</skill>
-        <skill>Basic Computer</skill>
-        <skill>Teamwork</skill>
-        <skill>Time Management</skill>
-        <skill>Effective Communication</skill>
-        <skill>Problem Solving</skill>
-    </skills>
+  <skills>
+    <skill>5S</skill>
+    <skill>Basic Computer</skill>
+    <skill>Teamwork</skill>
+    <skill>Time Management</skill>
+    <skill>Effective Communication</skill>
+    <skill>Problem Solving</skill>
+  </skills>
 
-    <education>
-        <degree>Secondary School Certificate</degree>
-        <institution>Goal Manda High School</institution>
-        <group>Science Group</group>
-        <year>2012</year>
-        <gpa>GPA: 5.00 / 5.00</gpa>
-    </education>
+  <languages>
+    <language>
+      <name>English</name>
+      <level>Fluent</level>
+    </language>
+    <language>
+      <name>Hindi</name>
+      <level>Basic</level>
+    </language>
+    <language>
+      <name>German</name>
+      <level>Learner A1</level>
+    </language>
+    <language>
+      <name>Bangla</name>
+      <level>Native</level>
+    </language>
+  </languages>
 
-    <languages>
-        <language>
-            <name>Bangla</name>
-            <level>Native</level>
-        </language>
-        <language>
-            <name>English</name>
-            <level>Fluent</level>
-        </language>
-        <language>
-            <name>Hindi</name>
-            <level>Basic</level>
-        </language>
-        <language>
-            <name>German</name>
-            <level>Learner / Beginner</level>
-        </language>
-    </languages>
-
-    <cv>
-        <url>assets/MD-Ariful-Islam-CV.pdf</url>
-        <enabled>true</enabled>
-    </cv>
-
-    <references>
-        <note>Professional references are available upon request.</note>
-    </references>
-
-    <!-- ===== BLOG POSTS (Fallback / Manual) ===== -->
-    <blogs>
-        <post>
-            <id>1</id>
-            <title>Welcome to My Blog</title>
-            <date>2026-01-15</date>
-            <image>assets/blog1.jpg</image>
-            <summary>My first blog post — thoughts on pharmaceutical manufacturing and GMP practices.</summary>
-            <content>This is a fallback blog post stored inside data.xml. New posts will appear from content/blogs.json managed via Decap CMS.</content>
-        </post>
-    </blogs>
+  <education>
+    <degree>
+      <institution>Goal Manda High School</institution>
+      <year>2012</year>
+      <group>Science Group</group>
+      <gpa>5.0 / 5.0</gpa>
+      <certificate>Secondary School Certificate</certificate>
+    </degree>
+  </education>
 </portfolio>
