@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main # আপনার গিটহাবের মেইন ব্রাঞ্চের নাম
+
+media_folder: "assets/blog" # ব্লগ ইমেজ কোথায় সেভ হবে
+public_folder: "assets/blog"
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }
