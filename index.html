@@ -1,1374 +1,857 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MD Ariful Islam | Coating Technician | Pharmaceutical Manufacturing</title>
-    <meta name="description" content="Pharmaceutical manufacturing professional with experience in coating operations, solid dosage production, GMP-compliant manufacturing, equipment operation and production documentation.">
-
-    <!-- Open Graph Metadata -->
-    <meta property="og:title" content="MD Ariful Islam | Coating Technician">
-    <meta property="og:description" content="Pharmaceutical Manufacturing Professional specializing in coating operations and GMP compliance.">
-    <meta property="og:type" content="website">
-
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-    <style>
-        :root {
-            --primary: #0f2c4a;
-            --primary-light: #1e426d;
-            --accent: #008080;
-            --accent-light: #e6f2f2;
-            --bg-main: #f8fafc;
-            --bg-card: #ffffff;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --max-width: 1140px;
-            --transition: all 0.25s ease-in-out;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        a:hover {
-            color: var(--primary);
-        }
-
-        .container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            width: 100%;
-        }
-
-        section {
-            padding: 4.5rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -6px;
-            width: 40px;
-            height: 3px;
-            background-color: var(--accent);
-        }
-
-        /* Navigation */
-        header {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-
-        .brand {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
-            letter-spacing: 0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--primary);
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 5rem 0;
-            background: linear-gradient(to right, #ffffff, #f1f5f9);
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .hero-photo-wrapper {
-            position: relative;
-            text-align: center;
-        }
-
-        .hero-photo {
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #ffffff;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            background-color: #e2e8f0;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background-color: var(--accent);
-            color: #ffffff;
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .hero-name {
-            font-size: 2.75rem;
-            color: var(--primary);
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-title {
-            font-size: 1.25rem;
-            color: var(--accent);
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 0.25rem;
-        }
-
-        .hero-positioning {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 1.25rem;
-            font-weight: 500;
-        }
-
-        .hero-summary {
-            color: var(--text-dark);
-            margin-bottom: 1.75rem;
-            max-width: 650px;
-        }
-
-        .cta-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: #ffffff;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-            color: #ffffff;
-        }
-
-        .btn-outline {
-            border-color: var(--primary);
-            color: var(--primary);
-            background-color: transparent;
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: #ffffff;
-        }
-
-        .btn-accent {
-            background-color: var(--accent);
-            color: #ffffff;
-        }
-
-        .btn-accent:hover {
-            background-color: #006666;
-            color: #ffffff;
-        }
-
-        /* Statistics Section */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 1.75rem;
-            border-radius: 6px;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1.2;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* Expertise Grid */
-        .expertise-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .expertise-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 1.25rem;
-            border-radius: 6px;
-            font-weight: 600;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .expertise-card::before {
-            content: '■';
-            color: var(--accent);
-            font-size: 0.8rem;
-        }
-
-        /* Manufacturing Environment */
-        .env-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .env-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 6px;
-        }
-
-        .env-card h3 {
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .env-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* Timeline / Experience */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--border);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2.5rem;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -2rem;
-            top: 0.25rem;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: var(--accent);
-            border: 3px solid #ffffff;
-            box-shadow: 0 0 0 1px var(--accent);
-        }
-
-        .timeline-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1.75rem;
-        }
-
-        .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-title {
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-
-        .timeline-period {
-            font-size: 0.85rem;
-            font-weight: 600;
-            background: var(--accent-light);
-            color: var(--accent);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-        }
-
-        .company-info {
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 0.25rem;
-            font-size: 0.95rem;
-        }
-
-        .facility-info {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            font-style: italic;
-        }
-
-        .timeline-resp {
-            list-style: none;
-            margin-top: 0.75rem;
-        }
-
-        .timeline-resp li {
-            position: relative;
-            padding-left: 1.25rem;
-            margin-bottom: 0.35rem;
-            font-size: 0.925rem;
-        }
-
-        .timeline-resp li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: bold;
-        }
-
-        .external-link {
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-            font-weight: normal;
-        }
-
-        /* Skills Tags */
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .skill-tag {
-            background-color: #ffffff;
-            border: 1px solid var(--border);
-            padding: 0.5rem 1.25rem;
-            border-radius: 20px;
-            font-weight: 500;
-            color: var(--primary);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-        }
-
-        /* Education & Languages Side-by-Side */
-        .two-col-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .info-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 1.75rem;
-            border-radius: 6px;
-        }
-
-        .lang-list {
-            list-style: none;
-        }
-
-        .lang-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px dashed var(--border);
-        }
-
-        .lang-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Contact & References */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .contact-details p {
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .reference-box {
-            background: var(--accent-light);
-            border: 1px solid #c2e0e0;
-            padding: 1.5rem;
-            border-radius: 6px;
-        }
-
-        /* ===== Blog Section ===== */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.75rem;
-        }
-
-        .blog-empty {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 2rem;
-            font-style: italic;
-            grid-column: 1 / -1;
-        }
-
-        .blog-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .blog-card:hover {
-            box-shadow: 0 10px 24px rgba(15, 44, 74, 0.10);
-            transform: translateY(-4px);
-            border-color: var(--accent);
-        }
-
-        .blog-card-image {
-            width: 100%;
-            height: 190px;
-            object-fit: cover;
-            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-            display: block;
-        }
-
-        .blog-card-body {
-            padding: 1.35rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .blog-card-date {
-            font-size: 0.78rem;
-            color: var(--accent);
-            font-weight: 700;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .blog-card-title {
-            font-size: 1.15rem;
-            color: var(--primary);
-            margin-bottom: 0.7rem;
-            line-height: 1.35;
-        }
-
-        .blog-card-summary {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            flex: 1;
-            margin-bottom: 1rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-read-more {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 0.88rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .blog-read-more::after {
-            content: '→';
-            transition: transform 0.2s;
-        }
-
-        .blog-card:hover .blog-read-more::after {
-            transform: translateX(4px);
-        }
-
-        /* ===== Blog Modal ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 44, 74, 0.78);
-            z-index: 2000;
-            padding: 2rem 1rem;
-            overflow-y: auto;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-overlay.active {
-            display: block;
-        }
-
-        .modal-content {
-            background: #fff;
-            max-width: 820px;
-            margin: 2rem auto;
-            border-radius: 10px;
-            position: relative;
-            padding: 2.5rem;
-            animation: modalIn 0.28s ease;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--accent-light);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.4rem;
-            cursor: pointer;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            background: var(--accent);
-            color: #fff;
-            transform: rotate(90deg);
-        }
-
-        .modal-image {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1.75rem;
-            background: #e2e8f0;
-        }
-
-        .modal-title {
-            font-size: 1.85rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            line-height: 1.25;
-        }
-
-        .modal-date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 1.75rem;
-        }
-
-        .modal-body {
-            color: var(--text-dark);
-            line-height: 1.85;
-            font-size: 1.02rem;
-            white-space: pre-line;
-        }
-
-        .modal-body p {
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--primary);
-            color: #ffffff;
-            padding: 2rem 0;
-            text-align: center;
-            font-size: 0.875rem;
-            margin-top: auto;
-        }
-
-        footer a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-
-        /* Error Fallback */
-        #error-message {
-            display: none;
-            padding: 2rem;
-            background: #fee2e2;
-            border: 1px solid #f87171;
-            color: #991b1b;
-            text-align: center;
-            margin: 2rem auto;
-            max-width: 600px;
-            border-radius: 6px;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 900px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-photo-wrapper {
-                margin-bottom: 1rem;
-            }
-
-            .hero-summary {
-                margin: 0 auto 1.75rem auto;
-            }
-
-            .cta-group {
-                justify-content: center;
-            }
-
-            .two-col-grid, .contact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background-color: #ffffff;
-                flex-direction: column;
-                padding: 1.5rem;
-                border-bottom: 1px solid var(--border);
-                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .hero-name {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .modal-content { padding: 1.75rem 1.25rem; }
-            .modal-title { font-size: 1.4rem; }
-            .modal-image { max-height: 240px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition: none !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
-
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "MD ARIFUL ISLAM",
-      "jobTitle": "Coating Technician",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Renata PLC"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Gazipur",
-        "addressRegion": "Dhaka",
-        "addressCountry": "Bangladesh"
-      },
-      "email": "arispramanik@gmail.com",
-      "url": "https://www.hiarif.com"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Md. Ariful Islam | Coating Technician</title>
+  <meta name="description" content="Portfolio of Md. Ariful Islam, Coating Technician with 11+ years of experience in WHO-approved potent product manufacturing facilities.">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Md. Ariful Islam | Coating Technician">
+  <meta property="og:description" content="Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/profile.jpg">
+  
+  <meta name="theme-color" content="#0B1E36">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💊</text></svg>">
+  
+  <style>
+    /* --- CSS Variables --- */
+    :root {
+      --primary-dark: #0B1E36;
+      --primary-darker: #071426;
+      --primary-light: #1A365D;
+      --accent: #0D9488;
+      --accent-light: #CCFBF1;
+      --text-light: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-dark: #0F172A;
+      --bg-main: #FFFFFF;
+      --bg-alt: #F1F5F9;
+      --border: #E2E8F0;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --transition: all 0.3s ease;
     }
-    </script>
+
+    /* --- Base & Reset --- */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: var(--font-family);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background-color: var(--bg-main);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* --- Layout --- */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 5rem 0; }
+    
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+      display: block;
+    }
+    .section-title {
+      font-size: 2rem; font-weight: 800; color: var(--primary-dark);
+      margin-bottom: 1rem; line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 1rem; color: var(--text-muted); max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* --- Dark Section Override --- */
+    .dark-section { background-color: var(--primary-dark); color: var(--text-light); }
+    .dark-section .section-title { color: var(--text-light); }
+    .dark-section .section-subtitle { color: var(--text-muted); }
+
+    /* --- Header & Nav --- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; }
+    .logo-icon {
+      width: 36px; height: 36px; background: var(--primary-dark); color: white;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem;
+    }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-text span:first-child { font-weight: 700; font-size: 1rem; color: var(--primary-dark); line-height: 1.2; }
+    .logo-text span:last-child { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    
+    .admin-btn {
+      font-size: 0.75rem; font-weight: 700; color: var(--accent);
+      border: 1px solid var(--accent); padding: 0.4rem 0.8rem;
+      border-radius: 4px; text-transform: uppercase;
+    }
+    .admin-btn:hover { background: var(--accent); color: white; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+    .hamburger span { display: block; width: 25px; height: 2px; background: var(--primary-dark); transition: var(--transition); }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* --- Hero Section --- */
+    #home { background: var(--primary-dark); color: var(--text-light); padding: 6rem 0; position: relative; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+    .hero-content h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+    .hero-content .title { font-size: 1rem; font-weight: 600; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
+    .hero-content .tagline { font-size: 1.25rem; color: var(--text-light); margin-bottom: 1.5rem; font-weight: 300; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(13, 148, 136, 0.15); border: 1px solid rgba(13, 148, 136, 0.3);
+      color: var(--accent); padding: 0.4rem 1rem; border-radius: 50px;
+      font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+    }
+    .badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+    .summary { font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; }
+    
+    .cta-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #0F766E; transform: translateY(-2px); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    
+    .hero-social { display: flex; gap: 1rem; }
+    .social-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05);
+      color: var(--text-muted); transition: var(--transition); border: 1px solid rgba(255,255,255,0.1);
+    }
+    .social-icon:hover { background: var(--accent); color: white; transform: translateY(-3px); border-color: var(--accent); }
+    .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    .profile-circle {
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,148,136,0.2) 0%, rgba(11,30,54,0) 70%);
+      border: 1px solid rgba(13, 148, 136, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .profile-circle::before {
+      content: ''; position: absolute; width: 100%; height: 100%;
+      border-radius: 50%; border: 1px dashed rgba(13, 148, 136, 0.2);
+      animation: spin 30s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .profile-circle img {
+      width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--accent); box-shadow: 0 0 30px rgba(13, 148, 136, 0.3);
+    }
+    .profile-placeholder {
+      width: 200px; height: 200px; border-radius: 50%; background: var(--primary-light);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+      border: 3px solid var(--accent);
+    }
+    .profile-placeholder svg { width: 60px; height: 60px; fill: var(--text-muted); margin-bottom: 0.5rem; }
+    
+    .quality-badge {
+      position: absolute; bottom: 20px; right: 20px;
+      background: var(--primary-light); border: 1px solid var(--accent);
+      padding: 0.5rem 1rem; border-radius: 8px;
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; color: var(--text-light);
+    }
+    .quality-badge svg { width: 16px; height: 16px; fill: var(--accent); }
+
+    /* --- About Section --- */
+    #about { background: var(--bg-main); }
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    .about-text p { margin-bottom: 1rem; color: var(--text-dark); font-size: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-card {
+      background: var(--bg-alt); padding: 1.5rem; border-radius: 8px;
+      border-top: 4px solid var(--accent);
+    }
+    .stat-card .number { font-size: 1.75rem; font-weight: 800; color: var(--accent); line-height: 1.2; }
+    .stat-card .label { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-top: 0.5rem; }
+    .stat-card .sub { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* --- Experience Section --- */
+    #experience { background: var(--primary-dark); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px; background: rgba(255,255,255,0.1);
+    }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -2rem; top: 0.5rem;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
+    }
+    .timeline-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 1.5rem; transition: var(--transition);
+    }
+    .timeline-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(13, 148, 136, 0.3); }
+    .timeline-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .timeline-date { font-size: 0.8rem; color: var(--accent); font-weight: 600; }
+    .timeline-facility { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .timeline-title { font-size: 1.2rem; font-weight: 700; color: var(--text-light); margin-bottom: 0.25rem; }
+    .timeline-company { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .timeline-company a { color: var(--accent); text-decoration: underline; }
+    .timeline-desc ul { list-style: none; }
+    .timeline-desc li { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem; }
+    .timeline-desc li::before { content: '✓'; color: var(--accent); font-weight: bold; }
+
+    /* --- Expertise & Environment Sections --- */
+    #expertise { background: var(--bg-main); }
+    .grid-2-col { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .expertise-card {
+      background: var(--bg-main); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem; display: flex; gap: 1rem;
+      transition: var(--transition);
+    }
+    .expertise-card:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .expertise-icon {
+      width: 48px; height: 48px; background: var(--accent-light); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .expertise-icon svg { width: 24px; height: 24px; fill: var(--accent); }
+    .expertise-content h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.25rem; }
+    .expertise-content p { font-size: 0.85rem; color: var(--text-muted); }
+
+    #environment { background: var(--bg-alt); }
+    .env-card {
+      background: var(--bg-main); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem; position: relative;
+    }
+    .env-number { font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; display: block; }
+    .env-card h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
+    .env-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* --- Skills & Languages --- */
+    #skills { background: var(--bg-main); }
+    .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .skill-tag {
+      background: var(--bg-alt); border: 1px solid var(--border);
+      padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem;
+      color: var(--text-dark); font-weight: 500; transition: var(--transition);
+    }
+    .skill-tag:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+    #education { background: var(--primary-dark); }
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .edu-item { margin-bottom: 1.5rem; }
+    .edu-year { font-size: 0.8rem; color: var(--accent); font-weight: 600; margin-bottom: 0.25rem; }
+    .edu-inst { font-size: 1.1rem; font-weight: 700; color: var(--text-light); }
+    .edu-detail { font-size: 0.9rem; color: var(--text-muted); }
+    
+    .lang-list { display: flex; flex-direction: column; gap: 1rem; }
+    .lang-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem; }
+    .lang-name { font-weight: 600; color: var(--text-light); }
+    .lang-level { font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* --- Blog Section --- */
+    #blog { background: var(--bg-main); }
+    .blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
+    .manage-link { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.25rem; }
+    .manage-link:hover { text-decoration: underline; }
+    
+    .blog-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+    .blog-card {
+      background: var(--bg-main); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; transition: var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--accent); }
+    .blog-card img { width: 100%; height: 220px; object-fit: cover; }
+    .blog-card-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .blog-date { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    .blog-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.4; }
+    .blog-card p { font-size: 0.9rem; color: var(--text-muted); flex: 1; margin-bottom: 1.5rem; }
+    .read-more { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+    .read-more:hover { gap: 0.75rem; }
+
+    /* --- Contact Section --- */
+    #contact { background: var(--bg-main); }
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+    .contact-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 40px; height: 40px; background: var(--accent-light); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .contact-icon svg { width: 20px; height: 20px; fill: var(--accent); }
+    .contact-detail span:first-child { display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+    .contact-detail a, .contact-detail span:last-child { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); }
+    .contact-detail a:hover { color: var(--accent); }
+    
+    .reference-box {
+      background: var(--bg-alt); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+    }
+    .reference-box h3 { font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
+    .reference-box p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .btn-dark { background: var(--primary-dark); color: white; }
+    .btn-dark:hover { background: var(--primary-light); }
+
+    /* --- Footer --- */
+    footer {
+      background: var(--primary-darker); color: var(--text-muted);
+      padding: 2rem 0; font-size: 0.8rem;
+    }
+    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+
+    /* --- Floating WhatsApp --- */
+    .whatsapp-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 56px; height: 56px; border-radius: 50%; background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      animation: pulse 2s infinite; transition: var(--transition);
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 30px; height: 30px; fill: white; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+
+    /* --- Modal --- */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
+      display: flex; justify-content: center; align-items: center; z-index: 1000;
+      opacity: 0; pointer-events: none; transition: var(--transition);
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: var(--bg-main); width: 90%; max-width: 700px; max-height: 85vh;
+      border-radius: 12px; overflow-y: auto; padding: 2.5rem; position: relative;
+      transform: translateY(20px); transition: var(--transition);
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem;
+      color: var(--text-muted); width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: var(--transition);
+    }
+    .modal-close:hover { background: var(--bg-alt); color: var(--text-dark); }
+    .modal-content h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-dark); }
+    .modal-content .modal-date { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .modal-content p { margin-bottom: 1rem; color: var(--text-dark); line-height: 1.7; }
+
+    /* --- Responsive --- */
+    @media (min-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr 1fr; }
+      .grid-2-col { grid-template-columns: 1fr 1fr; }
+      .blog-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .edu-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 767px) {
+      .nav-links {
+        display: none; flex-direction: column; position: absolute;
+        top: 70px; left: 0; right: 0; background: var(--bg-main);
+        padding: 1.5rem; border-bottom: 1px solid var(--border);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05); gap: 1rem;
+      }
+      .nav-links.active { display: flex; }
+      .hamburger { display: flex; }
+      .hero-content h1 { font-size: 2.25rem; }
+      .hero-grid { text-align: center; }
+      .hero-content .summary { margin: 0 auto 2rem; }
+      .cta-group { justify-content: center; }
+      .hero-social { justify-content: center; }
+      .profile-circle { width: 260px; height: 260px; }
+      .profile-circle img, .profile-placeholder { width: 160px; height: 160px; }
+      .timeline-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .blog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .footer-content { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Sticky Navigation -->
-    <header>
-        <div class="container nav-container">
-            <div class="brand" id="nav-brand">MD ARIFUL ISLAM</div>
-            <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation menu">☰</button>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#profile">Profile</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#expertise">Expertise</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+  <header>
+    <div class="container nav-container">
+      <a href="#home" class="logo">
+        <div class="logo-icon">AI</div>
+        <div class="logo-text">
+          <span>Md. Ariful Islam</span>
+          <span>Pharma Manufacturing</span>
         </div>
-    </header>
-
-    <!-- Error Message Display -->
-    <div id="error-message">
-        Unable to load content. Please ensure <code>data.xml</code> exists and is served via an HTTP server.
+      </a>
+      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#skills">Skills</a>
+        <a href="#blog">Blog</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+        <a href="admin/index.html" class="admin-btn">Admin ↗</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Main Content Container (Rendered dynamically) -->
-    <main id="app" style="display: none;">
-
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <div class="container hero-grid">
-                <div class="hero-photo-wrapper">
-                    <img id="hero-img" src="" alt="MD Ariful Islam Profile Photo" class="hero-photo">
-                </div>
-                <div>
-                    <span id="hero-badge" class="hero-badge"></span>
-                    <h1 id="hero-name" class="hero-name"></h1>
-                    <div id="hero-title" class="hero-title"></div>
-                    <div id="hero-positioning" class="hero-positioning"></div>
-                    <p id="hero-summary" class="hero-summary"></p>
-                    <div class="cta-group">
-                        <a href="#experience" class="btn btn-primary">View Experience</a>
-                        <a id="btn-cv" href="#" class="btn btn-accent" style="display:none;" download>Download CV</a>
-                        <a id="btn-linkedin" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="display:none;">LinkedIn Profile</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Profile & Statistics -->
-        <section id="profile">
-            <div class="container">
-                <h2 class="section-title">Professional Profile</h2>
-                <p id="profile-full-summary" style="margin-bottom: 2.5rem; font-size: 1.05rem; max-width: 900px;"></p>
-
-                <div id="stats-container" class="stats-grid"></div>
-            </div>
-        </section>
-
-        <!-- Career Journey / Experience Section -->
-        <section id="experience">
-            <div class="container">
-                <h2 class="section-title">Career Journey</h2>
-                <div id="experience-timeline" class="timeline"></div>
-            </div>
-        </section>
-
-        <!-- Technical Expertise Section -->
-        <section id="expertise">
-            <div class="container">
-                <h2 class="section-title">Technical Expertise</h2>
-                <div id="expertise-container" class="expertise-grid"></div>
-            </div>
-        </section>
-
-        <!-- Manufacturing Environment Section -->
-        <section id="environment">
-            <div class="container">
-                <h2 id="env-title" class="section-title">Manufacturing Environment</h2>
-                <div id="env-container" class="env-grid"></div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills">
-            <div class="container">
-                <h2 class="section-title">Skills &amp; Competencies</h2>
-                <div id="skills-container" class="skills-grid"></div>
-            </div>
-        </section>
-
-        <!-- Blog Section -->
-        <section id="blog">
-            <div class="container">
-                <h2 class="section-title">Latest from the Blog</h2>
-                <div id="blog-container" class="blog-grid"></div>
-            </div>
-        </section>
-
-        <!-- Education & Languages Section -->
-        <section id="education">
-            <div class="container">
-                <div class="two-col-grid">
-                    <div>
-                        <h2 class="section-title">Education</h2>
-                        <div id="education-container" class="info-card"></div>
-                    </div>
-                    <div>
-                        <h2 class="section-title">Languages</h2>
-                        <div class="info-card">
-                            <ul id="languages-container" class="lang-list"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-            <div class="container">
-                <h2 class="section-title">Contact Information</h2>
-                <div class="contact-grid">
-                    <div class="contact-details">
-                        <p><strong>Location:</strong> <span id="contact-location"></span></p>
-                        <p><strong>Phone:</strong> <span id="contact-phone"></span></p>
-                        <p><strong>Email:</strong> <span id="contact-email"></span></p>
-                        <p><strong>Website:</strong> <span id="contact-website"></span></p>
-
-                        <div class="cta-group" style="margin-top: 1.5rem;">
-                            <a id="cta-email-btn" href="#" class="btn btn-primary">Email Me</a>
-                            <a id="cta-linkedin-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="display:none;">LinkedIn</a>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 style="color: var(--primary); margin-bottom: 1rem;">References</h3>
-                        <div class="reference-box">
-                            <p id="reference-note" style="font-weight: 500;"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Blog Modal -->
-    <div id="blog-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close-btn" aria-label="Close blog post">&times;</button>
-            <img id="modal-image" class="modal-image" src="" alt="" style="display:none;">
-            <h2 id="modal-title" class="modal-title"></h2>
-            <div id="modal-date" class="modal-date"></div>
-            <div id="modal-body" class="modal-body"></div>
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section id="home">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="badge" id="hero-badge">11+ years across production operations</span>
+          <h1 id="hero-name">Md. Ariful Islam</h1>
+          <p class="title" id="hero-title">Coating Technician</p>
+          <p class="tagline" id="hero-tagline">Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.</p>
+          <p class="summary" id="hero-summary">Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure. Focused on coating machine operation, strict GMP discipline, and efficient, high-quality solid dosage production.</p>
+          <div class="cta-group">
+            <a href="#experience" class="btn btn-primary">View Experience ↗</a>
+            <a href="https://www.linkedin.com/in/md-ariful-islam-226816407" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn Profile ↗</a>
+          </div>
+          <div class="hero-social" id="hero-social"></div>
         </div>
+        <div class="hero-visual">
+          <div class="profile-circle">
+            <img src="assets/profile.jpg" alt="Md. Ariful Islam" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="profile-placeholder" style="display: none;">
+              <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              Profile
+            </div>
+          </div>
+          <div class="quality-badge">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            <div>
+              <strong>Quality-first</strong><br>
+              <span style="font-size:0.65rem; color: var(--text-muted);">OPERATING MINDSET</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <span class="section-label">About</span>
+        <h2 class="section-title">Grounded in the details that keep production moving.</h2>
+        <p class="section-subtitle">A practical profile shaped by hands-on work in controlled pharmaceutical manufacturing environments.</p>
+        
+        <div class="about-grid">
+          <div class="about-text">
+            <p id="about-text-1">Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure. Focused on coating machine operation, strict GMP discipline, and efficient, high-quality solid dosage production.</p>
+            <p id="about-text-2">From apprenticeship through production operation and coating-area supervision, the work has stayed close to the process: prepare well, operate carefully, document clearly, and help the next shift succeed.</p>
+            <a href="#contact" class="manage-link" style="margin-top: 1rem; display: inline-flex;">Start a conversation ↗</a>
+          </div>
+          <div class="stats-grid" id="stats-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="dark-section">
+      <div class="container">
+        <span class="section-label">Experience</span>
+        <h2 class="section-title">A timeline built close to the line.</h2>
+        <p class="section-subtitle">Progressive responsibility across coating, production operation, and process learning.</p>
+        
+        <div class="timeline" id="timeline">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise">
+      <div class="container">
+        <span class="section-label">Expertise</span>
+        <h2 class="section-title">Technical confidence, without the noise.</h2>
+        <p class="section-subtitle">The operating strengths that show up in a clean handover and a reliable batch.</p>
+        
+        <div class="grid-2-col" id="expertise-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Environment Section -->
+    <section id="environment" style="background: var(--bg-alt);">
+      <div class="container">
+        <span class="section-label">Manufacturing Environment</span>
+        <h2 class="section-title">Built for controlled, accountable work.</h2>
+        <p class="section-subtitle">The setting matters: quality depends on people, equipment, routines, and records working together.</p>
+        
+        <div class="grid-2-col" id="environment-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="container">
+        <span class="section-label">Skills</span>
+        <h2 class="section-title">A compact set of personal skills that support dependable production teams.</h2>
+        <div class="skills-container" id="skills-container">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" style="background: var(--bg-alt);">
+      <div class="container">
+        <div class="blog-header">
+          <div>
+            <span class="section-label">Field Notes</span>
+            <h2 class="section-title">A working journal for better batches.</h2>
+            <p class="section-subtitle" style="margin-bottom: 0;">Short notes on cleanroom discipline, coating operations, and the habits behind quality.</p>
+          </div>
+          <a href="admin/index.html" class="manage-link">Manage Posts ↗</a>
+        </div>
+        
+        <div class="blog-grid" id="blog-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Education & Languages Section -->
+    <section id="education" class="dark-section">
+      <div class="container">
+        <div class="edu-grid">
+          <div>
+            <span class="section-label">Education</span>
+            <h2 class="section-title">The foundation behind the practice.</h2>
+            <p class="section-subtitle">Formal study, followed by years of learning on the production floor.</p>
+            <div id="education-content">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div>
+            <span class="section-label">Languages</span>
+            <h2 class="section-title">Clear communication across the shift.</h2>
+            <div class="lang-list" id="lang-grid">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <span class="section-label">Contact</span>
+        <h2 class="section-title">Let's talk about dependable production.</h2>
+        <p class="section-subtitle">For professional conversations, connect directly through the details below.</p>
+        
+        <div class="contact-grid">
+          <div class="contact-list" id="contact-info">
+            <!-- Populated by JS -->
+          </div>
+          <div class="reference-box">
+            <h3>References available on request.</h3>
+            <p>Reference details are intentionally kept private. Professional references can be shared directly when a role or project requires them.</p>
+            <a href="mailto:arispramanik@gmail.com" class="btn btn-dark">Email Ariful ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>&copy; <span id="year"></span> Md. Ariful Islam. Built around quality, process, and people.</p>
+      <a href="#home" style="color: var(--text-muted);">BACK TO TOP ↑</a>
     </div>
+  </footer>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="footer-year"></span> <span id="footer-name">MD ARIFUL ISLAM</span>. All rights reserved.</p>
-        </div>
-    </footer>
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/8801845873227" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
 
-    <!-- Application Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set dynamic current year in footer
-            document.getElementById('footer-year').textContent = new Date().getFullYear();
+  <!-- Blog Modal -->
+  <div class="modal-overlay" id="blogModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <h2 id="modalTitle"></h2>
+      <p class="modal-date" id="modalDate"></p>
+      <div id="modalBody"></div>
+    </div>
+  </div>
 
-            // Mobile menu toggle logic
-            const hamburger = document.getElementById('hamburger-btn');
-            const navLinks = document.getElementById('nav-links');
-            hamburger.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set Year
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-            // Close mobile menu when link is clicked
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // Fetch XML + blogs JSON in parallel
-            Promise.all([
-                fetch('data.xml').then(response => {
-                    if (!response.ok) throw new Error('XML HTTP fetch failed');
-                    return response.text();
-                }),
-                fetch('content/blogs.json')
-                    .then(r => r.ok ? r.json() : { posts: [] })
-                    .catch(() => ({ posts: [] }))
-            ])
-            .then(([xmlStr, blogsData]) => {
-                const xml = new DOMParser().parseFromString(xmlStr, "text/xml");
-                renderPortfolio(xml, blogsData);
-            })
-            .catch(err => {
-                console.error('Error loading data:', err);
-                document.getElementById('error-message').style.display = 'block';
-            });
+      // Mobile Menu
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.getElementById('navLinks');
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
         });
+      });
 
-        // Helper function for XML node text extraction
-        function getXmlText(xmlDoc, selector, defaultValue = '') {
-            const el = xmlDoc.querySelector(selector);
-            return el ? el.textContent.trim() : defaultValue;
-        }
-
-        // Main Rendering Logic
-        function renderPortfolio(xml, blogsData) {
-            // 1. Personal Information Section
-            const name = getXmlText(xml, 'personal > name', 'MD ARIFUL ISLAM');
-            const title = getXmlText(xml, 'personal > title');
-            const positioning = getXmlText(xml, 'personal > positioning');
-            const location = getXmlText(xml, 'personal > location');
-            const photo = getXmlText(xml, 'personal > photo');
-            const badge = getXmlText(xml, 'personal > badge');
-            const website = getXmlText(xml, 'personal > website');
-            const linkedin = getXmlText(xml, 'personal > linkedin');
-            const email = getXmlText(xml, 'personal > email');
-            const phone = getXmlText(xml, 'personal > phone');
-
-            document.getElementById('nav-brand').textContent = name;
-            document.getElementById('footer-name').textContent = name;
-            document.getElementById('hero-name').textContent = name;
-            document.getElementById('hero-title').textContent = title;
-            document.getElementById('hero-positioning').textContent = positioning;
-
-            if (badge) {
-                document.getElementById('hero-badge').textContent = badge;
-            } else {
-                document.getElementById('hero-badge').style.display = 'none';
-            }
-
-            // Image Handler
-            const imgEl = document.getElementById('hero-img');
-            imgEl.src = photo || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" fill="%2364748b"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>';
-            imgEl.alt = name;
-
-            // Summary
-            const summary = getXmlText(xml, 'profile > summary');
-            document.getElementById('hero-summary').textContent = summary;
-            document.getElementById('profile-full-summary').textContent = summary;
-
-            // 2. Buttons / Interactive Links
-            if (linkedin) {
-                const lInBtn = document.getElementById('btn-linkedin');
-                const ctaLInBtn = document.getElementById('cta-linkedin-btn');
-                lInBtn.href = linkedin;
-                lInBtn.style.display = 'inline-flex';
-                ctaLInBtn.href = linkedin;
-                ctaLInBtn.style.display = 'inline-flex';
-            }
-
-            const cvUrl = getXmlText(xml, 'cv > url');
-            const cvEnabled = getXmlText(xml, 'cv > enabled', 'false');
-            if (cvUrl && cvEnabled === 'true') {
-                const cvBtn = document.getElementById('btn-cv');
-                cvBtn.href = cvUrl;
-                cvBtn.style.display = 'inline-flex';
-            }
-
-            // 3. Statistics Section Rendering
-            const statsContainer = document.getElementById('stats-container');
-            const stats = xml.querySelectorAll('statistics > stat');
-            stats.forEach(stat => {
-                const val = getXmlText(stat, 'value');
-                const lbl = getXmlText(stat, 'label');
-                const card = document.createElement('div');
-                card.className = 'stat-card';
-                card.innerHTML = `<div class="stat-value">${val}</div><div class="stat-label">${lbl}</div>`;
-                statsContainer.appendChild(card);
-            });
-
-            // 4. Experience Section Dynamic Timeline Rendering
-            const expContainer = document.getElementById('experience-timeline');
-            const jobs = xml.querySelectorAll('experience > job');
-            jobs.forEach(job => {
-                const period = getXmlText(job, 'period');
-                const jobTitle = getXmlText(job, 'title');
-                const area = getXmlText(job, 'area');
-                const compName = getXmlText(job, 'company > name');
-                const compFormer = getXmlText(job, 'company > formerName');
-                const compWeb = getXmlText(job, 'company > website');
-                const facility = getXmlText(job, 'facility');
-
-                let compHtml = compName;
-                if (compFormer) compHtml += ` <span style="font-weight: normal; font-size:0.85rem; color:var(--text-muted);">(${compFormer})</span>`;
-                if (compWeb) {
-                    compHtml += ` <a href="${compWeb}" target="_blank" rel="noopener noreferrer" class="external-link" title="Official Website">Official Website ↗</a>`;
-                }
-
-                const respItems = job.querySelectorAll('responsibilities > item');
-                let respHtml = '';
-                respItems.forEach(item => {
-                    respHtml += `<li>${item.textContent.trim()}</li>`;
-                });
-
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'timeline-item';
-                itemDiv.innerHTML = `
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="timeline-header">
-                            <h3 class="timeline-title">${jobTitle} ${area ? '— ' + area : ''}</h3>
-                            <span class="timeline-period">${period}</span>
-                        </div>
-                        <div class="company-info">${compHtml}</div>
-                        ${facility ? `<div class="facility-info">${facility}</div>` : ''}
-                        <ul class="timeline-resp">${respHtml}</ul>
-                    </div>
-                `;
-                expContainer.appendChild(itemDiv);
-            });
-
-            // 5. Technical Expertise Rendering
-            const expertiseContainer = document.getElementById('expertise-container');
-            const expertiseItems = xml.querySelectorAll('expertise > item');
-            expertiseItems.forEach(exp => {
-                const card = document.createElement('div');
-                card.className = 'expertise-card';
-                card.textContent = exp.textContent.trim();
-                expertiseContainer.appendChild(card);
-            });
-
-            // 6. Manufacturing Environment Rendering
-            const envTitle = getXmlText(xml, 'manufacturingEnvironment > title', 'MANUFACTURING ENVIRONMENT');
-            document.getElementById('env-title').textContent = envTitle;
-            const envContainer = document.getElementById('env-container');
-            const highlights = xml.querySelectorAll('manufacturingEnvironment > highlights > highlight');
-            highlights.forEach(h => {
-                const hName = getXmlText(h, 'name');
-                const hDesc = getXmlText(h, 'description');
-                const card = document.createElement('div');
-                card.className = 'env-card';
-                card.innerHTML = `<h3>${hName}</h3><p>${hDesc}</p>`;
-                envContainer.appendChild(card);
-            });
-
-            // 7. Skills Rendering
-            const skillsContainer = document.getElementById('skills-container');
-            const skills = xml.querySelectorAll('skills > skill');
-            skills.forEach(sk => {
-                const tag = document.createElement('div');
-                tag.className = 'skill-tag';
-                tag.textContent = sk.textContent.trim();
-                skillsContainer.appendChild(tag);
-            });
-
-            // 8. Education Section Rendering
-            const eduContainer = document.getElementById('education-container');
-            const degree = getXmlText(xml, 'education > degree');
-            const inst = getXmlText(xml, 'education > institution');
-            const group = getXmlText(xml, 'education > group');
-            const year = getXmlText(xml, 'education > year');
-            const gpa = getXmlText(xml, 'education > gpa');
-
-            eduContainer.innerHTML = `
-                <h3 style="color: var(--primary); margin-bottom: 0.25rem;">${degree}</h3>
-                <p style="font-weight: 600; font-size:0.95rem;">${inst}</p>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">${group} | ${year}</p>
-                <p style="margin-top: 0.5rem; font-weight: 500; color: var(--accent);">${gpa}</p>
-            `;
-
-            // 9. Languages Section Rendering
-            const langContainer = document.getElementById('languages-container');
-            const langs = xml.querySelectorAll('languages > language');
-            langs.forEach(l => {
-                const lName = getXmlText(l, 'name');
-                const lLevel = getXmlText(l, 'level');
-                const li = document.createElement('li');
-                li.className = 'lang-item';
-                li.innerHTML = `<span><strong>${lName}</strong></span><span style="color: var(--text-muted);">${lLevel}</span>`;
-                langContainer.appendChild(li);
-            });
-
-            // 10. Contact Information Rendering
-            document.getElementById('contact-location').textContent = location;
-            document.getElementById('contact-phone').textContent = phone;
-            document.getElementById('contact-email').textContent = email;
-
-            const contactWebEl = document.getElementById('contact-website');
-            if (website) {
-                contactWebEl.innerHTML = `<a href="${website}" target="_blank">${website}</a>`;
-            } else {
-                contactWebEl.textContent = 'N/A';
-            }
-
-            if (email) {
-                document.getElementById('cta-email-btn').href = `mailto:${email}`;
-            }
-
-            const refNote = getXmlText(xml, 'references > note', 'Professional references available upon request.');
-            document.getElementById('reference-note').textContent = refNote;
-
-            // 11. Blog Section Rendering
-            renderBlogs(xml, blogsData || { posts: [] });
-
-            // ===== Modal Event Listeners =====
-            const modal = document.getElementById('blog-modal');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-
-            modalCloseBtn.addEventListener('click', closeBlogModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeBlogModal();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) closeBlogModal();
-            });
-
-            function closeBlogModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            function openBlogModal(post) {
-                document.getElementById('modal-title').textContent = post.title;
-                document.getElementById('modal-date').textContent = formatDate(post.date);
-
-                const imgEl = document.getElementById('modal-image');
-                if (post.image) {
-                    imgEl.src = post.image;
-                    imgEl.alt = post.title;
-                    imgEl.style.display = 'block';
-                } else {
-                    imgEl.style.display = 'none';
-                }
-
-                const bodyEl = document.getElementById('modal-body');
-                bodyEl.innerHTML = '';
-                const paragraphs = (post.content || '').split(/\n\s*\n/);
-                paragraphs.forEach(p => {
-                    const para = document.createElement('p');
-                    para.textContent = p.trim();
-                    if (para.textContent) bodyEl.appendChild(para);
-                });
-
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                modal.scrollTop = 0;
-            }
-
-            function formatDate(dateStr) {
-                if (!dateStr) return '';
-                const d = new Date(dateStr);
-                if (isNaN(d.getTime())) return dateStr;
-                return d.toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric'
-                });
-            }
-
-            function renderBlogs(xmlDoc, blogsJson) {
-                const container = document.getElementById('blog-container');
-                container.innerHTML = '';
-
-                const posts = [];
-
-                // From data.xml
-                xmlDoc.querySelectorAll('blogs > post').forEach(p => {
-                    posts.push({
-                        id: getXmlText(p, 'id'),
-                        title: getXmlText(p, 'title'),
-                        date: getXmlText(p, 'date'),
-                        image: getXmlText(p, 'image'),
-                        summary: getXmlText(p, 'summary'),
-                        content: getXmlText(p, 'content')
-                    });
-                });
-
-                // From content/blogs.json (Decap CMS managed)
-                (blogsJson.posts || []).forEach(p => {
-                    posts.push({
-                        id: p.id || '',
-                        title: p.title || '',
-                        date: p.date || '',
-                        image: p.image || '',
-                        summary: p.summary || '',
-                        content: p.content || ''
-                    });
-                });
-
-                // Filter empties + sort by date desc
-                const validPosts = posts
-                    .filter(p => p.title)
-                    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-
-                if (validPosts.length === 0) {
-                    const empty = document.createElement('div');
-                    empty.className = 'blog-empty';
-                    empty.textContent = 'No blog posts yet. Check back soon!';
-                    container.appendChild(empty);
-                    return;
-                }
-
-                const fallbackImg = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"><rect width="400" height="200" fill="%23e6f2f2"/><text x="50%" y="50%" fill="%23008080" font-family="sans-serif" font-size="20" text-anchor="middle" dominant-baseline="middle">Blog</text></svg>';
-
-                validPosts.forEach(post => {
-                    const card = document.createElement('article');
-                    card.className = 'blog-card';
-
-                    const img = document.createElement('img');
-                    img.className = 'blog-card-image';
-                    img.alt = post.title;
-                    img.src = post.image || fallbackImg;
-                    img.onerror = function() {
-                        this.onerror = null;
-                        this.src = fallbackImg;
-                    };
-
-                    const body = document.createElement('div');
-                    body.className = 'blog-card-body';
-
-                    const dateEl = document.createElement('div');
-                    dateEl.className = 'blog-card-date';
-                    dateEl.textContent = formatDate(post.date);
-
-                    const titleEl = document.createElement('h3');
-                    titleEl.className = 'blog-card-title';
-                    titleEl.textContent = post.title;
-
-                    const summaryEl = document.createElement('p');
-                    summaryEl.className = 'blog-card-summary';
-                    summaryEl.textContent = post.summary;
-
-                    const readMore = document.createElement('span');
-                    readMore.className = 'blog-read-more';
-                    readMore.textContent = 'Read More';
-
-                    body.appendChild(dateEl);
-                    body.appendChild(titleEl);
-                    body.appendChild(summaryEl);
-                    body.appendChild(readMore);
-
-                    card.appendChild(img);
-                    card.appendChild(body);
-                    card.addEventListener('click', () => openBlogModal(post));
-
-                    container.appendChild(card);
-                });
-            }
-
-            // Make App Visible
-            document.getElementById('app').style.display = 'block';
-        }
-    </script>
-
-    <!-- Netlify Identity Redirect Script -->
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+      // Active Section Highlighting
+      const sections = document.querySelectorAll('section[id]');
+      const navItems = document.querySelectorAll('.nav-links a:not(.admin-btn)');
+      const observerOptions = { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navItems.forEach(item => {
+              item.classList.toggle('active', item.getAttribute('href') === `#${id}`);
             });
           }
         });
+      }, observerOptions);
+      sections.forEach(section => observer.observe(section));
+
+      // Fetch Data
+      Promise.all([
+        fetch('data.xml').then(res => res.text()).then(str => new DOMParser().parseFromString(str, 'text/xml')),
+        fetch('content/blogs.json').then(res => res.json()).catch(() => ({ posts: [] }))
+      ]).then(([xmlDoc, blogData]) => {
+        populatePortfolio(xmlDoc);
+        populateBlog(blogData.posts);
+      }).catch(err => {
+        console.error('Error loading data:', err);
+        // Fallback content
+        document.getElementById('hero-name').textContent = "Md. Ariful Islam";
+        document.getElementById('hero-title').textContent = "Coating Technician";
+        document.getElementById('hero-summary').textContent = "Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure.";
+        document.getElementById('stats-grid').innerHTML = `<div class="stat-card"><div class="number">11+ years</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div><div class="stat-card"><div class="number">2014</div><div class="label">Career start</div><div class="sub">Production operations</div></div><div class="stat-card"><div class="number">GMP/cGMP</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div><div class="stat-card"><div class="number">Coating</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>`;
+      });
+
+      function getXmlText(parent, tag) {
+        const el = parent.querySelector(tag);
+        return el ? el.textContent : '';
       }
-    </script>
+
+      function populatePortfolio(xml) {
+        const personal = xml.querySelector('personal');
+        document.getElementById('hero-name').textContent = getXmlText(personal, 'name') || 'Md. Ariful Islam';
+        document.getElementById('hero-title').textContent = getXmlText(personal, 'title') || 'Coating Technician';
+        document.getElementById('hero-tagline').textContent = getXmlText(personal, 'tagline') || '';
+        document.getElementById('hero-summary').textContent = getXmlText(personal, 'summary') || '';
+
+        // Social Links
+        const socials = xml.querySelector('social');
+        const socialContainer = document.getElementById('hero-social');
+        socialContainer.innerHTML = `
+          <a href="${getXmlText(socials, 'whatsapp')}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="${getXmlText(socials, 'telegram')}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.26-1.91.173-.18 3.231-2.957 3.29-3.218.004-.017.007-.08-.03-.113-.034-.033-.083-.022-.118-.014-.05.012-2.95 1.865-3.018 1.93-.356.34-.717.51-1.145.51-.47 0-.878-.28-1.154-.84-.35-.72-.753-1.46-.753-2.25 0-.8.395-1.25.84-1.63.45-.39 1.03-.71 1.65-.71.62 0 1.17.22 1.65.64l.01.01c.35.3.75.65 1.22.95.4.25.8.38 1.2.38.4 0 .78-.12 1.15-.35.37-.23.72-.55 1.06-.92.22-.24.45-.44.68-.58.23-.14.45-.2.68-.16z"/></svg></a>
+          <a href="${getXmlText(socials, 'linkedin')}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
+          <a href="mailto:${getXmlText(socials, 'email')}" class="social-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+        `;
+
+        // Stats
+        const stats = xml.querySelector('stats');
+        const statGrid = document.getElementById('stats-grid');
+        statGrid.innerHTML = `
+          <div class="stat-card"><div class="number">${getXmlText(stats, 'experience') || '11+ years'}</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div>
+          <div class="stat-card"><div class="number">${getXmlText(stats, 'start') || '2014'}</div><div class="label">Career start</div><div class="sub">Production operations</div></div>
+          <div class="stat-card"><div class="number">${getXmlText(stats, 'certification') || 'GMP/cGMP'}</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div>
+          <div class="stat-card"><div class="number">${getXmlText(stats, 'specialization') || 'Coating'}</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>
+        `;
+
+        // Experience Timeline
+        const timeline = document.getElementById('timeline');
+        const experiences = xml.querySelectorAll('experience > job');
+        timeline.innerHTML = Array.from(experiences).map(job => `
+          <div class="timeline-item">
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <span class="timeline-date">${getXmlText(job, 'period')}</span>
+                <span class="timeline-facility">${getXmlText(job, 'facility')}</span>
+              </div>
+              <div class="timeline-title">${getXmlText(job, 'title')}</div>
+              <div class="timeline-company">
+                <a href="${getXmlText(job, 'companyUrl')}" target="_blank" rel="noopener noreferrer">${getXmlText(job, 'company')} ↗</a>
+                ${getXmlText(job, 'facility') ? ` - ${getXmlText(job, 'facility')}` : ''}
+              </div>
+              <div class="timeline-desc">
+                <ul>${Array.from(job.querySelectorAll('responsibility')).map(r => `<li>${r.textContent}</li>`).join('')}</ul>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Expertise
+        const expertiseGrid = document.getElementById('expertise-grid');
+        const expertiseItems = xml.querySelectorAll('expertise > item');
+        expertiseGrid.innerHTML = Array.from(expertiseItems).map(item => `
+          <div class="expertise-card">
+            <div class="expertise-icon">
+              <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
+            </div>
+            <div class="expertise-content">
+              <h3>${getXmlText(item, 'title')}</h3>
+              <p>${getXmlText(item, 'description')}</p>
+            </div>
+          </div>
+        `).join('');
+
+        // Environment
+        const envGrid = document.getElementById('environment-grid');
+        const envItems = xml.querySelectorAll('environment > item');
+        envGrid.innerHTML = Array.from(envItems).map((item, index) => `
+          <div class="env-card">
+            <span class="env-number">0${index + 1}</span>
+            <h3>${getXmlText(item, 'title')}</h3>
+            <p>${getXmlText(item, 'description')}</p>
+          </div>
+        `).join('');
+
+        // Skills
+        const skillsContainer = document.getElementById('skills-container');
+        const skillItems = xml.querySelectorAll('skills > skill');
+        skillsContainer.innerHTML = Array.from(skillItems).map(skill => `
+          <span class="skill-tag">${skill.textContent}</span>
+        `).join('');
+
+        // Languages
+        const langGrid = document.getElementById('lang-grid');
+        const langItems = xml.querySelectorAll('languages > language');
+        langGrid.innerHTML = Array.from(langItems).map(lang => `
+          <div class="lang-item">
+            <span class="lang-name">${getXmlText(lang, 'name')}</span>
+            <span class="lang-level">${getXmlText(lang, 'level')}</span>
+          </div>
+        `).join('');
+
+        // Education
+        const eduContent = document.getElementById('education-content');
+        const eduItems = xml.querySelectorAll('education > degree');
+        eduContent.innerHTML = Array.from(eduItems).map(edu => `
+          <div class="edu-item">
+            <div class="edu-year">${getXmlText(edu, 'year')}</div>
+            <div class="edu-inst">${getXmlText(edu, 'institution')}</div>
+            <div class="edu-detail">${getXmlText(edu, 'group')} | GPA: ${getXmlText(edu, 'gpa')}</div>
+          </div>
+        `).join('');
+
+        // Contact Info
+        const contactInfo = document.getElementById('contact-info');
+        contactInfo.innerHTML = `
+          <div class="contact-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+            <div class="contact-detail"><span>Location</span><span>${getXmlText(personal, 'location')}</span></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+            <div class="contact-detail"><span>Phone</span><a href="tel:${getXmlText(personal, 'phone')}">${getXmlText(personal, 'phone')}</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+            <div class="contact-detail"><span>Email</span><a href="mailto:${getXmlText(personal, 'email')}">${getXmlText(personal, 'email')}</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <div class="contact-detail"><span>Website</span><a href="${getXmlText(personal, 'website')}" target="_blank" rel="noopener noreferrer">${getXmlText(personal, 'website')}</a></div>
+          </div>
+        `;
+      }
+
+      // Blog Logic
+      function populateBlog(posts) {
+        const blogGrid = document.getElementById('blog-grid');
+        if (!posts || posts.length === 0) {
+          blogGrid.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No blog posts available yet.</p>`;
+          return;
+        }
+        const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        blogGrid.innerHTML = sortedPosts.map(post => {
+          const dateObj = new Date(post.date);
+          const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
+          const fallbackImg = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjIwIiB2aWV3Qm94PSIwIDAgMzAwIDIyMCI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMjAiIGZpbGw9IiNlMmU4ZjAiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzY0NzQ4YiI+QmxvZzwvdGV4dD48L3N2Zz4=';
+          
+          return `
+            <article class="blog-card">
+              <img src="${post.image || fallbackImg}" alt="${post.title}" onerror="this.src='${fallbackImg}'">
+              <div class="blog-card-content">
+                <div class="blog-date">${formattedDate}</div>
+                <h3>${post.title}</h3>
+                <p>${post.summary}</p>
+                <span class="read-more" data-id="${post.id}">Read Article ↗</span>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.read-more').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = e.target.getAttribute('data-id');
+            const post = sortedPosts.find(p => p.id === id);
+            if (post) openModal(post);
+          });
+        });
+      }
+
+      // Modal Logic
+      const modal = document.getElementById('blogModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDate = document.getElementById('modalDate');
+      const modalBody = document.getElementById('modalBody');
+      const modalClose = document.getElementById('modalClose');
+
+      function openModal(post) {
+        modalTitle.textContent = post.title;
+        modalDate.textContent = new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        modalBody.innerHTML = post.content.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+    });
+  </script>
 </body>
 </html>
