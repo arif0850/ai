@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex" />
   <title>Content Manager | MD Ariful Islam</title>
   
-  <!-- Netlify Identity Widget Script -->
+  <!-- Netlify Identity Widget -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
@@ -14,8 +14,12 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
-    // Explicitly bind identity widget to Decap CMS for custom domains
     if (window.netlifyIdentity) {
+      // Netlify API এর সাথে ডিরেক্ট লিঙ্ক
+      window.netlifyIdentity.init({
+        APIUrl: "https://bejewelled-axolotl-c19836.netlify.app/.netlify/identity"
+      });
+      
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
