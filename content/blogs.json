@@ -1,3 +1,20 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "id": "1704067200000",
+      "title": "Building consistency into every coating batch",
+      "date": "2026-01-15",
+      "image": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
+      "summary": "A practical look at the habits that protect coating uniformity, documentation quality, and reliable batch outcomes.",
+      "content": "Consistency in coating is not just about the machine; it is about the habits surrounding the process.\n\n1. **Preparation is key:** Before a single tablet enters the pan, ensure the coating solution is properly prepared, the equipment is clean, and the parameters are set according to the batch record.\n\n2. **Monitor and adjust:** Coating is a dynamic process. Pay close attention to inlet temperature, spray rate, and pan speed. Small adjustments early on can prevent major issues later.\n\n3. **Documentation discipline:** Record everything as it happens. Accurate, real-time documentation is your best tool for troubleshooting and ensuring traceability.\n\nBy focusing on these habits, we ensure that every batch meets the highest standards of quality and efficacy."
+    },
+    {
+      "id": "1706745600000",
+      "title": "Why cleanroom habits strengthen GMP culture",
+      "date": "2025-12-02",
+      "image": "https://images.unsplash.com/photo-1581093458791-9f302d9b1e44?auto=format&fit=crop&q=80&w=800",
+      "summary": "Cleanroom discipline is a daily team practice: orderly movement, careful cleaning, and documentation that can be trusted.",
+      "content": "A cleanroom is more than just a physical space; it is a culture.\n\nIn a WHO-approved facility, every movement matters. Orderly movement prevents contamination. Careful cleaning ensures a controlled environment. And meticulous documentation provides the evidence that these standards are met.\n\nWhen the team adopts these habits, GMP compliance becomes second nature. It is not just about passing an audit; it is about ensuring patient safety through every step of the manufacturing process.\n\nStrong cleanroom habits are the foundation of a reliable, quality-first production environment."
+    }
+  ]
 }
