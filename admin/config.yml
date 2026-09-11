@@ -1,11 +1,6 @@
 backend:
   name: git-gateway
-  branch: main
-  identity_url: "https://bejewelled-axolotl-c19836.netlify.app/.netlify/identity"
-  gateway_url: "https://bejewelled-axolotl-c19836.netlify.app/.netlify/git/github"
-
-site_url: https://hiarif.com
-display_url: https://hiarif.com
+  branch: main # আপনার মূল গিটহাব ব্রাঞ্চের নাম
 
 media_folder: "assets/blog"
 public_folder: "/assets/blog"
