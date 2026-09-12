@@ -115,8 +115,48 @@
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-    /* --- Hero Section --- */
-    #home { background: var(--primary-dark); color: var(--text-light); padding: 6rem 0; position: relative; overflow: hidden; }
+    /* --- Hero Section with Background Image --- */
+    #home {
+      background: var(--primary-dark);
+      color: var(--text-light);
+      padding: 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Layer 1: Background Image */
+    #home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/hero-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.18;
+      z-index: 0;
+    }
+    
+    /* Layer 2: Gradient Overlay for readability */
+    #home::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(11, 30, 54, 0.85) 0%,
+        rgba(11, 30, 54, 0.65) 50%,
+        rgba(11, 30, 54, 0.9) 100%
+      );
+      z-index: 1;
+    }
+    
+    /* Layer 3: Content on top */
+    #home .container {
+      position: relative;
+      z-index: 2;
+    }
+    
     .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
     .hero-content h1 { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
     .hero-content .title { font-size: 1rem; font-weight: 600; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
@@ -488,9 +528,17 @@
       .orbit-container { inset: -18px; }
       .orbit-dot { width: 12px; height: 12px; top: -6px; }
       .orbit-dot-2 { width: 8px; height: 8px; bottom: -4px; }
+      .quality-badge {
+        position: static;
+        margin: 1.5rem auto 0;
+        display: inline-flex;
+        align-self: center;
+      }
+      .hero-visual { flex-direction: column; }
       .timeline-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .blog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .footer-content { flex-direction: column; text-align: center; }
+      #home::before { opacity: 0.12; }
     }
   </style>
 </head>
