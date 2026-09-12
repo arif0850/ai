@@ -14,7 +14,7 @@
   
   <meta name="theme-color" content="#0B1E36">
   
-  <!-- ===== FAVICON (UPDATED) ===== -->
+  <!-- ===== FAVICON ===== -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -150,31 +150,122 @@
     .social-icon:hover { background: var(--accent); color: white; transform: translateY(-3px); border-color: var(--accent); }
     .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
+    /* ===== PROFILE CIRCLE WITH ANIMATED ORBIT ===== */
     .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    
     .profile-circle {
-      width: 320px; height: 320px; border-radius: 50%;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
       background: radial-gradient(circle, rgba(13,148,136,0.2) 0%, rgba(11,30,54,0) 70%);
-      border: 1px solid rgba(13, 148, 136, 0.3);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
     }
+    
+    /* Rotating dashed ring */
     .profile-circle::before {
-      content: ''; position: absolute; width: 100%; height: 100%;
-      border-radius: 50%; border: 1px dashed rgba(13, 148, 136, 0.2);
-      animation: spin 30s linear infinite;
+      content: '';
+      position: absolute;
+      inset: -25px;
+      border-radius: 50%;
+      border: 2px dashed rgba(13, 148, 136, 0.45);
+      animation: spin 8s linear infinite;
     }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
+    
+    /* Second slower ring */
+    .profile-circle::after {
+      content: '';
+      position: absolute;
+      inset: -40px;
+      border-radius: 50%;
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      animation: spinReverse 15s linear infinite;
+    }
+    
+    /* Orbiting container for the glowing dot */
+    .orbit-container {
+      position: absolute;
+      inset: -25px;
+      border-radius: 50%;
+      animation: spin 8s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    /* The main glowing dot */
+    .orbit-dot {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 15px 5px rgba(13, 148, 136, 0.8),
+                  0 0 30px 10px rgba(13, 148, 136, 0.4);
+    }
+    
+    /* Second smaller dot at opposite side */
+    .orbit-dot-2 {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #5EEAD4;
+      box-shadow: 0 0 12px 4px rgba(94, 234, 212, 0.7);
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes spinReverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+    
     .profile-circle img {
-      width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
-      border: 3px solid var(--accent); box-shadow: 0 0 30px rgba(13, 148, 136, 0.3);
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 40px rgba(13, 148, 136, 0.5);
+      position: relative;
+      z-index: 1;
     }
+    
     .profile-placeholder {
-      width: 200px; height: 200px; border-radius: 50%; background: var(--primary-light);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
-      border: 3px solid var(--accent);
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 4px solid var(--accent);
+      position: relative;
+      z-index: 1;
     }
-    .profile-placeholder svg { width: 60px; height: 60px; fill: var(--text-muted); margin-bottom: 0.5rem; }
+    
+    .profile-placeholder svg {
+      width: 60px;
+      height: 60px;
+      fill: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
     
     .quality-badge {
       position: absolute; bottom: 20px; right: 20px;
@@ -390,8 +481,13 @@
       .hero-content .summary { margin: 0 auto 2rem; }
       .cta-group { justify-content: center; }
       .hero-social { justify-content: center; }
-      .profile-circle { width: 260px; height: 260px; }
-      .profile-circle img, .profile-placeholder { width: 160px; height: 160px; }
+      .profile-circle { width: 240px; height: 240px; }
+      .profile-circle img, .profile-placeholder { width: 170px; height: 170px; }
+      .profile-circle::before { inset: -18px; }
+      .profile-circle::after { inset: -30px; }
+      .orbit-container { inset: -18px; }
+      .orbit-dot { width: 12px; height: 12px; top: -6px; }
+      .orbit-dot-2 { width: 8px; height: 8px; bottom: -4px; }
       .timeline-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .blog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .footer-content { flex-direction: column; text-align: center; }
@@ -445,6 +541,10 @@
         </div>
         <div class="hero-visual">
           <div class="profile-circle">
+            <div class="orbit-container">
+              <div class="orbit-dot"></div>
+              <div class="orbit-dot-2"></div>
+            </div>
             <img src="assets/profile.jpg" alt="Md. Ariful Islam" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="profile-placeholder" style="display: none;">
               <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
