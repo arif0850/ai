@@ -71,7 +71,7 @@
       font-size: 16px;
       line-height: 1.55;
       color: var(--text-dark);
-      background-color: var(--primary-dark); /* Canvas এর পেছনে dark bg */
+      background-color: var(--primary-dark);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       letter-spacing: var(--letter-normal);
@@ -82,7 +82,6 @@
     
     /* ========================================
        SCROLL SEQUENCE ANIMATION CANVAS
-       Fixed position, সবার পেছনে থাকে
        ======================================== */
     #scroll-canvas {
       position: fixed;
@@ -90,14 +89,13 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      z-index: -1;
+      z-index: 0;
       pointer-events: none;
-      /* Canvas নিজেই ছবি আঁকে, তাই bg নেই */
+      opacity: 0.7; /* Bold - Canvas স্পষ্ট */
     }
     
     /* ========================================
        LOADING SCREEN
-       ছবি লোড হওয়ার সময় দেখাবে
        ======================================== */
     #loading-screen {
       position: fixed;
@@ -197,22 +195,81 @@
     section { 
       padding: 5rem 0;
       overflow-x: hidden;
+      position: relative;
+      z-index: 1;
     }
     
-    /* Hero section-এ background transparent হবে যাতে canvas দেখা যায় */
-    #home {
-      background: transparent !important;
+    /* ========================================
+       BOLD CANVAS - SECTION BACKGROUNDS
+       সব section-এ Canvas স্পষ্ট দেখা যাবে
+       ======================================== */
+    
+    /* Hero — Canvas সম্পূর্ণ স্পষ্ট, উপর gradient overlay */
+    #home { 
+      background: transparent; 
+      position: relative; 
+      z-index: 1; 
     }
     
-    /* বাকি section গুলোর background থাকবে কিন্তু হালকা transparent */
-    #about { background: rgba(255, 255, 255, 0.98); }
-    #experience { background: rgba(11, 30, 54, 0.98); }
-    #expertise { background: rgba(255, 255, 255, 0.98); }
-    #environment { background: rgba(241, 245, 249, 0.98); }
-    #skills { background: rgba(255, 255, 255, 0.98); }
-    #blog { background: rgba(241, 245, 249, 0.98); }
-    #education { background: rgba(11, 30, 54, 0.98); }
-    #contact { background: rgba(255, 255, 255, 0.98); }
+    /* সাদা section — Bold transparency */
+    #about { 
+      background: rgba(255, 255, 255, 0.82); 
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    
+    #expertise { 
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    
+    #skills { 
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    
+    #contact { 
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    
+    /* হালকা ধূসর section */
+    #environment { 
+      background: rgba(241, 245, 249, 0.75);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    
+    #blog { 
+      background: rgba(241, 245, 249, 0.75);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    
+    /* নেভি section — text readability-র জন্য opacity একটু বেশি */
+    #experience { 
+      background: rgba(11, 30, 54, 0.85);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+    
+    #education { 
+      background: rgba(11, 30, 54, 0.85);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+    }
+    
+    /* Footer */
+    footer {
+      background: rgba(7, 20, 38, 0.9);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      position: relative;
+      z-index: 1;
+    }
     
     .section-label {
       font-size: 0.75rem; 
@@ -239,7 +296,7 @@
       line-height: 1.6;
     }
 
-    .dark-section { background-color: var(--primary-dark); color: var(--text-light); }
+    .dark-section { color: var(--text-light); }
     .dark-section .section-title { color: var(--text-light); }
     .dark-section .section-subtitle { color: var(--text-muted); }
 
@@ -308,10 +365,8 @@
       padding: 6rem 0;
       position: relative;
       overflow: hidden;
-      /* কোনো ::before, ::after নেই — canvas সব করে */
     }
     
-    /* Hero-তে text readable করার জন্য overlay */
     #home::after {
       content: '';
       position: absolute;
@@ -328,7 +383,7 @@
     
     #home .container {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     
     .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
@@ -529,7 +584,11 @@
     
     .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .stat-card {
-      background: var(--bg-alt); padding: 1.5rem; border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9); padding: 1.5rem; border-radius: 8px;
+      border-top: 4px solid var(--accent);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
       border-top: 4px solid var(--accent);
     }
     .stat-card .number { 
@@ -552,7 +611,7 @@
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-      width: 1px; background: rgba(255,255,255,0.1);
+      width: 1px; background: rgba(255,255,255,0.15);
     }
     .timeline-item { position: relative; margin-bottom: 2.5rem; }
     .timeline-item::before {
@@ -561,10 +620,12 @@
       box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
     }
     .timeline-card {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px; padding: 1.5rem; transition: var(--transition);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
-    .timeline-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(13, 148, 136, 0.3); }
+    .timeline-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(13, 148, 136, 0.4); }
     .timeline-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 0.5rem; }
     .timeline-date { 
       font-size: 0.75rem; 
@@ -596,11 +657,13 @@
     /* --- Expertise & Environment --- */
     .grid-2-col { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
     .expertise-card {
-      background: var(--bg-main); border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(226, 232, 240, 0.8);
       border-radius: 8px; padding: 1.5rem; display: flex; gap: 1rem;
       transition: var(--transition);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
-    .expertise-card:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .expertise-card:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.08); background: rgba(255, 255, 255, 0.95); }
     .expertise-icon {
       width: 48px; height: 48px; background: var(--accent-light); border-radius: 8px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -616,8 +679,10 @@
     .expertise-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
 
     .env-card {
-      background: var(--bg-main); border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(226, 232, 240, 0.8);
       border-radius: 8px; padding: 1.5rem; position: relative;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
     .env-number { 
       font-size: 0.7rem; 
@@ -639,10 +704,12 @@
     /* --- Skills --- */
     .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .skill-tag {
-      background: var(--bg-alt); border: 1px solid var(--border);
+      background: rgba(241, 245, 249, 0.9); border: 1px solid var(--border);
       padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem;
       color: var(--text-dark); font-weight: 500; transition: var(--transition);
       letter-spacing: 0.01em;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
     .skill-tag:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
@@ -665,7 +732,7 @@
     .edu-detail { font-size: 0.9rem; color: var(--text-muted); }
     
     .lang-list { display: flex; flex-direction: column; gap: 1rem; }
-    .lang-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem; }
+    .lang-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.75rem; }
     .lang-name { font-weight: 600; color: var(--text-light); letter-spacing: var(--letter-snug); }
     .lang-level { 
       font-size: 0.7rem; 
@@ -691,11 +758,13 @@
     
     .blog-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
     .blog-card {
-      background: var(--bg-main); border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(226, 232, 240, 0.8);
       border-radius: 8px; overflow: hidden; transition: var(--transition);
       display: flex; flex-direction: column;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
-    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--accent); }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: var(--accent); background: rgba(255, 255, 255, 0.95); }
     .blog-card img { width: 100%; height: 220px; object-fit: cover; }
     .blog-card-content { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
     .blog-date { 
@@ -756,8 +825,10 @@
     .contact-detail a:hover { color: var(--accent); }
     
     .reference-box {
-      background: var(--bg-alt); border: 1px solid var(--border);
+      background: rgba(241, 245, 249, 0.9); border: 1px solid var(--border);
       border-radius: 12px; padding: 2rem;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
     .reference-box h3 { 
       font-size: 1.2rem; 
@@ -771,14 +842,7 @@
     .btn-dark:hover { background: var(--primary-light); }
 
     /* --- Footer --- */
-    footer {
-      background: var(--primary-darker); color: var(--text-muted);
-      padding: 2rem 0; font-size: 0.8rem;
-      overflow-x: hidden;
-      position: relative;
-      z-index: 1;
-    }
-    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 2rem 0; }
 
     /* --- Floating WhatsApp --- */
     .whatsapp-float {
@@ -857,6 +921,22 @@
         max-width: 100%;
       }
       
+      /* Mobile-এ Canvas opacity আরও কম */
+      #scroll-canvas {
+        opacity: 0.45;
+      }
+      
+      /* Mobile-এ section opacity বাড়াই (text পড়ার জন্য) */
+      #about, #expertise, #skills, #contact { 
+        background: rgba(255, 255, 255, 0.88); 
+      }
+      #environment, #blog { 
+        background: rgba(241, 245, 249, 0.85); 
+      }
+      #experience, #education { 
+        background: rgba(11, 30, 54, 0.92); 
+      }
+      
       .nav-links {
         display: none; flex-direction: column; position: absolute;
         top: 70px; left: 0; right: 0; background: var(--bg-main);
@@ -920,10 +1000,6 @@
       .stat-card .number { font-size: 1.5rem; }
     }
     
-    /* ========================================
-       Reduced Motion Preference
-       অ্যানিমেশন বন্ধ করার জন্য
-       ======================================== */
     @media (prefers-reduced-motion: reduce) {
       .profile-circle::before,
       .profile-circle::after,
@@ -937,7 +1013,6 @@
 <body>
   <!-- ========================================
        LOADING SCREEN
-       ১০০টি ছবি লোড হওয়ার সময় দেখাবে
        ======================================== -->
   <div id="loading-screen">
     <div class="loading-logo">AI</div>
@@ -951,7 +1026,6 @@
 
   <!-- ========================================
        SCROLL SEQUENCE CANVAS
-       সবার পেছনে fixed position-এ
        ======================================== -->
   <canvas id="scroll-canvas"></canvas>
 
@@ -1069,7 +1143,7 @@
     </section>
 
     <!-- Environment Section -->
-    <section id="environment" style="background: var(--bg-alt);">
+    <section id="environment">
       <div class="container">
         <span class="section-label">Manufacturing Environment</span>
         <h2 class="section-title">Built for controlled, accountable work.</h2>
@@ -1093,7 +1167,7 @@
     </section>
 
     <!-- Blog Section -->
-    <section id="blog" style="background: var(--bg-alt);">
+    <section id="blog">
       <div class="container">
         <div class="blog-header">
           <div>
@@ -1179,7 +1253,6 @@
   <script>
     // ========================================
     // SCROLL SEQUENCE ANIMATION
-    // ১০০টি ছবি scroll অনুযায়ী পরিবর্তন হবে
     // ========================================
     (function() {
       const TOTAL_FRAMES = 100;
@@ -1199,9 +1272,8 @@
       let isLoaded = false;
       let skipped = false;
       
-      // ===== Canvas Size সেট করা =====
       function resizeCanvas() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2); // max 2 DPR (performance)
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
         canvas.style.width = window.innerWidth + 'px';
@@ -1210,7 +1282,6 @@
         renderFrame(currentFrame);
       }
       
-      // ===== ছবি Cover ফিট করে আঁকা =====
       function renderFrame(index) {
         const img = images[index];
         if (!img || !img.complete || img.naturalWidth === 0) return;
@@ -1223,13 +1294,11 @@
         let drawWidth, drawHeight, offsetX, offsetY;
         
         if (canvasRatio > imgRatio) {
-          // Canvas বেশি চওড়া — width cover
           drawWidth = vw;
           drawHeight = vw / imgRatio;
           offsetX = 0;
           offsetY = (vh - drawHeight) / 2;
         } else {
-          // Canvas বেশি লম্বা — height cover
           drawHeight = vh;
           drawWidth = vh * imgRatio;
           offsetX = (vw - drawWidth) / 2;
@@ -1240,9 +1309,7 @@
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
       }
       
-      // ===== ছবি লোড করা =====
       function loadImages() {
-        // সব ছবি একসাথে লোড শুরু করি
         for (let i = 1; i <= TOTAL_FRAMES; i++) {
           const img = new Image();
           const frameNum = String(i).padStart(3, '0');
@@ -1252,12 +1319,10 @@
             loadedCount++;
             updateProgress();
             
-            // প্রথম ছবি লোড হলে দেখাও
             if (i === 1) {
               renderFrame(0);
             }
             
-            // সব লোড হলে loading screen সরান
             if (loadedCount === TOTAL_FRAMES && !skipped) {
               setTimeout(hideLoadingScreen, 400);
             }
@@ -1265,7 +1330,7 @@
           
           img.onerror = () => {
             console.warn(`Frame ${i} failed to load`);
-            loadedCount++; // failed হলেও count বাড়াই
+            loadedCount++;
             updateProgress();
             if (loadedCount === TOTAL_FRAMES && !skipped) {
               setTimeout(hideLoadingScreen, 400);
@@ -1276,23 +1341,19 @@
         }
       }
       
-      // ===== Progress Update =====
       function updateProgress() {
         const percent = Math.round((loadedCount / TOTAL_FRAMES) * 100);
         loadingText.textContent = `Loading ${loadedCount}/${TOTAL_FRAMES} (${percent}%)`;
         loadingBar.style.width = percent + '%';
       }
       
-      // ===== Loading Screen সরানো =====
       function hideLoadingScreen() {
         isLoaded = true;
         loadingScreen.classList.add('hidden');
-        // Scroll handle চালু করি
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
       }
       
-      // ===== Scroll Handler =====
       let ticking = false;
       
       function onScroll() {
@@ -1304,12 +1365,9 @@
           const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           const scrollFraction = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
           
-          // Smooth easing এর জন্য
-          const eased = scrollFraction;
-          
           const frameIndex = Math.min(
             TOTAL_FRAMES - 1,
-            Math.max(0, Math.round(eased * (TOTAL_FRAMES - 1)))
+            Math.max(0, Math.round(scrollFraction * (TOTAL_FRAMES - 1)))
           );
           
           if (frameIndex !== currentFrame) {
@@ -1321,25 +1379,22 @@
         });
       }
       
-      // ===== Skip Button =====
       skipBtn.addEventListener('click', () => {
         skipped = true;
         hideLoadingScreen();
       });
       
-      // ===== Event Listeners =====
       window.addEventListener('resize', resizeCanvas);
       window.addEventListener('orientationchange', () => {
         setTimeout(resizeCanvas, 100);
       });
       
-      // ===== শুরু =====
       resizeCanvas();
       loadImages();
     })();
     
     // ========================================
-    // বাকি সব portfolio logic
+    // বাকি Portfolio Logic
     // ========================================
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('year').textContent = new Date().getFullYear();
