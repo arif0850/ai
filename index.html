@@ -22,11 +22,19 @@
   <link rel="manifest" href="/site.webmanifest">
   <!-- ===== END FAVICON ===== -->
   
-  <!-- ===== INTER FONT (TUNED) ===== -->
+  <!-- ===== INTER FONT ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <!-- ===== END FONT ===== -->
+  
+  <!-- ===== COUNTER.DEV ANALYTICS ===== -->
+  <script 
+    src="https://cdn.counter.dev/script.js" 
+    data-id="b4eb4197-a4a3-45b8-b112-b3c97ae49a1f" 
+    data-utcoffset="6"
+    defer>
+  </script>
+  <!-- ===== END COUNTER.DEV ===== -->
   
   <style>
     /* --- CSS Variables --- */
@@ -54,7 +62,6 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; scroll-padding-top: 80px; }
     
-    /* ✅ FIX: Prevent horizontal overflow */
     html, body {
       overflow-x: hidden;
       width: 100%;
@@ -117,7 +124,6 @@
       line-height: 1.6;
     }
 
-    /* --- Dark Section Override --- */
     .dark-section { background-color: var(--primary-dark); color: var(--text-light); }
     .dark-section .section-title { color: var(--text-light); }
     .dark-section .section-subtitle { color: var(--text-muted); }
@@ -181,7 +187,7 @@
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-    /* --- Hero Section with Background Image --- */
+    /* --- Hero --- */
     #home {
       background: var(--primary-dark);
       color: var(--text-light);
@@ -284,7 +290,7 @@
     .social-icon:hover { background: var(--accent); color: white; transform: translateY(-3px); border-color: var(--accent); }
     .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
-    /* ===== PROFILE CIRCLE WITH ANIMATED ORBIT ===== */
+    /* ===== PROFILE CIRCLE ===== */
     .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
     
     .profile-circle {
@@ -410,7 +416,7 @@
     }
     .quality-badge svg { width: 16px; height: 16px; fill: var(--accent); }
 
-    /* --- About Section --- */
+    /* --- About --- */
     #about { background: var(--bg-main); }
     .about-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
     .about-text p { margin-bottom: 1rem; color: var(--text-dark); font-size: 1rem; line-height: 1.7; }
@@ -437,7 +443,7 @@
     }
     .stat-card .sub { font-size: 0.75rem; color: var(--text-muted); }
 
-    /* --- Experience Section --- */
+    /* --- Experience --- */
     #experience { background: var(--primary-dark); }
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before {
@@ -483,7 +489,7 @@
     .timeline-desc li { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem; }
     .timeline-desc li::before { content: '✓'; color: var(--accent); font-weight: bold; }
 
-    /* --- Expertise & Environment Sections --- */
+    /* --- Expertise & Environment --- */
     #expertise { background: var(--bg-main); }
     .grid-2-col { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
     .expertise-card {
@@ -528,7 +534,7 @@
     }
     .env-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
 
-    /* --- Skills & Languages --- */
+    /* --- Skills --- */
     #skills { background: var(--bg-main); }
     .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .skill-tag {
@@ -569,7 +575,7 @@
       font-weight: 600;
     }
 
-    /* --- Blog Section --- */
+    /* --- Blog --- */
     #blog { background: var(--bg-main); }
     .blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap; }
     .manage-link { 
@@ -623,7 +629,7 @@
     }
     .read-more:hover { gap: 0.75rem; }
 
-    /* --- Contact Section --- */
+    /* --- Contact --- */
     #contact { background: var(--bg-main); }
     .contact-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
     .contact-list { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -673,6 +679,41 @@
       overflow-x: hidden;
     }
     .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+
+    /* ===== VISITOR COUNTER (Live) ===== */
+    .visitor-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding: 0.4rem 0.9rem;
+      background: rgba(13, 148, 136, 0.1);
+      border: 1px solid rgba(13, 148, 136, 0.25);
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .visitor-counter .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: dotPulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .visitor-counter #visitor-count {
+      color: var(--accent);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
 
     /* --- Floating WhatsApp --- */
     .whatsapp-float {
@@ -738,9 +779,7 @@
       .edu-grid { grid-template-columns: 1fr 1fr; }
     }
     
-    /* ===== MOBILE FIX ===== */
     @media (max-width: 767px) {
-      /* ✅ Fix horizontal overflow */
       html, body {
         overflow-x: hidden;
         max-width: 100vw;
@@ -786,7 +825,6 @@
       }
       .hero-visual { flex-direction: column; }
       
-      /* ✅ Timeline mobile fix */
       .timeline { padding-left: 1.5rem; }
       .timeline-item::before { left: -1.5rem; width: 8px; height: 8px; }
       .timeline-card { padding: 1.25rem; }
@@ -796,7 +834,6 @@
       .blog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .footer-content { flex-direction: column; text-align: center; }
       
-      /* ✅ Hero background adjustments for mobile */
       #home::before { opacity: 0.25; }
       #home::after {
         background: linear-gradient(
@@ -807,16 +844,15 @@
         );
       }
       
-      /* ✅ Small screen extra fix */
       .container { padding: 0 1rem; }
       section { padding: 4rem 0; }
       .modal-content { padding: 1.75rem 1.25rem; }
       .reference-box { padding: 1.5rem; }
       .whatsapp-float { width: 50px; height: 50px; bottom: 1.25rem; right: 1.25rem; }
       .whatsapp-float svg { width: 26px; height: 26px; }
+      .visitor-counter { font-size: 0.7rem; padding: 0.35rem 0.75rem; }
     }
     
-    /* ===== EXTRA SMALL SCREENS ===== */
     @media (max-width: 480px) {
       .hero-content h1 { font-size: 1.85rem; }
       .section-title { font-size: 1.5rem; }
@@ -1034,6 +1070,11 @@
   <footer>
     <div class="container footer-content">
       <p>&copy; <span id="year"></span> Md. Ariful Islam. Built around quality, process, and people.</p>
+      <div class="visitor-counter" title="Total visits to this site">
+        <span class="pulse-dot"></span>
+        <span id="visitor-count">...</span>
+        <span>visits</span>
+      </div>
       <a href="#home" style="color: var(--text-muted);">BACK TO TOP ↑</a>
     </div>
   </footer>
@@ -1100,6 +1141,25 @@
         document.getElementById('hero-summary').textContent = "Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure.";
         document.getElementById('stats-grid').innerHTML = `<div class="stat-card"><div class="number">11+ years</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div><div class="stat-card"><div class="number">2014</div><div class="label">Career start</div><div class="sub">Production operations</div></div><div class="stat-card"><div class="number">GMP/cGMP</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div><div class="stat-card"><div class="number">Coating</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>`;
       });
+
+      // ===== Visitor Counter (CountAPI.xyz) =====
+      async function loadVisitorCount() {
+        try {
+          const response = await fetch('https://api.countapi.xyz/hit/hiarif-com/total-visits');
+          const data = await response.json();
+          const countEl = document.getElementById('visitor-count');
+          if (countEl && data.value !== undefined) {
+            countEl.textContent = data.value.toLocaleString('en-US');
+          } else if (countEl) {
+            countEl.textContent = '—';
+          }
+        } catch (err) {
+          console.warn('Visitor counter failed:', err);
+          const countEl = document.getElementById('visitor-count');
+          if (countEl) countEl.textContent = '—';
+        }
+      }
+      loadVisitorCount();
 
       function getXmlText(parent, tag) {
         const el = parent.querySelector(tag);
