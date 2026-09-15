@@ -82,6 +82,7 @@
     
     /* ========================================
        SCROLL SEQUENCE CANVAS
+       সম্পূর্ণ স্পষ্ট (opacity: 1)
        ======================================== */
     #scroll-canvas {
       position: fixed;
@@ -91,7 +92,8 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.85;
+      opacity: 1;
+      filter: brightness(0.85) contrast(1.1);
     }
     
     /* ========================================
@@ -194,8 +196,7 @@
     }
     
     /* ========================================
-       ALL SECTIONS — Solid Navy Background
-       Canvas শুধু Hero-তে দেখা যাবে
+       SECTIONS — Solid Navy (Animation শুধু Hero-তে)
        ======================================== */
     section { 
       padding: 5rem 0;
@@ -206,7 +207,7 @@
       color: var(--text-light);
     }
     
-    /* Hero-তে Canvas দেখা যাবে */
+    /* Hero — Canvas দেখা যাবে */
     #home { 
       background: transparent;
       z-index: 1;
@@ -306,15 +307,16 @@
       overflow: hidden;
     }
     
+    /* হালকা gradient overlay — Canvas স্পষ্ট দেখা যাবে */
     #home::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(
         135deg,
-        rgba(11, 30, 54, 0.75) 0%,
-        rgba(11, 30, 54, 0.5) 50%,
-        rgba(11, 30, 54, 0.8) 100%
+        rgba(11, 30, 54, 0.55) 0%,
+        rgba(11, 30, 54, 0.25) 50%,
+        rgba(11, 30, 54, 0.6) 100%
       );
       z-index: 0;
       pointer-events: none;
@@ -326,6 +328,7 @@
     }
     
     .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+    
     .hero-content h1 { 
       font-size: 3rem; 
       font-weight: 800; 
@@ -333,7 +336,10 @@
       margin-bottom: 1rem;
       letter-spacing: -0.035em;
       color: var(--text-light);
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.95), 
+                   0 4px 40px rgba(0, 0, 0, 0.8);
     }
+    
     .hero-content .title { 
       font-size: 0.95rem; 
       font-weight: 600; 
@@ -341,7 +347,9 @@
       letter-spacing: 0.1em; 
       text-transform: uppercase; 
       margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
     }
+    
     .hero-content .tagline { 
       font-size: 1.2rem; 
       color: var(--text-light); 
@@ -349,25 +357,34 @@
       font-weight: 300;
       line-height: 1.5;
       letter-spacing: var(--letter-normal);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
     }
+    
     .badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(13, 148, 136, 0.15); border: 1px solid rgba(13, 148, 136, 0.3);
-      color: var(--accent); padding: 0.4rem 1rem; border-radius: 50px;
-      font-size: 0.75rem; font-weight: 600; margin-bottom: 1.5rem;
+      background: rgba(13, 148, 136, 0.3); 
+      border: 1px solid rgba(13, 148, 136, 0.6);
+      color: var(--accent-light); 
+      padding: 0.4rem 1rem; 
+      border-radius: 50px;
+      font-size: 0.75rem; 
+      font-weight: 600; 
+      margin-bottom: 1.5rem;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
     .badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+    
     .summary { 
       font-size: 1rem; 
       color: var(--text-light); 
       margin-bottom: 2rem; 
       max-width: 500px;
       line-height: 1.65;
-      opacity: 0.9;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+      opacity: 0.95;
     }
     
     .cta-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
@@ -379,16 +396,32 @@
       letter-spacing: 0.02em;
       transition: var(--transition);
     }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: #0F766E; transform: translateY(-2px); }
-    .btn-outline { 
-      border: 1px solid rgba(255,255,255,0.3); 
-      color: var(--text-light);
-      background: rgba(11, 30, 54, 0.3);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    .btn-primary { 
+      background: var(--accent); 
+      color: white; 
+      box-shadow: 0 4px 20px rgba(13, 148, 136, 0.5); 
     }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .btn-primary:hover { 
+      background: #0F766E; 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 25px rgba(13, 148, 136, 0.7); 
+    }
+    
+    .btn-outline { 
+      border: 1px solid rgba(255,255,255,0.4); 
+      color: var(--text-light);
+      background: rgba(11, 30, 54, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .btn-outline:hover { 
+      border-color: var(--accent); 
+      color: var(--accent); 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(13, 148, 136, 0.4);
+    }
+    
     .btn-dark { background: var(--accent); color: white; border: none; }
     .btn-dark:hover { background: #0F766E; transform: translateY(-2px); }
     
@@ -396,14 +429,21 @@
     .social-icon {
       display: flex; align-items: center; justify-content: center;
       width: 40px; height: 40px; border-radius: 50%; 
-      background: rgba(11, 30, 54, 0.4);
+      background: rgba(11, 30, 54, 0.7);
       color: var(--text-light); 
       transition: var(--transition); 
       border: 1px solid rgba(255,255,255,0.2);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
-    .social-icon:hover { background: var(--accent); color: white; transform: translateY(-3px); border-color: var(--accent); }
+    .social-icon:hover { 
+      background: var(--accent); 
+      color: white; 
+      transform: translateY(-3px); 
+      border-color: var(--accent);
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+    }
     .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
     /* ===== PROFILE CIRCLE ===== */
@@ -425,7 +465,7 @@
       position: absolute;
       inset: -25px;
       border-radius: 50%;
-      border: 2px dashed rgba(13, 148, 136, 0.45);
+      border: 2px dashed rgba(13, 148, 136, 0.6);
       animation: spin 8s linear infinite;
     }
     
@@ -434,7 +474,7 @@
       position: absolute;
       inset: -40px;
       border-radius: 50%;
-      border: 1px solid rgba(13, 148, 136, 0.2);
+      border: 1px solid rgba(13, 148, 136, 0.3);
       animation: spinReverse 15s linear infinite;
     }
     
@@ -520,13 +560,15 @@
     
     .quality-badge {
       position: absolute; bottom: 20px; right: 20px;
-      background: rgba(26, 54, 93, 0.9); border: 1px solid var(--accent);
+      background: rgba(26, 54, 93, 0.9); 
+      border: 1px solid var(--accent);
       padding: 0.5rem 1rem; border-radius: 8px;
       display: flex; align-items: center; gap: 0.5rem;
       font-size: 0.7rem; color: var(--text-light);
       letter-spacing: 0.04em;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
     .quality-badge strong { 
       font-weight: 700; 
@@ -876,7 +918,20 @@
         max-width: 100%;
       }
       
-      #scroll-canvas { opacity: 0.5; }
+      /* Mobile-এ Canvas আরও স্পষ্ট */
+      #scroll-canvas { 
+        opacity: 0.95; 
+        filter: brightness(0.8) contrast(1.15);
+      }
+      
+      #home::after {
+        background: linear-gradient(
+          135deg,
+          rgba(11, 30, 54, 0.65) 0%,
+          rgba(11, 30, 54, 0.4) 50%,
+          rgba(11, 30, 54, 0.7) 100%
+        );
+      }
       
       .nav-links {
         display: none; flex-direction: column; position: absolute;
