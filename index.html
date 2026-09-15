@@ -20,7 +20,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <!-- ===== END FAVICON ===== -->
   
   <!-- ===== INTER FONT ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +33,6 @@
     data-utcoffset="6"
     defer>
   </script>
-  <!-- ===== END COUNTER.DEV ===== -->
   
   <style>
     /* --- CSS Variables --- */
@@ -73,7 +71,7 @@
       font-size: 16px;
       line-height: 1.55;
       color: var(--text-dark);
-      background-color: var(--bg-main);
+      background-color: var(--primary-dark); /* Canvas এর পেছনে dark bg */
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       letter-spacing: var(--letter-normal);
@@ -81,10 +79,112 @@
       font-optical-sizing: auto;
       position: relative;
     }
-    img { max-width: 100%; display: block; height: auto; }
-    a { text-decoration: none; color: inherit; transition: var(--transition); }
-    ul { list-style: none; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    
+    /* ========================================
+       SCROLL SEQUENCE ANIMATION CANVAS
+       Fixed position, সবার পেছনে থাকে
+       ======================================== */
+    #scroll-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      /* Canvas নিজেই ছবি আঁকে, তাই bg নেই */
+    }
+    
+    /* ========================================
+       LOADING SCREEN
+       ছবি লোড হওয়ার সময় দেখাবে
+       ======================================== */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--primary-dark);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-light);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      padding: 2rem;
+    }
+    
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    
+    .loading-logo {
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      color: white;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: var(--letter-tight);
+    }
+    
+    .loading-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: var(--letter-snug);
+    }
+    
+    .loading-progress-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .loading-bar-wrapper {
+      width: 100%;
+      max-width: 320px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    
+    .loading-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    
+    .skip-btn {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: var(--transition);
+    }
+    
+    .skip-btn:hover {
+      background: rgba(13, 148, 136, 0.2);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
     /* --- Layout --- */
     .container { 
@@ -98,6 +198,21 @@
       padding: 5rem 0;
       overflow-x: hidden;
     }
+    
+    /* Hero section-এ background transparent হবে যাতে canvas দেখা যায় */
+    #home {
+      background: transparent !important;
+    }
+    
+    /* বাকি section গুলোর background থাকবে কিন্তু হালকা transparent */
+    #about { background: rgba(255, 255, 255, 0.98); }
+    #experience { background: rgba(11, 30, 54, 0.98); }
+    #expertise { background: rgba(255, 255, 255, 0.98); }
+    #environment { background: rgba(241, 245, 249, 0.98); }
+    #skills { background: rgba(255, 255, 255, 0.98); }
+    #blog { background: rgba(241, 245, 249, 0.98); }
+    #education { background: rgba(11, 30, 54, 0.98); }
+    #contact { background: rgba(255, 255, 255, 0.98); }
     
     .section-label {
       font-size: 0.75rem; 
@@ -189,41 +304,31 @@
 
     /* --- Hero --- */
     #home {
-      background: var(--primary-dark);
       color: var(--text-light);
       padding: 6rem 0;
       position: relative;
       overflow: hidden;
+      /* কোনো ::before, ::after নেই — canvas সব করে */
     }
     
-    #home::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('assets/hero-bg.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.4;
-      z-index: 0;
-    }
-    
+    /* Hero-তে text readable করার জন্য overlay */
     #home::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(
         135deg,
-        rgba(11, 30, 54, 0.65) 0%,
-        rgba(11, 30, 54, 0.45) 50%,
-        rgba(11, 30, 54, 0.7) 100%
+        rgba(11, 30, 54, 0.75) 0%,
+        rgba(11, 30, 54, 0.55) 50%,
+        rgba(11, 30, 54, 0.8) 100%
       );
-      z-index: 1;
+      z-index: 0;
+      pointer-events: none;
     }
     
     #home .container {
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
     
     .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
@@ -233,6 +338,7 @@
       line-height: 1.05; 
       margin-bottom: 1rem;
       letter-spacing: -0.035em;
+      color: var(--text-light);
     }
     .hero-content .title { 
       font-size: 0.95rem; 
@@ -278,14 +384,14 @@
     }
     .btn-primary { background: var(--accent); color: white; }
     .btn-primary:hover { background: #0F766E; transform: translateY(-2px); }
-    .btn-outline { border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.3); color: var(--text-light); }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
     
     .hero-social { display: flex; gap: 1rem; }
     .social-icon {
       display: flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05);
-      color: var(--text-muted); transition: var(--transition); border: 1px solid rgba(255,255,255,0.1);
+      width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.08);
+      color: var(--text-muted); transition: var(--transition); border: 1px solid rgba(255,255,255,0.15);
     }
     .social-icon:hover { background: var(--accent); color: white; transform: translateY(-3px); border-color: var(--accent); }
     .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
@@ -297,7 +403,7 @@
       width: 320px;
       height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(13,148,136,0.2) 0%, rgba(11,30,54,0) 70%);
+      background: radial-gradient(circle, rgba(13,148,136,0.25) 0%, rgba(11,30,54,0) 70%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -417,7 +523,6 @@
     .quality-badge svg { width: 16px; height: 16px; fill: var(--accent); }
 
     /* --- About --- */
-    #about { background: var(--bg-main); }
     .about-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
     .about-text p { margin-bottom: 1rem; color: var(--text-dark); font-size: 1rem; line-height: 1.7; }
     .about-text p:last-child { margin-bottom: 0; }
@@ -444,7 +549,6 @@
     .stat-card .sub { font-size: 0.75rem; color: var(--text-muted); }
 
     /* --- Experience --- */
-    #experience { background: var(--primary-dark); }
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0;
@@ -490,7 +594,6 @@
     .timeline-desc li::before { content: '✓'; color: var(--accent); font-weight: bold; }
 
     /* --- Expertise & Environment --- */
-    #expertise { background: var(--bg-main); }
     .grid-2-col { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
     .expertise-card {
       background: var(--bg-main); border: 1px solid var(--border);
@@ -512,7 +615,6 @@
     }
     .expertise-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
 
-    #environment { background: var(--bg-alt); }
     .env-card {
       background: var(--bg-main); border: 1px solid var(--border);
       border-radius: 8px; padding: 1.5rem; position: relative;
@@ -535,7 +637,6 @@
     .env-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
 
     /* --- Skills --- */
-    #skills { background: var(--bg-main); }
     .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     .skill-tag {
       background: var(--bg-alt); border: 1px solid var(--border);
@@ -545,7 +646,6 @@
     }
     .skill-tag:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-    #education { background: var(--primary-dark); }
     .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
     .edu-item { margin-bottom: 1.5rem; }
     .edu-year { 
@@ -576,7 +676,6 @@
     }
 
     /* --- Blog --- */
-    #blog { background: var(--bg-main); }
     .blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap; }
     .manage-link { 
       font-size: 0.75rem; 
@@ -630,7 +729,6 @@
     .read-more:hover { gap: 0.75rem; }
 
     /* --- Contact --- */
-    #contact { background: var(--bg-main); }
     .contact-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; }
     .contact-list { display: flex; flex-direction: column; gap: 1.5rem; }
     .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
@@ -677,43 +775,10 @@
       background: var(--primary-darker); color: var(--text-muted);
       padding: 2rem 0; font-size: 0.8rem;
       overflow-x: hidden;
+      position: relative;
+      z-index: 1;
     }
     .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-
-    /* ===== VISITOR COUNTER (Live) ===== */
-    .visitor-counter {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      padding: 0.4rem 0.9rem;
-      background: rgba(13, 148, 136, 0.1);
-      border: 1px solid rgba(13, 148, 136, 0.25);
-      border-radius: 50px;
-      letter-spacing: 0.04em;
-      font-weight: 600;
-    }
-
-    .visitor-counter .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: dotPulse 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    .visitor-counter #visitor-count {
-      color: var(--accent);
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-
-    @keyframes dotPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
 
     /* --- Floating WhatsApp --- */
     .whatsapp-float {
@@ -834,23 +899,12 @@
       .blog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
       .footer-content { flex-direction: column; text-align: center; }
       
-      #home::before { opacity: 0.25; }
-      #home::after {
-        background: linear-gradient(
-          135deg,
-          rgba(11, 30, 54, 0.75) 0%,
-          rgba(11, 30, 54, 0.55) 50%,
-          rgba(11, 30, 54, 0.8) 100%
-        );
-      }
-      
       .container { padding: 0 1rem; }
       section { padding: 4rem 0; }
       .modal-content { padding: 1.75rem 1.25rem; }
       .reference-box { padding: 1.5rem; }
       .whatsapp-float { width: 50px; height: 50px; bottom: 1.25rem; right: 1.25rem; }
       .whatsapp-float svg { width: 26px; height: 26px; }
-      .visitor-counter { font-size: 0.7rem; padding: 0.35rem 0.75rem; }
     }
     
     @media (max-width: 480px) {
@@ -865,9 +919,42 @@
       .stat-card { padding: 1.25rem; }
       .stat-card .number { font-size: 1.5rem; }
     }
+    
+    /* ========================================
+       Reduced Motion Preference
+       অ্যানিমেশন বন্ধ করার জন্য
+       ======================================== */
+    @media (prefers-reduced-motion: reduce) {
+      .profile-circle::before,
+      .profile-circle::after,
+      .orbit-container,
+      .whatsapp-float {
+        animation: none !important;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- ========================================
+       LOADING SCREEN
+       ১০০টি ছবি লোড হওয়ার সময় দেখাবে
+       ======================================== -->
+  <div id="loading-screen">
+    <div class="loading-logo">AI</div>
+    <div class="loading-title">Preparing your experience...</div>
+    <div class="loading-progress-text" id="loading-progress-text">Loading 0/100 (0%)</div>
+    <div class="loading-bar-wrapper">
+      <div class="loading-bar" id="loading-bar"></div>
+    </div>
+    <button class="skip-btn" id="skip-btn">Skip Loading</button>
+  </div>
+
+  <!-- ========================================
+       SCROLL SEQUENCE CANVAS
+       সবার পেছনে fixed position-এ
+       ======================================== -->
+  <canvas id="scroll-canvas"></canvas>
+
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <header>
@@ -1070,11 +1157,6 @@
   <footer>
     <div class="container footer-content">
       <p>&copy; <span id="year"></span> Md. Ariful Islam. Built around quality, process, and people.</p>
-      <div class="visitor-counter" title="Total visits to this site">
-        <span class="pulse-dot"></span>
-        <span id="visitor-count">...</span>
-        <span>visits</span>
-      </div>
       <a href="#home" style="color: var(--text-muted);">BACK TO TOP ↑</a>
     </div>
   </footer>
@@ -1095,6 +1177,170 @@
   </div>
 
   <script>
+    // ========================================
+    // SCROLL SEQUENCE ANIMATION
+    // ১০০টি ছবি scroll অনুযায়ী পরিবর্তন হবে
+    // ========================================
+    (function() {
+      const TOTAL_FRAMES = 100;
+      const FRAME_PATH = 'frames/ezgif-frame-';
+      const FRAME_EXT = '.jpg';
+      
+      const canvas = document.getElementById('scroll-canvas');
+      const ctx = canvas.getContext('2d');
+      const loadingScreen = document.getElementById('loading-screen');
+      const loadingBar = document.getElementById('loading-bar');
+      const loadingText = document.getElementById('loading-progress-text');
+      const skipBtn = document.getElementById('skip-btn');
+      
+      const images = [];
+      let loadedCount = 0;
+      let currentFrame = 0;
+      let isLoaded = false;
+      let skipped = false;
+      
+      // ===== Canvas Size সেট করা =====
+      function resizeCanvas() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2); // max 2 DPR (performance)
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        renderFrame(currentFrame);
+      }
+      
+      // ===== ছবি Cover ফিট করে আঁকা =====
+      function renderFrame(index) {
+        const img = images[index];
+        if (!img || !img.complete || img.naturalWidth === 0) return;
+        
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const canvasRatio = vw / vh;
+        const imgRatio = img.naturalWidth / img.naturalHeight;
+        
+        let drawWidth, drawHeight, offsetX, offsetY;
+        
+        if (canvasRatio > imgRatio) {
+          // Canvas বেশি চওড়া — width cover
+          drawWidth = vw;
+          drawHeight = vw / imgRatio;
+          offsetX = 0;
+          offsetY = (vh - drawHeight) / 2;
+        } else {
+          // Canvas বেশি লম্বা — height cover
+          drawHeight = vh;
+          drawWidth = vh * imgRatio;
+          offsetX = (vw - drawWidth) / 2;
+          offsetY = 0;
+        }
+        
+        ctx.clearRect(0, 0, vw, vh);
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+      }
+      
+      // ===== ছবি লোড করা =====
+      function loadImages() {
+        // সব ছবি একসাথে লোড শুরু করি
+        for (let i = 1; i <= TOTAL_FRAMES; i++) {
+          const img = new Image();
+          const frameNum = String(i).padStart(3, '0');
+          img.src = `${FRAME_PATH}${frameNum}${FRAME_EXT}`;
+          
+          img.onload = () => {
+            loadedCount++;
+            updateProgress();
+            
+            // প্রথম ছবি লোড হলে দেখাও
+            if (i === 1) {
+              renderFrame(0);
+            }
+            
+            // সব লোড হলে loading screen সরান
+            if (loadedCount === TOTAL_FRAMES && !skipped) {
+              setTimeout(hideLoadingScreen, 400);
+            }
+          };
+          
+          img.onerror = () => {
+            console.warn(`Frame ${i} failed to load`);
+            loadedCount++; // failed হলেও count বাড়াই
+            updateProgress();
+            if (loadedCount === TOTAL_FRAMES && !skipped) {
+              setTimeout(hideLoadingScreen, 400);
+            }
+          };
+          
+          images.push(img);
+        }
+      }
+      
+      // ===== Progress Update =====
+      function updateProgress() {
+        const percent = Math.round((loadedCount / TOTAL_FRAMES) * 100);
+        loadingText.textContent = `Loading ${loadedCount}/${TOTAL_FRAMES} (${percent}%)`;
+        loadingBar.style.width = percent + '%';
+      }
+      
+      // ===== Loading Screen সরানো =====
+      function hideLoadingScreen() {
+        isLoaded = true;
+        loadingScreen.classList.add('hidden');
+        // Scroll handle চালু করি
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+      
+      // ===== Scroll Handler =====
+      let ticking = false;
+      
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        
+        requestAnimationFrame(() => {
+          const scrollTop = window.scrollY;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollFraction = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
+          
+          // Smooth easing এর জন্য
+          const eased = scrollFraction;
+          
+          const frameIndex = Math.min(
+            TOTAL_FRAMES - 1,
+            Math.max(0, Math.round(eased * (TOTAL_FRAMES - 1)))
+          );
+          
+          if (frameIndex !== currentFrame) {
+            currentFrame = frameIndex;
+            renderFrame(currentFrame);
+          }
+          
+          ticking = false;
+        });
+      }
+      
+      // ===== Skip Button =====
+      skipBtn.addEventListener('click', () => {
+        skipped = true;
+        hideLoadingScreen();
+      });
+      
+      // ===== Event Listeners =====
+      window.addEventListener('resize', resizeCanvas);
+      window.addEventListener('orientationchange', () => {
+        setTimeout(resizeCanvas, 100);
+      });
+      
+      // ===== শুরু =====
+      resizeCanvas();
+      loadImages();
+    })();
+    
+    // ========================================
+    // বাকি সব portfolio logic
+    // ========================================
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1141,25 +1387,6 @@
         document.getElementById('hero-summary').textContent = "Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure.";
         document.getElementById('stats-grid').innerHTML = `<div class="stat-card"><div class="number">11+ years</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div><div class="stat-card"><div class="number">2014</div><div class="label">Career start</div><div class="sub">Production operations</div></div><div class="stat-card"><div class="number">GMP/cGMP</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div><div class="stat-card"><div class="number">Coating</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>`;
       });
-
-      // ===== Visitor Counter (CountAPI.xyz) =====
-      async function loadVisitorCount() {
-        try {
-          const response = await fetch('https://api.countapi.xyz/hit/hiarif-com/total-visits');
-          const data = await response.json();
-          const countEl = document.getElementById('visitor-count');
-          if (countEl && data.value !== undefined) {
-            countEl.textContent = data.value.toLocaleString('en-US');
-          } else if (countEl) {
-            countEl.textContent = '—';
-          }
-        } catch (err) {
-          console.warn('Visitor counter failed:', err);
-          const countEl = document.getElementById('visitor-count');
-          if (countEl) countEl.textContent = '—';
-        }
-      }
-      loadVisitorCount();
 
       function getXmlText(parent, tag) {
         const el = parent.querySelector(tag);
