@@ -54,9 +54,9 @@
       --letter-snug: -0.015em;
       --letter-normal: -0.01em;
       --letter-wide: 0.12em;
-      --text-shadow-strong: 0 2px 20px rgba(0, 0, 0, 0.95), 0 4px 40px rgba(0, 0, 0, 0.8);
-      --text-shadow-medium: 0 2px 15px rgba(0, 0, 0, 0.9), 0 4px 30px rgba(0, 0, 0, 0.7);
-      --text-shadow-light: 0 1px 10px rgba(0, 0, 0, 0.85);
+      --text-shadow-strong: 0 2px 20px rgba(0, 0, 0, 1), 0 4px 40px rgba(0, 0, 0, 0.95), 0 8px 60px rgba(0, 0, 0, 0.8);
+      --text-shadow-medium: 0 2px 15px rgba(0, 0, 0, 1), 0 4px 30px rgba(0, 0, 0, 0.9);
+      --text-shadow-light: 0 1px 10px rgba(0, 0, 0, 0.9);
     }
 
     /* --- Base & Reset --- */
@@ -95,7 +95,7 @@
       z-index: 0;
       pointer-events: none;
       opacity: 1;
-      filter: brightness(0.65) contrast(1.15) saturate(0.95);
+      filter: brightness(0.7) contrast(1.15) saturate(0.95);
       will-change: auto;
       transform: translateZ(0);
     }
@@ -200,8 +200,8 @@
     }
     
     /* ========================================
-       ALL SECTIONS — Transparent + Overlay
-       Section padding কমানো হয়েছে (animation sensitivity বাড়ানোর জন্য)
+       ✅ সব Section-এ হালকা Overlay (Hero-এর মতো)
+       Canvas সব জায়গায় স্পষ্ট দেখা যাবে
        ======================================== */
     section { 
       padding: 3.5rem 0;
@@ -218,14 +218,15 @@
       inset: 0;
       background: linear-gradient(
         180deg,
-        rgba(11, 30, 54, 0.88) 0%,
-        rgba(11, 30, 54, 0.82) 50%,
-        rgba(11, 30, 54, 0.88) 100%
+        rgba(11, 30, 54, 0.6) 0%,
+        rgba(11, 30, 54, 0.4) 50%,
+        rgba(11, 30, 54, 0.65) 100%
       );
       z-index: -1;
       pointer-events: none;
     }
     
+    /* Hero-তে diagonal gradient */
     #home::before {
       background: linear-gradient(
         135deg,
@@ -265,7 +266,7 @@
       max-width: 600px;
       margin-bottom: 2rem;
       line-height: 1.6;
-      opacity: 0.95;
+      opacity: 0.98;
       text-shadow: var(--text-shadow-medium);
     }
 
@@ -377,8 +378,8 @@
     
     .badge {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(13, 148, 136, 0.4); 
-      border: 1px solid rgba(13, 148, 136, 0.7);
+      background: rgba(13, 148, 136, 0.5); 
+      border: 1px solid rgba(13, 148, 136, 0.8);
       color: var(--accent-light); 
       padding: 0.4rem 1rem; 
       border-radius: 50px;
@@ -389,7 +390,7 @@
       text-transform: uppercase;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
     .badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
     
@@ -426,7 +427,7 @@
     .btn-outline { 
       border: 1px solid rgba(255,255,255,0.4); 
       color: var(--text-light);
-      background: rgba(11, 30, 54, 0.7);
+      background: rgba(11, 30, 54, 0.75);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -445,13 +446,13 @@
     .social-icon {
       display: flex; align-items: center; justify-content: center;
       width: 40px; height: 40px; border-radius: 50%; 
-      background: rgba(11, 30, 54, 0.75);
+      background: rgba(11, 30, 54, 0.8);
       color: var(--text-light); 
       transition: var(--transition); 
       border: 1px solid rgba(255,255,255,0.25);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
     .social-icon:hover { 
       background: var(--accent); 
@@ -576,7 +577,7 @@
     
     .quality-badge {
       position: absolute; bottom: 20px; right: 20px;
-      background: rgba(11, 30, 54, 0.9); 
+      background: rgba(11, 30, 54, 0.95); 
       border: 1px solid var(--accent);
       padding: 0.5rem 1rem; border-radius: 8px;
       display: flex; align-items: center; gap: 0.5rem;
@@ -584,7 +585,7 @@
       letter-spacing: 0.04em;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     }
     .quality-badge strong { 
       font-weight: 700; 
@@ -593,20 +594,19 @@
     .quality-badge svg { width: 16px; height: 16px; fill: var(--accent); }
 
     /* ========================================
-       CARD STYLES (Glass Effect)
+       ✅ Card Styles — আরও Solid (Text পড়ার জন্য)
        ======================================== */
     .stat-card,
     .timeline-card,
     .expertise-card,
     .env-card,
-    .skill-tag,
     .blog-card,
     .reference-box {
-      background: rgba(11, 30, 54, 0.85); 
+      background: rgba(11, 30, 54, 0.92); 
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
       transition: var(--transition);
     }
     
@@ -615,9 +615,17 @@
     .expertise-card:hover,
     .env-card:hover,
     .blog-card:hover {
-      background: rgba(11, 30, 54, 0.95);
-      border-color: rgba(13, 148, 136, 0.5);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      background: rgba(11, 30, 54, 0.98);
+      border-color: rgba(13, 148, 136, 0.6);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    }
+    
+    .skill-tag {
+      background: rgba(11, 30, 54, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
     
     /* --- About --- */
@@ -659,7 +667,7 @@
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-      width: 1px; background: rgba(255,255,255,0.25);
+      width: 1px; background: rgba(255,255,255,0.3);
     }
     .timeline-item { position: relative; margin-bottom: 2rem; }
     .timeline-item::before {
@@ -679,7 +687,7 @@
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
     }
     .timeline-facility { 
       font-size: 0.7rem; 
@@ -707,7 +715,7 @@
       border-radius: 8px; padding: 1.25rem; display: flex; gap: 1rem;
     }
     .expertise-icon {
-      width: 44px; height: 44px; background: rgba(13, 148, 136, 0.3); border-radius: 8px;
+      width: 44px; height: 44px; background: rgba(13, 148, 136, 0.35); border-radius: 8px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .expertise-icon svg { width: 22px; height: 22px; fill: var(--accent); }
@@ -718,7 +726,7 @@
       margin-bottom: 0.25rem;
       letter-spacing: var(--letter-snug);
     }
-    .expertise-content p { font-size: 0.85rem; color: var(--text-light); opacity: 0.9; line-height: 1.55; }
+    .expertise-content p { font-size: 0.85rem; color: var(--text-light); opacity: 0.92; line-height: 1.55; }
 
     .env-card {
       border-radius: 8px; padding: 1.25rem; position: relative;
@@ -730,7 +738,7 @@
       margin-bottom: 0.5rem; 
       display: block;
       letter-spacing: 0.06em;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
     }
     .env-card h3 { 
       font-size: 1rem; 
@@ -739,7 +747,7 @@
       margin-bottom: 0.5rem;
       letter-spacing: var(--letter-snug);
     }
-    .env-card p { font-size: 0.85rem; color: var(--text-light); opacity: 0.9; line-height: 1.55; }
+    .env-card p { font-size: 0.85rem; color: var(--text-light); opacity: 0.92; line-height: 1.55; }
 
     /* --- Skills --- */
     .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
@@ -759,7 +767,7 @@
       margin-bottom: 0.25rem;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
     }
     .edu-inst { 
       font-size: 1.05rem; 
@@ -768,7 +776,7 @@
       letter-spacing: var(--letter-snug);
       text-shadow: var(--text-shadow-light);
     }
-    .edu-detail { font-size: 0.9rem; color: var(--text-light); opacity: 0.9; }
+    .edu-detail { font-size: 0.9rem; color: var(--text-light); opacity: 0.92; text-shadow: var(--text-shadow-light); }
     
     .lang-list { display: flex; flex-direction: column; gap: 0.75rem; }
     .lang-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.6rem; }
@@ -784,7 +792,7 @@
       text-transform: uppercase; 
       letter-spacing: 0.08em;
       font-weight: 600;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
     }
 
     /* --- Blog --- */
@@ -798,7 +806,7 @@
       display: flex; 
       align-items: center; 
       gap: 0.25rem;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
     }
     .manage-link:hover { text-decoration: underline; }
     
@@ -825,7 +833,7 @@
       line-height: 1.35;
       letter-spacing: var(--letter-snug);
     }
-    .blog-card p { font-size: 0.9rem; color: var(--text-light); opacity: 0.9; flex: 1; margin-bottom: 1rem; line-height: 1.55; }
+    .blog-card p { font-size: 0.9rem; color: var(--text-light); opacity: 0.92; flex: 1; margin-bottom: 1rem; line-height: 1.55; }
     .read-more { 
       font-size: 0.75rem; 
       font-weight: 700; 
@@ -845,13 +853,13 @@
     .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
     .contact-icon {
       width: 40px; height: 40px; 
-      background: rgba(11, 30, 54, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(11, 30, 54, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
     .contact-icon svg { width: 20px; height: 20px; fill: var(--accent); }
     .contact-detail span:first-child { 
@@ -869,7 +877,7 @@
       color: var(--text-light);
       letter-spacing: var(--letter-snug);
       word-break: break-word;
-      text-shadow: var(--text-shadow-light);
+      text-shadow: var(--text-shadow-medium);
     }
     .contact-detail a:hover { color: var(--accent); }
     
@@ -883,7 +891,7 @@
       margin-bottom: 0.5rem;
       letter-spacing: var(--letter-snug);
     }
-    .reference-box p { font-size: 0.9rem; color: var(--text-light); opacity: 0.9; margin-bottom: 1.25rem; line-height: 1.6; }
+    .reference-box p { font-size: 0.9rem; color: var(--text-light); opacity: 0.92; margin-bottom: 1.25rem; line-height: 1.6; }
 
     /* --- Footer --- */
     footer {
@@ -955,7 +963,7 @@
       letter-spacing: 0.08em;
       font-weight: 600;
     }
-    .modal-content p { margin-bottom: 1rem; color: var(--text-light); opacity: 0.9; line-height: 1.7; }
+    .modal-content p { margin-bottom: 1rem; color: var(--text-light); opacity: 0.92; line-height: 1.7; }
 
     /* --- Responsive --- */
     @media (min-width: 768px) {
@@ -980,21 +988,21 @@
         max-width: 100%;
       }
       
-      /* ✅ Mobile section padding আরও কম */
       section { padding: 2.5rem 0; }
       #home { padding: 3rem 0; }
       
       #scroll-canvas { 
         opacity: 1;
-        filter: brightness(0.6) contrast(1.1) saturate(0.95);
+        filter: brightness(0.65) contrast(1.1) saturate(0.95);
       }
       
+      /* Mobile-এ একটু বেশি overlay */
       section::before {
         background: linear-gradient(
           180deg,
-          rgba(11, 30, 54, 0.92) 0%,
-          rgba(11, 30, 54, 0.88) 50%,
-          rgba(11, 30, 54, 0.92) 100%
+          rgba(11, 30, 54, 0.7) 0%,
+          rgba(11, 30, 54, 0.55) 50%,
+          rgba(11, 30, 54, 0.72) 100%
         );
       }
       
@@ -1334,11 +1342,9 @@
       const FRAME_EXT = '.jpg';
       
       // ✅ Sensitivity — কত দ্রুত animation হবে
-      // 1.0 = Normal | 1.5 = 50% বেশি | 2.0 = 2x | 2.5 = 2.5x
       const SENSITIVITY = 2.0;
       
       // ✅ Smoothness — কত smooth transition হবে
-      // 0.15 = ধীর | 0.25 = মাঝারি | 0.35 = দ্রুত
       const SMOOTHNESS = 0.28;
       
       const canvas = document.getElementById('scroll-canvas');
@@ -1453,7 +1459,6 @@
         startAnimationLoop();
       }
       
-      // ✅ Smooth Animation Loop
       function startAnimationLoop() {
         if (animating) return;
         animating = true;
@@ -1475,12 +1480,10 @@
         requestAnimationFrame(loop);
       }
       
-      // ✅ High Sensitivity Scroll Handler
       function onScroll() {
         const scrollTop = window.scrollY || window.pageYOffset;
         const scrollFraction = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
         
-        // Sensitivity multiplier দিয়ে amplify
         targetFrame = scrollFraction * (TOTAL_FRAMES - 1) * SENSITIVITY;
         targetFrame = Math.min(TOTAL_FRAMES - 1, targetFrame);
       }
