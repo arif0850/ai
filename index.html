@@ -906,6 +906,16 @@
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
     .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .visitor-counter {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.3rem 0.75rem; border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(13, 148, 136, 0.12);
+      color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .visitor-counter svg { width: 14px; height: 14px; stroke: var(--accent); flex-shrink: 0; }
+    .visitor-counter strong { color: var(--text-light); font-weight: 600; }
 
     /* --- Floating WhatsApp --- */
     .whatsapp-float {
@@ -1313,6 +1323,10 @@
   <footer>
     <div class="container footer-content">
       <p>&copy; <span id="year"></span> Md. Ariful Islam. Built around quality, process, and people.</p>
+      <span class="visitor-counter" aria-live="polite">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span><strong id="visitor-count">—</strong> VISITORS</span>
+      </span>
       <a href="#home" style="color: var(--text-muted);">BACK TO TOP ↑</a>
     </div>
   </footer>
@@ -1738,6 +1752,27 @@
       modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
     });
+  </script>
+  <!-- ===== VISITOR COUNTER ===== -->
+  <script>
+    (function () {
+      var el = document.getElementById('visitor-count');
+      if (!el) return;
+      var base = 'https://abacus.jasoncameron.dev';
+      var ns = 'hiarif-com', key = 'visits';
+      // Count each visitor once per browser session so refreshes don't inflate the number
+      var counted = false;
+      try { counted = sessionStorage.getItem('hiarif_visit_counted') === '1'; } catch (e) {}
+      var url = base + (counted ? '/get/' : '/hit/') + ns + '/' + key;
+      fetch(url)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (typeof d.value !== 'number') throw new Error('no value');
+          el.textContent = d.value.toLocaleString('en-US');
+          if (!counted) { try { sessionStorage.setItem('hiarif_visit_counted', '1'); } catch (e) {} }
+        })
+        .catch(function () { el.closest('.visitor-counter').style.display = 'none'; });
+    })();
   </script>
 </body>
 </html>
