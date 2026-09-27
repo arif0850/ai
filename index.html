@@ -615,14 +615,6 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
     }
     
-    .skill-tag {
-      background: rgba(11, 30, 54, 0.9);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    }
-    
     /* --- About --- */
     .about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
     .about-text p { 
@@ -745,13 +737,52 @@
     .env-card p { font-size: 0.85rem; color: var(--text-light); opacity: 0.92; line-height: 1.55; }
 
     /* --- Skills --- */
-    .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-    .skill-tag {
-      padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem;
-      color: var(--text-light); font-weight: 500;
-      letter-spacing: 0.01em;
+    .skills-category {
+      margin-bottom: 2.5rem;
     }
-    .skill-tag:hover { background: var(--accent); color: white; border-color: var(--accent); }
+    
+    .skills-category:last-child {
+      margin-bottom: 0;
+    }
+    
+    .skills-category-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+    }
+    
+    .skills-container { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 0.75rem; 
+    }
+    
+    .skill-tag {
+      padding: 0.5rem 1rem; 
+      border-radius: 50px; 
+      font-size: 0.85rem;
+      color: var(--text-light); 
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      background: rgba(11, 30, 54, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: var(--transition);
+    }
+    
+    .skill-tag:hover { 
+      background: var(--accent); 
+      color: white; 
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+    }
 
     .edu-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
     .edu-item { margin-bottom: 1rem; }
@@ -1150,9 +1181,9 @@
         <div class="hero-content">
           <span class="badge" id="hero-badge">11+ years across production operations</span>
           <h1 id="hero-name">Md. Ariful Islam</h1>
-          <p class="title" id="hero-title">Coating Technician</p>
+          <p class="title" id="hero-title">Coating Technician | Advance Operator</p>
           <p class="tagline" id="hero-tagline">Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.</p>
-          <p class="summary" id="hero-summary">Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure. Focused on coating machine operation, strict GMP discipline, and efficient, high-quality solid dosage production.</p>
+          <p class="summary" id="hero-summary">Pharmaceutical manufacturing professional with 11+ years of hands-on experience in production and tablet coating operations at Renata PLC, Rajendrapur Potent Product Facility. Started as an industrial apprentice in 2014, progressing to Junior Officer through consistent growth. Core expertise includes sugar & film coating, machine operation (IMA, Glatt, Solace), batch execution, and equipment qualification support (OQ, PQ). Disciplined, cost-conscious, and highly accountable, with a strong focus on cGMP, FDA guidelines, and workplace safety.</p>
           <div class="cta-group">
             <a href="#experience" class="btn btn-primary">View Experience ↗</a>
             <a href="https://www.linkedin.com/in/ariful-islam" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn Profile ↗</a>
@@ -1245,9 +1276,60 @@
     <section id="skills">
       <div class="container">
         <span class="section-label">Skills</span>
-        <h2 class="section-title">A compact set of personal skills that support dependable production teams.</h2>
-        <div class="skills-container" id="skills-container">
-          <!-- Populated by JS -->
+        <h2 class="section-title">A compact set of production skills that keep a shift dependable.</h2>
+        
+        <div class="skills-category">
+          <h3 class="skills-category-title">Coating & Production</h3>
+          <div class="skills-container">
+            <span class="skill-tag">Sugar coating</span>
+            <span class="skill-tag">Film coating</span>
+            <span class="skill-tag">Tablet compression</span>
+            <span class="skill-tag">Machine operation</span>
+            <span class="skill-tag">Advanced process control</span>
+            <span class="skill-tag">SCADA & HMI interfaces</span>
+            <span class="skill-tag">Heavy equipment</span>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="skills-category-title">Quality, GMP & Safety</h3>
+          <div class="skills-container">
+            <span class="skill-tag">Good Manufacturing Practice (GMP)</span>
+            <span class="skill-tag">Standard Operating Procedure (SOP)</span>
+            <span class="skill-tag">Workplace safety</span>
+            <span class="skill-tag">Cleanroom & gowning protocols</span>
+            <span class="skill-tag">Lockout/Tagout (LOTO)</span>
+            <span class="skill-tag">FEFO</span>
+            <span class="skill-tag">Personal Protective Equipment (PPE)</span>
+            <span class="skill-tag">Environment, Health, and Safety (EHS)</span>
+            <span class="skill-tag">Personal hygiene</span>
+            <span class="skill-tag">5S</span>
+            <span class="skill-tag">Housekeeping</span>
+            <span class="skill-tag">Firefighting</span>
+            <span class="skill-tag">First aid</span>
+            <span class="skill-tag">Rescue</span>
+            <span class="skill-tag">Emergency first response</span>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="skills-category-title">People & Operations</h3>
+          <div class="skills-container">
+            <span class="skill-tag">Leadership</span>
+            <span class="skill-tag">Operator training</span>
+            <span class="skill-tag">Teamwork</span>
+            <span class="skill-tag">Communication</span>
+            <span class="skill-tag">Time management</span>
+            <span class="skill-tag">Self assessment</span>
+          </div>
+        </div>
+
+        <div class="skills-category">
+          <h3 class="skills-category-title">Also Exploring</h3>
+          <div class="skills-container">
+            <span class="skill-tag">Artificial Intelligence (AI)</span>
+            <span class="skill-tag">Web development</span>
+          </div>
         </div>
       </div>
     </section>
@@ -1458,7 +1540,7 @@
     })();
     
     // ========================================
-    // Portfolio Data & Logic (Hardcoded for Reliability)
+    // Portfolio Data & Logic
     // ========================================
     const portfolioData = {
       personal: {
@@ -1567,13 +1649,6 @@
           description: "Cost-conscious approach to production, process troubleshooting, and training new operators on machine operation and GMP."
         }
       ],
-      skills: [
-        "Workplace Safety", "SCADA & HMI Interfaces", "Cleanroom & Gowning Protocols",
-        "Lockout/Tagout (LOTO)", "FEFO (First Expired, First Out)", "Film Coating",
-        "Sugar Coating", "Standard Operating Procedure (SOP)", "Advanced Process Control",
-        "Good Manufacturing Practice (GMP)", "5S & Good Housekeeping", "Personal Protective Equipment (PPE)",
-        "Machine Operation & Troubleshooting", "Operator Training & Leadership", "Environment, Health, and Safety (EHS)"
-      ],
       languages: [
         { name: "Bengali", level: "Native or Bilingual" },
         { name: "English", level: "Professional Working" },
@@ -1629,7 +1704,7 @@
       }, observerOptions);
       sections.forEach(section => observer.observe(section));
 
-      // Initialize Portfolio with hardcoded data (No XML fetch needed = No CORS errors)
+      // Initialize Portfolio with hardcoded data
       populatePortfolio(portfolioData);
 
       // Try to fetch blogs, but don't break if it fails
@@ -1707,11 +1782,6 @@
             <h3>${item.title}</h3>
             <p>${item.description}</p>
           </div>
-        `).join('');
-
-        const skillsContainer = document.getElementById('skills-container');
-        skillsContainer.innerHTML = data.skills.map(skill => `
-          <span class="skill-tag">${skill}</span>
         `).join('');
 
         const langGrid = document.getElementById('lang-grid');
