@@ -199,10 +199,6 @@
       overflow-x: hidden;
     }
     
-    /* ========================================
-       ✅ সব Section-এ হালকা Overlay (Hero-এর মতো)
-       Canvas সব জায়গায় স্পষ্ট দেখা যাবে
-       ======================================== */
     section { 
       padding: 3.5rem 0;
       overflow-x: hidden;
@@ -226,7 +222,6 @@
       pointer-events: none;
     }
     
-    /* Hero-তে diagonal gradient */
     #home::before {
       background: linear-gradient(
         135deg,
@@ -594,7 +589,7 @@
     .quality-badge svg { width: 16px; height: 16px; fill: var(--accent); }
 
     /* ========================================
-       ✅ Card Styles — আরও Solid (Text পড়ার জন্য)
+       Card Styles
        ======================================== */
     .stat-card,
     .timeline-card,
@@ -758,7 +753,7 @@
     }
     .skill-tag:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
-    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .edu-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
     .edu-item { margin-bottom: 1rem; }
     .edu-year { 
       font-size: 0.75rem; 
@@ -1006,7 +1001,6 @@
         filter: brightness(0.65) contrast(1.1) saturate(0.95);
       }
       
-      /* Mobile-এ একটু বেশি overlay */
       section::before {
         background: linear-gradient(
           180deg,
@@ -1161,7 +1155,7 @@
           <p class="summary" id="hero-summary">Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure. Focused on coating machine operation, strict GMP discipline, and efficient, high-quality solid dosage production.</p>
           <div class="cta-group">
             <a href="#experience" class="btn btn-primary">View Experience ↗</a>
-            <a href="https://www.linkedin.com/in/md-ariful-islam-226816407" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn Profile ↗</a>
+            <a href="https://www.linkedin.com/in/ariful-islam" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn Profile ↗</a>
           </div>
           <div class="hero-social" id="hero-social"></div>
         </div>
@@ -1313,7 +1307,7 @@
           <div class="reference-box">
             <h3>References available on request.</h3>
             <p>Reference details are intentionally kept private. Professional references can be shared directly when a role or project requires them.</p>
-            <a href="mailto:arispramanik@gmail.com" class="btn btn-dark">Email Ariful ↗</a>
+            <a href="mailto:arifspramanik@gmail.com" class="btn btn-dark">Email Ariful ↗</a>
           </div>
         </div>
       </div>
@@ -1348,24 +1342,17 @@
 
   <script>
     // ========================================
-    // SCROLL SEQUENCE ANIMATION — HIGH SENSITIVITY + SMOOTH
+    // SCROLL SEQUENCE ANIMATION
     // ========================================
     (function() {
       const TOTAL_FRAMES = 100;
       const FRAME_PATH = 'frames/ezgif-frame-';
       const FRAME_EXT = '.jpg';
-      
-      // ✅ Sensitivity — কত দ্রুত animation হবে
       const SENSITIVITY = 2.0;
-      
-      // ✅ Smoothness — কত smooth transition হবে
       const SMOOTHNESS = 0.28;
       
       const canvas = document.getElementById('scroll-canvas');
-      const ctx = canvas.getContext('2d', { 
-        alpha: false, 
-        desynchronized: true
-      });
+      const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
       const loadingScreen = document.getElementById('loading-screen');
       const loadingBar = document.getElementById('loading-bar');
       const loadingText = document.getElementById('loading-progress-text');
@@ -1389,40 +1376,25 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
-        
         maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        
-        if (currentFrame >= 0) {
-          renderFrame(Math.round(displayFrame));
-        }
+        if (currentFrame >= 0) renderFrame(Math.round(displayFrame));
       }
       
       function renderFrame(index) {
         index = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(index)));
         if (index === currentFrame) return;
-        
         const img = images[index];
         if (!img || !img.complete || img.naturalWidth === 0) return;
         
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-        const canvasRatio = vw / vh;
-        const imgRatio = img.naturalWidth / img.naturalHeight;
-        
+        const vw = window.innerWidth, vh = window.innerHeight;
+        const canvasRatio = vw / vh, imgRatio = img.naturalWidth / img.naturalHeight;
         let drawWidth, drawHeight, offsetX, offsetY;
         
         if (canvasRatio > imgRatio) {
-          drawWidth = vw;
-          drawHeight = vw / imgRatio;
-          offsetX = 0;
-          offsetY = (vh - drawHeight) / 2;
+          drawWidth = vw; drawHeight = vw / imgRatio; offsetX = 0; offsetY = (vh - drawHeight) / 2;
         } else {
-          drawHeight = vh;
-          drawWidth = vh * imgRatio;
-          offsetX = (vw - drawWidth) / 2;
-          offsetY = 0;
+          drawHeight = vh; drawWidth = vh * imgRatio; offsetX = (vw - drawWidth) / 2; offsetY = 0;
         }
-        
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
         currentFrame = index;
       }
@@ -1430,40 +1402,21 @@
       function loadImages() {
         for (let i = 1; i <= TOTAL_FRAMES; i++) {
           const img = new Image();
-          const frameNum = String(i).padStart(3, '0');
-          img.src = `${FRAME_PATH}${frameNum}${FRAME_EXT}`;
+          img.src = `${FRAME_PATH}${String(i).padStart(3, '0')}${FRAME_EXT}`;
           img.decoding = 'async';
-          
           img.onload = () => {
             loadedCount++;
-            updateProgress();
-            
-            if (i === 1) {
-              renderFrame(0);
-            }
-            
-            if (loadedCount === TOTAL_FRAMES && !skipped) {
-              setTimeout(hideLoadingScreen, 400);
-            }
+            loadingText.textContent = `Loading ${loadedCount}/${TOTAL_FRAMES} (${Math.round((loadedCount / TOTAL_FRAMES) * 100)}%)`;
+            loadingBar.style.width = (loadedCount / TOTAL_FRAMES * 100) + '%';
+            if (i === 1) renderFrame(0);
+            if (loadedCount === TOTAL_FRAMES && !skipped) setTimeout(hideLoadingScreen, 400);
           };
-          
           img.onerror = () => {
-            console.warn(`Frame ${i} failed to load`);
             loadedCount++;
-            updateProgress();
-            if (loadedCount === TOTAL_FRAMES && !skipped) {
-              setTimeout(hideLoadingScreen, 400);
-            }
+            if (loadedCount === TOTAL_FRAMES && !skipped) setTimeout(hideLoadingScreen, 400);
           };
-          
           images.push(img);
         }
-      }
-      
-      function updateProgress() {
-        const percent = Math.round((loadedCount / TOTAL_FRAMES) * 100);
-        loadingText.textContent = `Loading ${loadedCount}/${TOTAL_FRAMES} (${percent}%)`;
-        loadingBar.style.width = percent + '%';
       }
       
       function hideLoadingScreen() {
@@ -1476,10 +1429,8 @@
       function startAnimationLoop() {
         if (animating) return;
         animating = true;
-        
         function loop() {
           const diff = targetFrame - displayFrame;
-          
           if (Math.abs(diff) > 0.05) {
             displayFrame += diff * SMOOTHNESS;
             renderFrame(displayFrame);
@@ -1487,45 +1438,164 @@
             displayFrame = targetFrame;
             renderFrame(displayFrame);
           }
-          
           requestAnimationFrame(loop);
         }
-        
         requestAnimationFrame(loop);
       }
       
       function onScroll() {
         const scrollTop = window.scrollY || window.pageYOffset;
         const scrollFraction = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
-        
-        targetFrame = scrollFraction * (TOTAL_FRAMES - 1) * SENSITIVITY;
-        targetFrame = Math.min(TOTAL_FRAMES - 1, targetFrame);
+        targetFrame = Math.min(TOTAL_FRAMES - 1, scrollFraction * (TOTAL_FRAMES - 1) * SENSITIVITY);
       }
       
-      skipBtn.addEventListener('click', () => {
-        skipped = true;
-        hideLoadingScreen();
-      });
-      
-      window.addEventListener('resize', () => {
-        maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        resizeCanvas();
-      });
-      
-      window.addEventListener('orientationchange', () => {
-        setTimeout(() => {
-          maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-          resizeCanvas();
-        }, 150);
-      });
+      skipBtn.addEventListener('click', () => { skipped = true; hideLoadingScreen(); });
+      window.addEventListener('resize', () => { maxScroll = document.documentElement.scrollHeight - window.innerHeight; resizeCanvas(); });
+      window.addEventListener('orientationchange', () => { setTimeout(() => { maxScroll = document.documentElement.scrollHeight - window.innerHeight; resizeCanvas(); }, 150); });
       
       resizeCanvas();
       loadImages();
     })();
     
     // ========================================
-    // Portfolio Logic
+    // Portfolio Data & Logic (Hardcoded for Reliability)
     // ========================================
+    const portfolioData = {
+      personal: {
+        name: "Md. Ariful Islam",
+        title: "Coating Technician | Advance Operator",
+        tagline: "Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.",
+        summary: "Pharmaceutical manufacturing professional with 11+ years of hands-on experience in production and tablet coating operations at Renata PLC, Rajendrapur Potent Product Facility. Started as an industrial apprentice in 2014, progressing to Junior Officer through consistent growth. Core expertise includes sugar & film coating, machine operation (IMA, Glatt, Solace), batch execution, and equipment qualification support (OQ, PQ). Disciplined, cost-conscious, and highly accountable, with a strong focus on cGMP, FDA guidelines, and workplace safety.",
+        location: "Noyapara, Bhawal Mirzapur, Rajendrapur, Gazipur-1700, Bangladesh",
+        phone: "+8801845873227",
+        email: "arifspramanik@gmail.com",
+        website: "https://hiarif.com"
+      },
+      social: {
+        whatsapp: "https://wa.me/8801845873227",
+        linkedin: "https://www.linkedin.com/in/ariful-islam",
+        email: "arifspramanik@gmail.com"
+      },
+      stats: {
+        experience: "11+ Years",
+        start: "2014",
+        certification: "cGMP / FDA / GMP",
+        specialization: "Tablet Coating & OSD"
+      },
+      experience: [
+        {
+          period: "July 2019 - Present",
+          facility: "Rajendrapur Potent Product Facility, Gazipur",
+          title: "Junior Officer (Coating Technician)",
+          company: "Renata PLC",
+          companyUrl: "https://www.renata-ltd.com/",
+          responsibilities: [
+            "Operational Leadership: Direct and participate in mechanical construction, installation, maintenance, inspection, and repairs.",
+            "Team Supervision: Lead team by creating work schedules, delegating assignments, and managing overtime.",
+            "Safety & Compliance: Enforce safety policies, identify and correct unsafe conditions, recommend improvements.",
+            "Quality Assurance: Inspect ongoing and completed work to guarantee adherence to quality and operational standards.",
+            "Production Preparation: Study specifications, schedule tasks, weigh components, and prepare materials.",
+            "Cleaning & Maintenance: Perform COP (cleaning out-of-place) and CIP (cleaning in-place) procedures regularly.",
+            "Equipment Monitoring: Monitor equipment during operation and adjust settings to meet production demands.",
+            "Troubleshooting & Repair: Perform basic operational repairs and quick troubleshooting to minimize downtime.",
+            "Documentation: Log all production processes, reports, and data accurately in required databases."
+          ]
+        },
+        {
+          period: "July 2017 - June 2019",
+          facility: "Gazipur Sadar Upazila",
+          title: "Contractual (Coating Operator)",
+          company: "Renata PLC",
+          companyUrl: "https://www.renata-ltd.com/",
+          responsibilities: [
+            "Production Preparation: Study specifications, schedule tasks, weigh components, and prepare materials.",
+            "Cleaning & Maintenance: Perform COP and CIP procedures regularly.",
+            "Equipment Monitoring: Monitor equipment during operation and adjust settings to meet production demands.",
+            "Compliance & Safety: Adhere strictly to GMP, standard operating procedures (SOP), and safety regulations.",
+            "Troubleshooting & Repair: Perform basic operational repairs and quick troubleshooting to minimize downtime.",
+            "Documentation: Log all production processes, reports, and data accurately in required databases."
+          ]
+        },
+        {
+          period: "April 2014 - June 2017",
+          facility: "Gazipur",
+          title: "Entry-Level Production & Operations Trainee",
+          company: "Renata PLC",
+          companyUrl: "https://www.renata-ltd.com/",
+          responsibilities: [
+            "Supported Daily Operations: Observed and supported daily pharmaceutical production workflows under senior guidance.",
+            "GMP & Cleanroom Compliance: Adhered strictly to GMP standards, personal hygiene, and cleanroom gowning procedures.",
+            "Equipment & Process Learning: Gained foundational knowledge of production machinery operations, line clearance, and routine setup.",
+            "In-Process Quality Checks: Assisted senior personnel with basic in-process quality parameters and visual inspections.",
+            "Documentation Practice: Learned proper batch record documentation standards and logbook maintenance."
+          ]
+        }
+      ],
+      expertise: [
+        {
+          title: "Sugar & Film Coating",
+          description: "One of my strongest practical skills, built through years of direct operational involvement in solid dosage production activities."
+        },
+        {
+          title: "Machine Operation & Troubleshooting",
+          description: "Hands-on operation and parameter optimization on IMA, Glatt, and Solace coating equipment to minimize downtime."
+        },
+        {
+          title: "Process Control & Documentation",
+          description: "Batch execution, process monitoring, parameter control, and accurate logging of all production data in required databases."
+        },
+        {
+          title: "Equipment Qualification Support",
+          description: "Assisting in equipment installation, qualification (OQ, PQ), calibration, and requalification processes."
+        }
+      ],
+      environment: [
+        {
+          title: "Potent Product Handling",
+          description: "Working within a potent-product environment requiring strict gowning, PPE, and contamination control protocols."
+        },
+        {
+          title: "GMP & Cleanroom Protocols",
+          description: "Consistent adherence to Good Manufacturing Practices, standard operating procedures (SOPs), and personal hygiene standards."
+        },
+        {
+          title: "Safety & EHS Focus",
+          description: "Active participation in workplace safety, Lockout/Tagout (LOTO), emergency first response, and firefighting protocols."
+        },
+        {
+          title: "Continuous Improvement",
+          description: "Cost-conscious approach to production, process troubleshooting, and training new operators on machine operation and GMP."
+        }
+      ],
+      skills: [
+        "Workplace Safety", "SCADA & HMI Interfaces", "Cleanroom & Gowning Protocols",
+        "Lockout/Tagout (LOTO)", "FEFO (First Expired, First Out)", "Film Coating",
+        "Sugar Coating", "Standard Operating Procedure (SOP)", "Advanced Process Control",
+        "Good Manufacturing Practice (GMP)", "5S & Good Housekeeping", "Personal Protective Equipment (PPE)",
+        "Machine Operation & Troubleshooting", "Operator Training & Leadership", "Environment, Health, and Safety (EHS)"
+      ],
+      languages: [
+        { name: "Bengali", level: "Native or Bilingual" },
+        { name: "English", level: "Professional Working" },
+        { name: "Hindi", level: "Limited Working" },
+        { name: "German", level: "Elementary" }
+      ],
+      education: [
+        {
+          year: "June 2012 - May 2014",
+          institution: "Rajshahi Govt. City College, Rajshahi",
+          group: "Business/Commerce, General",
+          gpa: "N/A"
+        },
+        {
+          year: "January 2007 - February 2012",
+          institution: "Goal Manda High School",
+          group: "Science",
+          gpa: "N/A"
+        }
+      ]
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1559,117 +1629,105 @@
       }, observerOptions);
       sections.forEach(section => observer.observe(section));
 
-      Promise.all([
-        fetch('data.xml').then(res => res.text()).then(str => new DOMParser().parseFromString(str, 'text/xml')),
-        fetch('content/blogs.json').then(res => res.json()).catch(() => ({ posts: [] }))
-      ]).then(([xmlDoc, blogData]) => {
-        populatePortfolio(xmlDoc);
-        populateBlog(blogData.posts);
-      }).catch(err => {
-        console.error('Error loading data:', err);
-        document.getElementById('hero-name').textContent = "Md. Ariful Islam";
-        document.getElementById('hero-title').textContent = "Coating Technician";
-        document.getElementById('hero-summary').textContent = "Experience in a WHO-approved potent product manufacturing facility with multi-regulatory compliance exposure.";
-        document.getElementById('stats-grid').innerHTML = `<div class="stat-card"><div class="number">11+ years</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div><div class="stat-card"><div class="number">2014</div><div class="label">Career start</div><div class="sub">Production operations</div></div><div class="stat-card"><div class="number">GMP/cGMP</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div><div class="stat-card"><div class="number">Coating</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>`;
-      });
+      // Initialize Portfolio with hardcoded data (No XML fetch needed = No CORS errors)
+      populatePortfolio(portfolioData);
 
-      function getXmlText(parent, tag) {
-        const el = parent.querySelector(tag);
-        return el ? el.textContent : '';
-      }
+      // Try to fetch blogs, but don't break if it fails
+      fetch('content/blogs.json')
+        .then(res => res.json())
+        .then(blogData => {
+          populateBlog(blogData.posts || []);
+        })
+        .catch(err => {
+          console.log('Blog data not found, loading portfolio only.');
+          populateBlog([]);
+        });
 
-      function populatePortfolio(xml) {
-        const personal = xml.querySelector('personal');
-        document.getElementById('hero-name').textContent = getXmlText(personal, 'name') || 'Md. Ariful Islam';
-        document.getElementById('hero-title').textContent = getXmlText(personal, 'title') || 'Coating Technician';
-        document.getElementById('hero-tagline').textContent = getXmlText(personal, 'tagline') || '';
-        document.getElementById('hero-summary').textContent = getXmlText(personal, 'summary') || '';
+      function populatePortfolio(data) {
+        const personal = data.personal;
+        document.getElementById('hero-name').textContent = personal.name;
+        document.getElementById('hero-title').textContent = personal.title;
+        document.getElementById('hero-tagline').textContent = personal.tagline;
+        document.getElementById('hero-summary').textContent = personal.summary;
 
-        const socials = xml.querySelector('social');
+        const social = data.social;
         const socialContainer = document.getElementById('hero-social');
         socialContainer.innerHTML = `
-          <a href="${getXmlText(socials, 'whatsapp')}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-          <a href="${getXmlText(socials, 'telegram')}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.26-1.91.173-.18 3.231-2.957 3.29-3.218.004-.017.007-.08-.03-.113-.034-.033-.083-.022-.118-.014-.05.012-2.95 1.865-3.018 1.93-.356.34-.717.51-1.145.51-.47 0-.878-.28-1.154-.84-.35-.72-.753-1.46-.753-2.25 0-.8.395-1.25.84-1.63.45-.39 1.03-.71 1.65-.71.62 0 1.17.22 1.65.64l.01.01c.35.3.75.65 1.22.95.4.25.8.38 1.2.38.4 0 .78-.12 1.15-.35.37-.23.72-.55 1.06-.92.22-.24.45-.44.68-.58.23-.14.45-.2.68-.16z"/></svg></a>
-          <a href="${getXmlText(socials, 'linkedin')}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
-          <a href="mailto:${getXmlText(socials, 'email')}" class="social-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+          <a href="${social.whatsapp}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          <a href="${social.linkedin}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
+          <a href="mailto:${social.email}" class="social-icon" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
         `;
 
-        const stats = xml.querySelector('stats');
+        const stats = data.stats;
         const statGrid = document.getElementById('stats-grid');
         statGrid.innerHTML = `
-          <div class="stat-card"><div class="number">${getXmlText(stats, 'experience') || '11+ years'}</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div>
-          <div class="stat-card"><div class="number">${getXmlText(stats, 'start') || '2014'}</div><div class="label">Career start</div><div class="sub">Production operations</div></div>
-          <div class="stat-card"><div class="number">${getXmlText(stats, 'certification') || 'GMP/cGMP'}</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div>
-          <div class="stat-card"><div class="number">${getXmlText(stats, 'specialization') || 'Coating'}</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>
+          <div class="stat-card"><div class="number">${stats.experience}</div><div class="label">Experience</div><div class="sub">Pharmaceutical manufacturing</div></div>
+          <div class="stat-card"><div class="number">${stats.start}</div><div class="label">Career start</div><div class="sub">Production operations</div></div>
+          <div class="stat-card"><div class="number">${stats.certification}</div><div class="label">Quality focus</div><div class="sub">Compliance-minded execution</div></div>
+          <div class="stat-card"><div class="number">${stats.specialization}</div><div class="label">Specialization</div><div class="sub">Oral solid dosage</div></div>
         `;
 
         const timeline = document.getElementById('timeline');
-        const experiences = xml.querySelectorAll('experience > job');
-        timeline.innerHTML = Array.from(experiences).map(job => `
+        timeline.innerHTML = data.experience.map(job => `
           <div class="timeline-item">
             <div class="timeline-card">
               <div class="timeline-header">
-                <span class="timeline-date">${getXmlText(job, 'period')}</span>
-                <span class="timeline-facility">${getXmlText(job, 'facility')}</span>
+                <span class="timeline-date">${job.period}</span>
+                <span class="timeline-facility">${job.facility}</span>
               </div>
-              <div class="timeline-title">${getXmlText(job, 'title')}</div>
+              <div class="timeline-title">${job.title}</div>
               <div class="timeline-company">
-                <a href="${getXmlText(job, 'companyUrl')}" target="_blank" rel="noopener noreferrer">${getXmlText(job, 'company')} ↗</a>
-                ${getXmlText(job, 'facility') ? ` - ${getXmlText(job, 'facility')}` : ''}
+                <a href="${job.companyUrl}" target="_blank" rel="noopener noreferrer">${job.company} ↗</a>
+                ${job.facility ? ` - ${job.facility}` : ''}
               </div>
               <div class="timeline-desc">
-                <ul>${Array.from(job.querySelectorAll('responsibility')).map(r => `<li>${r.textContent}</li>`).join('')}</ul>
+                <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
               </div>
             </div>
           </div>
         `).join('');
 
         const expertiseGrid = document.getElementById('expertise-grid');
-        const expertiseItems = xml.querySelectorAll('expertise > item');
-        expertiseGrid.innerHTML = Array.from(expertiseItems).map(item => `
+        expertiseGrid.innerHTML = data.expertise.map(item => `
           <div class="expertise-card">
             <div class="expertise-icon">
               <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
             </div>
             <div class="expertise-content">
-              <h3>${getXmlText(item, 'title')}</h3>
-              <p>${getXmlText(item, 'description')}</p>
+              <h3>${item.title}</h3>
+              <p>${item.description}</p>
             </div>
           </div>
         `).join('');
 
         const envGrid = document.getElementById('environment-grid');
-        const envItems = xml.querySelectorAll('environment > item');
-        envGrid.innerHTML = Array.from(envItems).map((item, index) => `
+        envGrid.innerHTML = data.environment.map((item, index) => `
           <div class="env-card">
             <span class="env-number">0${index + 1}</span>
-            <h3>${getXmlText(item, 'title')}</h3>
-            <p>${getXmlText(item, 'description')}</p>
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
           </div>
         `).join('');
 
         const skillsContainer = document.getElementById('skills-container');
-        const skillItems = xml.querySelectorAll('skills > skill');
-        skillsContainer.innerHTML = Array.from(skillItems).map(skill => `
-          <span class="skill-tag">${skill.textContent}</span>
+        skillsContainer.innerHTML = data.skills.map(skill => `
+          <span class="skill-tag">${skill}</span>
         `).join('');
 
         const langGrid = document.getElementById('lang-grid');
-        const langItems = xml.querySelectorAll('languages > language');
-        langGrid.innerHTML = Array.from(langItems).map(lang => `
+        langGrid.innerHTML = data.languages.map(lang => `
           <div class="lang-item">
-            <span class="lang-name">${getXmlText(lang, 'name')}</span>
-            <span class="lang-level">${getXmlText(lang, 'level')}</span>
+            <span class="lang-name">${lang.name}</span>
+            <span class="lang-level">${lang.level}</span>
           </div>
         `).join('');
 
         const eduContent = document.getElementById('education-content');
-        const eduItems = xml.querySelectorAll('education > degree');
-        eduContent.innerHTML = Array.from(eduItems).map(edu => `
+        eduContent.innerHTML = data.education.map(edu => `
           <div class="edu-item">
-            <div class="edu-year">${getXmlText(edu, 'year')}</div>
-            <div class="edu-inst">${getXmlText(edu, 'institution')}</div>
-            <div class="edu-detail">${getXmlText(edu, 'group')} | GPA: ${getXmlText(edu, 'gpa')}</div>
+            <div class="edu-year">${edu.year}</div>
+            <div class="edu-inst">${edu.institution}</div>
+            <div class="edu-detail">${edu.group} ${edu.gpa !== 'N/A' ? '| GPA: ' + edu.gpa : ''}</div>
           </div>
         `).join('');
 
@@ -1677,19 +1735,19 @@
         contactInfo.innerHTML = `
           <div class="contact-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
-            <div class="contact-detail"><span>Location</span><span>${getXmlText(personal, 'location')}</span></div>
+            <div class="contact-detail"><span>Location</span><span>${personal.location}</span></div>
           </div>
           <div class="contact-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
-            <div class="contact-detail"><span>Phone</span><a href="tel:${getXmlText(personal, 'phone')}">${getXmlText(personal, 'phone')}</a></div>
+            <div class="contact-detail"><span>Phone</span><a href="tel:${personal.phone}">${personal.phone}</a></div>
           </div>
           <div class="contact-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-            <div class="contact-detail"><span>Email</span><a href="mailto:${getXmlText(personal, 'email')}">${getXmlText(personal, 'email')}</a></div>
+            <div class="contact-detail"><span>Email</span><a href="mailto:${personal.email}">${personal.email}</a></div>
           </div>
           <div class="contact-item">
             <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
-            <div class="contact-detail"><span>Website</span><a href="${getXmlText(personal, 'website')}" target="_blank" rel="noopener noreferrer">${getXmlText(personal, 'website')}</a></div>
+            <div class="contact-detail"><span>Website</span><a href="${personal.website}" target="_blank" rel="noopener noreferrer">${personal.website}</a></div>
           </div>
         `;
       }
@@ -1697,7 +1755,7 @@
       function populateBlog(posts) {
         const blogGrid = document.getElementById('blog-grid');
         if (!posts || posts.length === 0) {
-          blogGrid.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center;">No blog posts available yet.</p>`;
+          blogGrid.innerHTML = `<p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 2rem;">No blog posts available yet.</p>`;
           return;
         }
         const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -1753,6 +1811,7 @@
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
     });
   </script>
+  
   <!-- ===== VISITOR COUNTER ===== -->
   <script>
     (function () {
@@ -1760,7 +1819,6 @@
       if (!el) return;
       var base = 'https://abacus.jasoncameron.dev';
       var ns = 'hiarif-com', key = 'visits';
-      // Count each visitor once per browser session so refreshes don't inflate the number
       var counted = false;
       try { counted = sessionStorage.getItem('hiarif_visit_counted') === '1'; } catch (e) {}
       var url = base + (counted ? '/get/' : '/hit/') + ns + '/' + key;
