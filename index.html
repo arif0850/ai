@@ -326,7 +326,9 @@
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-    /* --- Hero --- */
+    /* ========================================
+       ✅ HERO — স্ক্রিনশটের মতো নতুন layout
+       ======================================== */
     #home {
       color: var(--text-light);
       padding: 4rem 0;
@@ -339,90 +341,155 @@
       z-index: 2;
     }
     
-    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+    .hero-grid { 
+      display: grid; 
+      grid-template-columns: 1fr; 
+      gap: 3rem; 
+      align-items: center; 
+    }
     
+    .hero-content {
+      max-width: 100%;
+    }
+    
+    /* Badge — 11+ years */
+    .badge {
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.5rem;
+      background: rgba(13, 148, 136, 0.2); 
+      border: 1px solid rgba(13, 148, 136, 0.5);
+      color: var(--accent-light); 
+      padding: 0.45rem 1.1rem; 
+      border-radius: 50px;
+      font-size: 0.75rem; 
+      font-weight: 600; 
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .badge::before { 
+      content: ''; 
+      width: 8px; 
+      height: 8px; 
+      background: var(--accent); 
+      border-radius: 50%;
+      box-shadow: 0 0 8px 2px rgba(13, 148, 136, 0.8);
+    }
+    
+    /* Name — বড় */
     .hero-content h1 { 
-      font-size: 3rem; 
+      font-size: 3.5rem; 
       font-weight: 800; 
       line-height: 1.05; 
-      margin-bottom: 1rem;
-      letter-spacing: -0.035em;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.04em;
       color: var(--text-light);
       text-shadow: var(--text-shadow-strong);
     }
     
-    .hero-content .title { 
+    /* Title — COATING TECHNICIAN · JUNIOR OFFICER · COATING AREA */
+    .hero-title-line { 
       font-size: 0.95rem; 
-      font-weight: 600; 
+      font-weight: 700; 
       color: var(--accent); 
-      letter-spacing: 0.1em; 
+      letter-spacing: 0.14em; 
       text-transform: uppercase; 
-      margin-bottom: 1rem;
+      margin-bottom: 1.75rem;
       text-shadow: var(--text-shadow-strong);
+      line-height: 1.6;
     }
     
+    /* Tagline */
     .hero-content .tagline { 
-      font-size: 1.2rem; 
+      font-size: 1.35rem; 
       color: var(--text-light); 
-      margin-bottom: 1.5rem; 
+      margin-bottom: 1.25rem; 
       font-weight: 300;
       line-height: 1.5;
       letter-spacing: var(--letter-normal);
       text-shadow: var(--text-shadow-strong);
     }
     
-    .badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(13, 148, 136, 0.5); 
-      border: 1px solid rgba(13, 148, 136, 0.8);
-      color: var(--accent-light); 
-      padding: 0.4rem 1rem; 
+    /* Summary text */
+    .summary { 
+      font-size: 0.98rem; 
+      color: var(--text-light); 
+      margin-bottom: 1.75rem; 
+      max-width: 100%;
+      line-height: 1.7;
+      text-shadow: var(--text-shadow-medium);
+      opacity: 0.96;
+    }
+    
+    /* Skills tags — Hero-তে */
+    .hero-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-skill-tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-light);
+      background: rgba(11, 30, 54, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 0.45rem 0.9rem;
       border-radius: 50px;
-      font-size: 0.75rem; 
-      font-weight: 600; 
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
-    .badge::before { content: ''; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-    
-    .summary { 
-      font-size: 1rem; 
-      color: var(--text-light); 
-      margin-bottom: 2rem; 
-      max-width: 500px;
-      line-height: 1.65;
-      text-shadow: var(--text-shadow-medium);
-      opacity: 0.98;
-    }
-    
-    .cta-group { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.5rem; border-radius: 6px; 
-      font-weight: 600; 
-      font-size: 0.85rem;
-      letter-spacing: 0.02em;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+      letter-spacing: 0.01em;
       transition: var(--transition);
     }
+    
+    .hero-skill-tag:hover {
+      background: rgba(13, 148, 136, 0.5);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    /* Buttons */
+    .cta-group { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 0.85rem; 
+      margin-bottom: 1.5rem; 
+    }
+    
+    .btn {
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.75rem; 
+      border-radius: 8px; 
+      font-weight: 600; 
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      transition: var(--transition);
+      min-width: 180px;
+    }
+    
     .btn-primary { 
       background: var(--accent); 
       color: white; 
-      box-shadow: 0 4px 20px rgba(13, 148, 136, 0.5); 
+      box-shadow: 0 6px 24px rgba(13, 148, 136, 0.5); 
     }
     .btn-primary:hover { 
       background: #0F766E; 
       transform: translateY(-2px); 
-      box-shadow: 0 6px 25px rgba(13, 148, 136, 0.7); 
+      box-shadow: 0 8px 32px rgba(13, 148, 136, 0.7); 
     }
     
     .btn-outline { 
-      border: 1px solid rgba(255,255,255,0.4); 
+      border: 1.5px solid rgba(255,255,255,0.35); 
       color: var(--text-light);
-      background: rgba(11, 30, 54, 0.75);
+      background: rgba(11, 30, 54, 0.65);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -431,16 +498,21 @@
       border-color: var(--accent); 
       color: var(--accent); 
       transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(13, 148, 136, 0.4);
+      box-shadow: 0 8px 25px rgba(13, 148, 136, 0.4);
     }
     
     .btn-dark { background: var(--accent); color: white; border: none; }
     .btn-dark:hover { background: #0F766E; transform: translateY(-2px); }
     
-    .hero-social { display: flex; gap: 1rem; }
+    /* Social icons */
+    .hero-social { display: flex; gap: 0.85rem; }
     .social-icon {
-      display: flex; align-items: center; justify-content: center;
-      width: 40px; height: 40px; border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      width: 42px; 
+      height: 42px; 
+      border-radius: 50%; 
       background: rgba(11, 30, 54, 0.8);
       color: var(--text-light); 
       transition: var(--transition); 
@@ -458,8 +530,13 @@
     }
     .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
-    /* ===== PROFILE CIRCLE ===== */
-    .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    /* ===== PROFILE CIRCLE (Desktop এ ডান দিকে) ===== */
+    .hero-visual { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      position: relative; 
+    }
     
     .profile-circle {
       width: 320px;
@@ -737,13 +814,8 @@
     .env-card p { font-size: 0.85rem; color: var(--text-light); opacity: 0.92; line-height: 1.55; }
 
     /* --- Skills --- */
-    .skills-category {
-      margin-bottom: 2.5rem;
-    }
-    
-    .skills-category:last-child {
-      margin-bottom: 0;
-    }
+    .skills-category { margin-bottom: 2.5rem; }
+    .skills-category:last-child { margin-bottom: 0; }
     
     .skills-category-title {
       font-size: 0.85rem;
@@ -755,11 +827,7 @@
       text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
     }
     
-    .skills-container { 
-      display: flex; 
-      flex-wrap: wrap; 
-      gap: 0.75rem; 
-    }
+    .skills-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
     
     .skill-tag {
       padding: 0.5rem 1rem; 
@@ -1003,12 +1071,22 @@
 
     /* --- Responsive --- */
     @media (min-width: 768px) {
-      .hero-grid { grid-template-columns: 1fr 1fr; }
+      .hero-grid { 
+        grid-template-columns: 1.4fr 1fr; 
+        gap: 4rem;
+      }
       .about-grid { grid-template-columns: 1fr 1fr; }
       .grid-2-col { grid-template-columns: 1fr 1fr; }
       .blog-grid { grid-template-columns: 1fr 1fr; }
       .contact-grid { grid-template-columns: 1fr 1fr; }
       .edu-grid { grid-template-columns: 1fr 1fr; }
+      
+      .hero-content h1 { font-size: 3.5rem; }
+    }
+    
+    @media (min-width: 1024px) {
+      .hero-content h1 { font-size: 4rem; }
+      .hero-content .tagline { font-size: 1.5rem; }
     }
     
     @media (max-width: 767px) {
@@ -1065,11 +1143,43 @@
       .nav-links.active { display: flex; }
       .hamburger { display: flex; }
       
-      .hero-content h1 { font-size: 2rem; letter-spacing: -0.03em; }
-      .hero-grid { text-align: center; }
-      .hero-content .summary { margin: 0 auto 1.5rem; }
-      .cta-group { justify-content: center; }
-      .hero-social { justify-content: center; }
+      /* Mobile Hero Layout */
+      .hero-grid { 
+        grid-template-columns: 1fr; 
+        text-align: center;
+        gap: 2rem;
+      }
+      
+      .hero-content h1 { 
+        font-size: 2.25rem; 
+        letter-spacing: -0.03em; 
+      }
+      
+      .hero-title-line {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+      }
+      
+      .hero-content .tagline { 
+        font-size: 1.1rem; 
+      }
+      
+      .summary { 
+        font-size: 0.92rem;
+        margin: 0 auto 1.5rem; 
+      }
+      
+      .hero-skills {
+        justify-content: center;
+      }
+      
+      .cta-group { 
+        justify-content: center; 
+      }
+      
+      .hero-social { 
+        justify-content: center; 
+      }
       
       .profile-circle { width: 220px; height: 220px; }
       .profile-circle img, .profile-placeholder { width: 155px; height: 155px; }
@@ -1105,10 +1215,16 @@
       .modal-content { padding: 1.5rem 1rem; }
       .whatsapp-float { width: 50px; height: 50px; bottom: 1.25rem; right: 1.25rem; }
       .whatsapp-float svg { width: 26px; height: 26px; }
+      
+      .btn {
+        min-width: 150px;
+        padding: 0.8rem 1.25rem;
+        font-size: 0.9rem;
+      }
     }
     
     @media (max-width: 480px) {
-      .hero-content h1 { font-size: 1.75rem; }
+      .hero-content h1 { font-size: 1.9rem; }
       .section-title { font-size: 1.4rem; }
       .section-subtitle { font-size: 0.9rem; }
       .profile-circle { width: 190px; height: 190px; }
@@ -1119,6 +1235,16 @@
       .stat-card { padding: 1rem; }
       .stat-card .number { font-size: 1.4rem; }
       section { padding: 2rem 0; }
+      
+      .hero-skill-tag {
+        font-size: 0.72rem;
+        padding: 0.4rem 0.75rem;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
     }
     
     @media (prefers-reduced-motion: reduce) {
@@ -1175,21 +1301,53 @@
   </header>
 
   <main id="main-content">
-    <!-- Hero Section -->
+    <!-- ========================================
+         HERO — স্ক্রিনশটের মতো নতুন layout
+         ======================================== -->
     <section id="home">
       <div class="container hero-grid">
         <div class="hero-content">
+          <!-- Badge -->
           <span class="badge" id="hero-badge">11+ years across production operations</span>
+          
+          <!-- Name -->
           <h1 id="hero-name">Md. Ariful Islam</h1>
-          <p class="title" id="hero-title">Coating Technician | Advance Operator</p>
+          
+          <!-- Title with dots -->
+          <p class="hero-title-line" id="hero-title">COATING TECHNICIAN · JUNIOR OFFICER · COATING AREA</p>
+          
+          <!-- Tagline -->
           <p class="tagline" id="hero-tagline">Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.</p>
-          <p class="summary" id="hero-summary">Pharmaceutical manufacturing professional with 11+ years of hands-on experience in production and tablet coating operations at Renata PLC, Rajendrapur Potent Product Facility. Started as an industrial apprentice in 2014, progressing to Junior Officer through consistent growth. Core expertise includes sugar & film coating, machine operation (IMA, Glatt, Solace), batch execution, and equipment qualification support (OQ, PQ). Disciplined, cost-conscious, and highly accountable, with a strong focus on cGMP, FDA guidelines, and workplace safety.</p>
-          <div class="cta-group">
-            <a href="#experience" class="btn btn-primary">View Experience ↗</a>
-            <a href="https://www.linkedin.com/in/ariful-islam" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn Profile ↗</a>
+          
+          <!-- Summary -->
+          <p class="summary" id="hero-summary">Pharmaceutical coating and production professional with 11+ years on the line at Renata PLC, Rajendrapur Potent Product Facility. Started as an industrial apprentice in 2014 and grew into Junior Officer – Coating Area through consistent, hands-on work on sugar coating, film coating, and solid-dosage operations.</p>
+          
+          <!-- Skills Tags in Hero -->
+          <div class="hero-skills">
+            <span class="hero-skill-tag">Sugar coating</span>
+            <span class="hero-skill-tag">Film coating</span>
+            <span class="hero-skill-tag">OSD</span>
+            <span class="hero-skill-tag">IMA</span>
+            <span class="hero-skill-tag">Glatt</span>
+            <span class="hero-skill-tag">Solace</span>
+            <span class="hero-skill-tag">cGMP</span>
+            <span class="hero-skill-tag">FDA</span>
+            <span class="hero-skill-tag">Potent product</span>
+            <span class="hero-skill-tag">OCP</span>
+            <span class="hero-skill-tag">Process control</span>
           </div>
+          
+          <!-- CTA Buttons -->
+          <div class="cta-group">
+            <a href="#experience" class="btn btn-primary">View experience ↗</a>
+            <a href="https://www.linkedin.com/in/md-ariful-islam-226816407" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn profile ↗</a>
+          </div>
+          
+          <!-- Social Icons -->
           <div class="hero-social" id="hero-social"></div>
         </div>
+        
+        <!-- Profile Image -->
         <div class="hero-visual">
           <div class="profile-circle">
             <div class="orbit-container">
@@ -1545,9 +1703,9 @@
     const portfolioData = {
       personal: {
         name: "Md. Ariful Islam",
-        title: "Coating Technician | Advance Operator",
+        title: "COATING TECHNICIAN · JUNIOR OFFICER · COATING AREA",
         tagline: "Hands-on pharmaceutical manufacturing with a calm, quality-first operating mindset.",
-        summary: "Pharmaceutical manufacturing professional with 11+ years of hands-on experience in production and tablet coating operations at Renata PLC, Rajendrapur Potent Product Facility. Started as an industrial apprentice in 2014, progressing to Junior Officer through consistent growth. Core expertise includes sugar & film coating, machine operation (IMA, Glatt, Solace), batch execution, and equipment qualification support (OQ, PQ). Disciplined, cost-conscious, and highly accountable, with a strong focus on cGMP, FDA guidelines, and workplace safety.",
+        summary: "Pharmaceutical coating and production professional with 11+ years on the line at Renata PLC, Rajendrapur Potent Product Facility. Started as an industrial apprentice in 2014 and grew into Junior Officer – Coating Area through consistent, hands-on work on sugar coating, film coating, and solid-dosage operations.",
         location: "Noyapara, Bhawal Mirzapur, Rajendrapur, Gazipur-1700, Bangladesh",
         phone: "+8801845873227",
         email: "arifspramanik@gmail.com",
@@ -1555,7 +1713,7 @@
       },
       social: {
         whatsapp: "https://wa.me/8801845873227",
-        linkedin: "https://www.linkedin.com/in/ariful-islam",
+        linkedin: "https://www.linkedin.com/in/md-ariful-islam-226816407",
         email: "arifspramanik@gmail.com"
       },
       stats: {
@@ -1704,10 +1862,8 @@
       }, observerOptions);
       sections.forEach(section => observer.observe(section));
 
-      // Initialize Portfolio with hardcoded data
       populatePortfolio(portfolioData);
 
-      // Try to fetch blogs, but don't break if it fails
       fetch('content/blogs.json')
         .then(res => res.json())
         .then(blogData => {
