@@ -1,0 +1,30 @@
+name: Gemini Auto Coder
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  refactor:
+    if: startsWith(github.event.issue.body, '/refactor')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          pip install google-genai PyGithub
+
+      - name: Run Gemini Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python .github/scripts/gemini_coder.py
