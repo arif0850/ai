@@ -6,26 +6,18 @@
   <title>Blog | Md. Ariful Islam</title>
   <meta name="description" content="Field notes on cleanroom discipline, coating operations, and the habits behind quality — by Md. Ariful Islam.">
   
-  <!-- Open Graph -->
-  <meta property="og:title" content="Blog | Md. Ariful Islam">
-  <meta property="og:description" content="Field notes on cleanroom discipline, coating operations, and the habits behind quality.">
-  <meta property="og:type" content="website">
-  
   <meta name="theme-color" content="#0D9488">
   
-  <!-- ===== FAVICON ===== -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   
-  <!-- ===== INTER FONT ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- ===== COUNTER.DEV ANALYTICS ===== -->
   <script 
     src="https://cdn.counter.dev/script.js" 
     data-id="b4eb4197-a4a3-45b8-b112-b3c97ae49a1f" 
@@ -34,40 +26,23 @@
   </script>
   
   <style>
-    /* --- CSS Variables --- */
     :root {
       --primary: #0F172A;
-      --primary-light: #1E293B;
       --accent: #0D9488;
-      --accent-light: #CCFBF1;
       --text-main: #0F172A;
       --text-muted: #64748B;
-      --text-light: #94A3B8;
       --bg-main: #FFFFFF;
       --bg-alt: #F8FAFC;
-      --bg-card: #FFFFFF;
       --border: #E2E8F0;
-      --border-light: #F1F5F9;
       --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --transition: all 0.25s ease;
-      --letter-tight: -0.025em;
-      --letter-snug: -0.015em;
-      --letter-normal: -0.01em;
       --letter-wide: 0.12em;
       --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
 
-    /* --- Base & Reset --- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-    
-    html, body {
-      overflow-x: hidden;
-      width: 100%;
-      max-width: 100%;
-    }
+    html { scroll-behavior: smooth; }
     
     body {
       font-family: var(--font-family);
@@ -77,22 +52,12 @@
       background-color: var(--bg-main);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      letter-spacing: var(--letter-normal);
-      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-      font-optical-sizing: auto;
       position: relative;
     }
 
-    /* --- Layout --- */
-    .container { 
-      width: 100%; 
-      max-width: 1140px; 
-      margin: 0 auto; 
-      padding: 0 1.5rem;
-      overflow-x: hidden;
-    }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
 
-    /* --- Header & Nav --- */
+    /* Header */
     header {
       position: sticky; 
       top: 0; 
@@ -101,7 +66,6 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      overflow-x: hidden;
     }
     
     .nav-container { 
@@ -119,73 +83,46 @@
     }
     
     .logo-icon {
-      width: 38px; 
-      height: 38px; 
-      background: var(--accent); 
-      color: white;
+      width: 38px; height: 38px; 
+      background: var(--accent); color: white;
       border-radius: 8px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      font-weight: 800; 
-      font-size: 0.95rem;
-      letter-spacing: var(--letter-tight);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.95rem;
     }
     
     .logo-text { display: flex; flex-direction: column; }
     .logo-text span:first-child { 
-      font-weight: 700; 
-      font-size: 0.95rem; 
-      color: var(--primary); 
-      line-height: 1.2;
-      letter-spacing: var(--letter-snug);
+      font-weight: 700; font-size: 0.95rem; 
+      color: var(--primary); line-height: 1.2;
     }
     .logo-text span:last-child { 
-      font-size: 0.62rem; 
-      color: var(--text-muted); 
-      letter-spacing: 0.08em; 
-      text-transform: uppercase;
+      font-size: 0.62rem; color: var(--text-muted); 
+      letter-spacing: 0.08em; text-transform: uppercase;
       font-weight: 600;
     }
     
     .nav-links { display: flex; gap: 1.75rem; align-items: center; }
     .nav-links a { 
-      font-size: 0.82rem; 
-      font-weight: 600; 
+      font-size: 0.82rem; font-weight: 600; 
       color: var(--text-muted); 
       text-transform: uppercase; 
       letter-spacing: 0.05em;
       text-decoration: none;
       transition: var(--transition);
     }
-    .nav-links a:hover, 
-    .nav-links a.active { 
-      color: var(--accent); 
-    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
     .hamburger { 
-      display: none; 
-      flex-direction: column; 
-      gap: 5px; 
-      cursor: pointer; 
-      padding: 5px; 
-      background: none;
-      border: none;
+      display: none; flex-direction: column; gap: 5px; 
+      cursor: pointer; padding: 5px; 
+      background: none; border: none;
     }
     .hamburger span { 
-      display: block; 
-      width: 24px; 
-      height: 2px; 
-      background: var(--primary); 
-      transition: var(--transition); 
+      display: block; width: 24px; height: 2px; 
+      background: var(--primary); transition: var(--transition);
     }
-    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-    /* ========================================
-       PAGE HEADER
-       ======================================== */
+    /* Page Header */
     .page-header {
       padding: 4rem 0 2.5rem;
       background: var(--bg-alt);
@@ -193,50 +130,34 @@
     }
     
     .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--accent); text-decoration: none;
       margin-bottom: 1.75rem;
       transition: var(--transition);
     }
-    
-    .back-link:hover {
-      gap: 0.65rem;
-    }
+    .back-link:hover { gap: 0.65rem; }
     
     .section-label {
-      font-size: 0.72rem; 
-      font-weight: 700; 
+      font-size: 0.72rem; font-weight: 700; 
       letter-spacing: var(--letter-wide);
       text-transform: uppercase; 
-      color: var(--accent); 
-      margin-bottom: 0.75rem;
+      color: var(--accent); margin-bottom: 0.75rem;
       display: block;
     }
     
     .section-title {
-      font-size: 2.5rem; 
-      font-weight: 800; 
-      color: var(--primary);
-      margin-bottom: 1rem; 
-      line-height: 1.15;
-      letter-spacing: -0.03em;
+      font-size: 2.5rem; font-weight: 800; 
+      color: var(--primary); margin-bottom: 1rem; 
+      line-height: 1.15; letter-spacing: -0.03em;
     }
     
     .section-subtitle {
-      font-size: 1rem; 
-      color: var(--text-muted); 
-      max-width: 640px;
-      line-height: 1.7;
+      font-size: 1rem; color: var(--text-muted); 
+      max-width: 640px; line-height: 1.7;
     }
 
-    /* ========================================
-       BLOG GRID
-       ======================================== */
+    /* Blog Grid */
     .blog-section {
       padding: 4rem 0 5rem;
       background: var(--bg-main);
@@ -249,14 +170,12 @@
     }
     
     .blog-card {
-      background: var(--bg-card); 
+      background: var(--bg-main); 
       border: 1px solid var(--border);
       border-radius: 12px; 
       overflow: hidden;
-      display: flex; 
-      flex-direction: column;
-      text-decoration: none;
-      color: inherit;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
       transition: var(--transition);
       box-shadow: var(--shadow-sm);
     }
@@ -268,179 +187,70 @@
     }
     
     .blog-card-img-wrap {
-      width: 100%;
-      height: 220px;
-      overflow: hidden;
-      background: var(--bg-alt);
-      position: relative;
+      width: 100%; height: 220px;
+      overflow: hidden; background: var(--bg-alt);
     }
     
     .blog-card img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 100%; 
+      object-fit: cover; display: block;
       transition: transform 0.4s ease;
     }
     
-    .blog-card:hover img {
-      transform: scale(1.05);
-    }
+    .blog-card:hover img { transform: scale(1.05); }
     
     .blog-card-content { 
-      padding: 1.75rem; 
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
+      padding: 1.75rem; flex: 1; 
+      display: flex; flex-direction: column; 
     }
     
     .blog-date { 
-      font-size: 0.7rem; 
-      color: var(--text-muted); 
+      font-size: 0.7rem; color: var(--text-muted); 
       text-transform: uppercase; 
       letter-spacing: 0.08em; 
-      margin-bottom: 0.75rem;
-      font-weight: 700;
+      margin-bottom: 0.75rem; font-weight: 700;
     }
     
     .blog-card h3 { 
-      font-size: 1.2rem; 
-      font-weight: 700; 
-      color: var(--primary); 
-      margin-bottom: 0.75rem; 
-      line-height: 1.4;
-      letter-spacing: -0.015em;
+      font-size: 1.2rem; font-weight: 700; 
+      color: var(--primary); margin-bottom: 0.75rem; 
+      line-height: 1.4; letter-spacing: -0.015em;
     }
     
     .blog-card p { 
-      font-size: 0.92rem; 
-      color: var(--text-muted); 
-      flex: 1; 
-      margin-bottom: 1.5rem; 
-      line-height: 1.65; 
+      font-size: 0.92rem; color: var(--text-muted); 
+      flex: 1; margin-bottom: 1.5rem; line-height: 1.65;
     }
     
     .read-more { 
-      font-size: 0.8rem; 
-      font-weight: 700; 
-      color: var(--accent); 
-      text-transform: uppercase; 
-      letter-spacing: 0.06em; 
-      display: flex; 
-      align-items: center; 
-      gap: 0.4rem;
+      font-size: 0.8rem; font-weight: 700; 
+      color: var(--accent); text-transform: uppercase; 
+      letter-spacing: 0.06em; display: flex; 
+      align-items: center; gap: 0.4rem;
       transition: var(--transition);
     }
     
-    .blog-card:hover .read-more { 
-      gap: 0.75rem; 
-    }
-    
-    /* ========================================
-       EMPTY STATE
-       ======================================== */
-    .empty-state {
-      text-align: center;
-      padding: 5rem 2rem;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      background: var(--bg-alt);
-      border-radius: 12px;
-      border: 1px dashed var(--border);
-      grid-column: 1 / -1;
-    }
-    
-    .empty-state svg {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 1.5rem;
-      fill: var(--text-light);
-      opacity: 0.5;
-      display: block;
-    }
-    
-    .empty-state h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-    
-    .empty-state p {
-      font-size: 0.92rem;
-      max-width: 400px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
+    .blog-card:hover .read-more { gap: 0.75rem; }
 
-    /* ========================================
-       LOADING SKELETON
-       ======================================== */
-    .skeleton-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    
-    .skeleton-img {
-      width: 100%;
-      height: 220px;
-      background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-    
-    .skeleton-content {
-      padding: 1.75rem;
-    }
-    
-    .skeleton-line {
-      height: 12px;
-      background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-      margin-bottom: 0.75rem;
-    }
-    
-    .skeleton-line.short { width: 40%; }
-    .skeleton-line.medium { width: 70%; height: 20px; }
-    .skeleton-line.long { width: 100%; }
-    
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    /* --- Footer --- */
+    /* Footer */
     footer {
       background: var(--bg-alt);
       color: var(--text-muted);
-      padding: 2rem 0; 
-      font-size: 0.82rem;
+      padding: 2rem 0; font-size: 0.82rem;
       border-top: 1px solid var(--border);
     }
     
     .footer-content { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      flex-wrap: wrap; 
-      gap: 1rem; 
+      display: flex; justify-content: space-between; 
+      align-items: center; flex-wrap: wrap; gap: 1rem;
     }
     
     .footer-content a {
-      color: var(--text-muted);
-      text-decoration: none;
+      color: var(--text-muted); text-decoration: none;
       transition: var(--transition);
     }
-    
-    .footer-content a:hover {
-      color: var(--accent);
-    }
+    .footer-content a:hover { color: var(--accent); }
 
-    /* --- Responsive --- */
     @media (min-width: 768px) {
       .blog-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -452,42 +262,19 @@
     
     @media (max-width: 767px) {
       .nav-links {
-        display: none; 
-        flex-direction: column; 
-        position: absolute;
-        top: 72px; 
-        left: 0; 
-        right: 0; 
-        background: var(--bg-main);
-        padding: 1.5rem; 
+        display: none; flex-direction: column; 
+        position: absolute; top: 72px; left: 0; right: 0;
+        background: var(--bg-main); padding: 1.5rem;
         border-bottom: 1px solid var(--border);
-        box-shadow: var(--shadow-lg); 
-        gap: 1rem;
-        width: 100%;
-        align-items: flex-start;
+        box-shadow: var(--shadow-lg); gap: 1rem;
       }
       .nav-links.active { display: flex; }
       .hamburger { display: flex; }
       
       .page-header { padding: 3rem 0 2rem; }
       .section-title { font-size: 1.85rem; }
-      .section-subtitle { font-size: 0.95rem; }
-      .blog-section { padding: 3rem 0 4rem; }
-      .blog-card h3 { font-size: 1.1rem; }
       .blog-card-img-wrap { height: 200px; }
       .footer-content { flex-direction: column; text-align: center; }
-    }
-    
-    @media (max-width: 480px) {
-      .section-title { font-size: 1.6rem; }
-      .blog-card-content { padding: 1.5rem; }
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation: none !important;
-        transition: none !important;
-      }
     }
   </style>
 </head>
@@ -519,9 +306,6 @@
   </header>
 
   <main>
-    <!-- ========================================
-         PAGE HEADER
-         ======================================== -->
     <div class="page-header">
       <div class="container">
         <a href="index.html" class="back-link">← Back to Home</a>
@@ -531,40 +315,62 @@
       </div>
     </div>
 
-    <!-- ========================================
-         BLOG GRID
-         ======================================== -->
     <section class="blog-section">
       <div class="container">
-        <div class="blog-grid" id="blog-grid">
-          <!-- Skeleton loaders shown while loading -->
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-content">
-              <div class="skeleton-line short"></div>
-              <div class="skeleton-line medium"></div>
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line long"></div>
+        <div class="blog-grid">
+
+          <!-- ==========================================
+               POST 1 — নতুন পোস্ট এখানে যোগ করুন
+               ========================================== -->
+          <a href="posts/coating-consistency.html" class="blog-card">
+            <div class="blog-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Building consistency into every coating batch" loading="lazy">
             </div>
-          </div>
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-content">
-              <div class="skeleton-line short"></div>
-              <div class="skeleton-line medium"></div>
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line long"></div>
+            <div class="blog-card-content">
+              <div class="blog-date">JANUARY 15, 2026</div>
+              <h3>Building consistency into every coating batch</h3>
+              <p>A practical look at the habits that protect coating uniformity, documentation quality, and reliable batch outcomes.</p>
+              <span class="read-more">Read Article ↗</span>
             </div>
-          </div>
-          <div class="skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-content">
-              <div class="skeleton-line short"></div>
-              <div class="skeleton-line medium"></div>
-              <div class="skeleton-line long"></div>
-              <div class="skeleton-line long"></div>
+          </a>
+
+          <!-- ==========================================
+               POST 2
+               ========================================== -->
+          <a href="posts/cleanroom-habits.html" class="blog-card">
+            <div class="blog-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1581093458791-9f302d9b1e44?auto=format&fit=crop&q=80&w=800" alt="Why cleanroom habits strengthen GMP culture" loading="lazy">
             </div>
-          </div>
+            <div class="blog-card-content">
+              <div class="blog-date">DECEMBER 2, 2025</div>
+              <h3>Why cleanroom habits strengthen GMP culture</h3>
+              <p>Cleanroom discipline is a daily team practice: orderly movement, careful cleaning, and documentation that can be trusted.</p>
+              <span class="read-more">Read Article ↗</span>
+            </div>
+          </a>
+
+          <!-- ==========================================
+               POST 3
+               ========================================== -->
+          <a href="posts/safety-sticker.html" class="blog-card">
+            <div class="blog-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?auto=format&fit=crop&q=80&w=800" alt="Safety Awareness Sticker" loading="lazy">
+            </div>
+            <div class="blog-card-content">
+              <div class="blog-date">SEPTEMBER 11, 2026</div>
+              <h3>Pharmaceutical Machine Operator-এর নিরাপত্তায় Safety Awareness Sticker কেন গুরুত্বপূর্ণ?</h3>
+              <p>একটি ছোট Safety Awareness Sticker একজন কর্মীর হাত, আঙুল বা জীবন রক্ষা করতে পারে।</p>
+              <span class="read-more">Read Article ↗</span>
+            </div>
+          </a>
+
+          <!-- ==========================================
+               নতুন পোস্ট যোগ করতে:
+               ১. উপরের একটি card কপি করুন
+               ২. নাম পরিবর্তন করুন (href, title, date, summary)
+               ৩. posts/ ফোল্ডারে নতুন HTML ফাইল বানান
+               ========================================== -->
+
         </div>
       </div>
     </section>
@@ -578,12 +384,8 @@
   </footer>
 
   <script>
-    // ========================================
-    // BLOG LISTING LOGIC
-    // ========================================
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.getElementById('navLinks');
     hamburger.addEventListener('click', () => {
@@ -591,90 +393,6 @@
       navLinks.classList.toggle('active');
       hamburger.setAttribute('aria-expanded', navLinks.classList.contains('active'));
     });
-
-    // Load blog posts
-    fetch('content/blogs.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch blogs.json');
-        return res.json();
-      })
-      .then(data => {
-        renderBlogs(data.posts || []);
-      })
-      .catch(err => {
-        console.error('Failed to load blogs:', err);
-        showEmpty('Unable to load blog posts at this time.');
-      });
-
-    function renderBlogs(posts) {
-      const grid = document.getElementById('blog-grid');
-      
-      if (!posts || posts.length === 0) {
-        showEmpty('No blog posts available yet. Check back soon!');
-        return;
-      }
-      
-      // Sort by date descending (newest first)
-      const sorted = [...posts].sort((a, b) => {
-        return new Date(b.date || 0) - new Date(a.date || 0);
-      });
-      
-      // Fallback image SVG
-      const fallbackImg = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiB2aWV3Qm94PSIwIDAgNDAwIDI1MCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyNTAiIGZpbGw9IiNmMWY1ZjkiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5NGEzYjgiPkZpZWxkIE5vdGVzPC90ZXh0Pjwvc3ZnPg==';
-      
-      grid.innerHTML = sorted.map(post => {
-        const dateObj = new Date(post.date || Date.now());
-        const formattedDate = dateObj.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        }).toUpperCase();
-        
-        const postUrl = `post.html?id=${encodeURIComponent(post.id || '')}`;
-        const title = escapeHtml(post.title || 'Untitled Post');
-        const summary = escapeHtml(post.summary || '');
-        const imageUrl = post.image ? escapeHtml(post.image) : fallbackImg;
-        
-        return `
-          <a href="${postUrl}" class="blog-card">
-            <div class="blog-card-img-wrap">
-              <img 
-                src="${imageUrl}" 
-                alt="${title}" 
-                onerror="this.onerror=null; this.src='${fallbackImg}'" 
-                loading="lazy">
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-date">${formattedDate}</div>
-              <h3>${title}</h3>
-              <p>${summary}</p>
-              <span class="read-more">Read Article ↗</span>
-            </div>
-          </a>
-        `;
-      }).join('');
-    }
-
-    function showEmpty(message) {
-      const grid = document.getElementById('blog-grid');
-      grid.innerHTML = `
-        <div class="empty-state">
-          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h10v2H7zm0 4h7v2H7zm0-8h10v2H7z"/></svg>
-          <h3>${escapeHtml(message)}</h3>
-          <p>Check back later or go back to the home page.</p>
-        </div>
-      `;
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
   </script>
 </body>
 </html>
