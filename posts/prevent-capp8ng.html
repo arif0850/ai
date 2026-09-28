@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to prevent tablet capping defects | Md. Ariful Islam</title>
+  <meta name="description" content="Practical steps to reduce capping defects in tablet compression.">
+  
+  <!-- ✅ AUTO-DETECT এর জন্য এই ৪টি meta tag -->
+  <meta name="post-title" content="How to prevent tablet capping defects">
+  <meta name="post-date" content="2026-10-01">
+  <meta name="post-summary" content="Practical steps to reduce capping defects in tablet compression.">
+  <meta name="post-image" content="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800">
+  
+  <meta name="theme-color" content="#0D9488">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <script 
+    src="https://cdn.counter.dev/script.js" 
+    data-id="b4eb4197-a4a3-45b8-b112-b3c97ae49a1f" 
+    data-utcoffset="6"
+    defer>
+  </script>
+  
+  <style>
+    /* — এখানে আপনার আগের post এর CSS কপি করুন — */
+    :root{--primary:#0F172A;--accent:#0D9488;--text-main:#0F172A;--text-muted:#64748B;--bg-main:#FFFFFF;--bg-alt:#F8FAFC;--border:#E2E8F0;--font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--transition:all 0.25s ease;--shadow-md:0 4px 12px rgba(0,0,0,0.06)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-family);font-size:16px;line-height:1.7;color:var(--text-main);background-color:var(--bg-main);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .container{max-width:780px;margin:0 auto;padding:0 1.5rem}
+    header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-container{display:flex;justify-content:space-between;align-items:center;height:72px;max-width:1140px;margin:0 auto;padding:0 1.5rem}
+    .logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+    .logo-icon{width:38px;height:38px;background:var(--accent);color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.95rem}
+    .logo-text{display:flex;flex-direction:column}
+    .logo-text span:first-child{font-weight:700;font-size:0.95rem;color:var(--primary);line-height:1.2}
+    .logo-text span:last-child{font-size:0.62rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+    .back-link{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.82rem;font-weight:600;color:var(--accent);text-decoration:none;transition:var(--transition)}
+    .back-link:hover{gap:0.65rem}
+    .article-wrapper{padding:3.5rem 0 4rem}
+    .article-meta{font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.5rem}
+    .article-meta::before{content:'';width:24px;height:2px;background:var(--accent)}
+    .article-title{font-size:2.5rem;font-weight:800;color:var(--primary);line-height:1.2;letter-spacing:-0.03em;margin-bottom:1.5rem}
+    .article-summary{font-size:1.1rem;color:var(--text-muted);line-height:1.65;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+    .article-image{width:100%;max-height:440px;object-fit:cover;border-radius:12px;margin-bottom:2.5rem;background:var(--bg-alt);box-shadow:var(--shadow-md);display:block}
+    .article-body{font-size:1.05rem;color:var(--text-muted);line-height:1.85}
+    .article-body p{margin-bottom:1.5rem}
+    .article-body h2{font-size:1.6rem;color:var(--primary);margin:2.5rem 0 1rem;font-weight:700;line-height:1.3}
+    .article-body ul,.article-body ol{margin:0 0 1.5rem 1.5rem;color:var(--text-muted)}
+    .article-body li{margin-bottom:0.65rem;padding-left:0.25rem;line-height:1.7}
+    .article-body li::marker{color:var(--accent)}
+    .article-body strong{color:var(--primary);font-weight:700}
+    .post-footer{margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    footer{background:var(--bg-alt);color:var(--text-muted);padding:2rem 0;font-size:0.82rem;border-top:1px solid var(--border)}
+    .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1140px;margin:0 auto;padding:0 1.5rem}
+    .footer-content a{color:var(--text-muted);text-decoration:none;transition:var(--transition)}
+    .footer-content a:hover{color:var(--accent)}
+    @media (max-width:767px){.article-wrapper{padding:2.5rem 0 3rem}.article-title{font-size:1.75rem}.article-body{font-size:1rem}.article-body h2{font-size:1.35rem}.article-image{max-height:280px}.post-footer{flex-direction:column;align-items:flex-start}.footer-content{flex-direction:column;text-align:center}}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">AI</div>
+        <div class="logo-text">
+          <span>Md. Ariful Islam</span>
+          <span>Pharma Manufacturing</span>
+        </div>
+      </a>
+      <a href="../blog.html" class="back-link">← All Posts</a>
+    </div>
+  </header>
+
+  <main>
+    <article class="article-wrapper">
+      <div class="container">
+        
+        <span class="article-meta">October 1, 2026</span>
+        <h1 class="article-title">How to prevent tablet capping defects</h1>
+        <p class="article-summary">Practical steps to reduce capping defects in tablet compression.</p>
+        
+        <img 
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" 
+          alt="Tablet capping" 
+          class="article-image">
+        
+        <div class="article-body">
+          
+          <p>Your content here...</p>
+          
+          <h2>Section heading</h2>
+          <p>More content...</p>
+          
+        </div>
+        
+        <div class="post-footer">
+          <a href="../blog.html" class="back-link">← All Posts</a>
+          <a href="../index.html#contact" class="back-link">Contact Me →</a>
+        </div>
+        
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 Md. Ariful Islam. All rights reserved.</p>
+      <a href="../index.html">← Back to Home</a>
+    </div>
+  </footer>
+
+</body>
+</html>
