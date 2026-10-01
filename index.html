@@ -449,6 +449,107 @@
       line-height: 1.6;
     }
 
+    /* ========================================
+       ✅ SKILLS SECTION (About Tab) — Scroll Strip
+       ======================================== */
+    .skills-section-about {
+      margin-top: 40px;
+    }
+
+    /* Plain title — no icon box */
+    .skills-title-plain {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .skills-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 16px;
+      margin-bottom: 4px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+    }
+
+    .skills-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .skills-scroll:active {
+      cursor: grabbing;
+    }
+
+    .skills-scroll-bar {
+      position: relative;
+      height: 3px;
+      background: var(--border);
+      border-radius: 3px;
+      margin-top: 4px;
+      overflow: hidden;
+    }
+
+    .skills-scroll-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 30%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: transform 0.15s ease-out, width 0.15s ease-out;
+      box-shadow: 0 0 8px rgba(255, 219, 110, 0.4);
+    }
+
+    .skill-card-scroll {
+      flex: 0 0 auto;
+      width: 100px;
+      background: var(--bg-inner);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 16px 10px;
+      text-align: center;
+      transition: var(--transition);
+      cursor: default;
+      scroll-snap-align: start;
+      user-select: none;
+    }
+
+    .skill-card-scroll:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-line);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .skill-card-scroll i {
+      color: var(--accent);
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .skill-card-scroll:hover i {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 8px rgba(255, 219, 110, 0.6));
+    }
+
+    .skill-card-scroll span {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      font-weight: 500;
+      line-height: 1.3;
+      display: block;
+    }
+
     .timeline-group {
       margin-bottom: 40px;
     }
@@ -639,127 +740,6 @@
       color: var(--text-soft);
       font-weight: 500;
       line-height: 1.4;
-      display: block;
-    }
-
-    /* ========================================
-       ✅ OTHER SKILLS — Horizontal Scroll Strip
-       ======================================== */
-    .other-skills-section {
-      margin-top: 40px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border-soft);
-    }
-
-    .other-skills-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 18px;
-      letter-spacing: -0.01em;
-    }
-
-    .other-skills-title .icon-box {
-      width: 36px;
-      height: 36px;
-      background: var(--bg-inner);
-      border-radius: var(--radius-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border);
-    }
-
-    .other-skills-title .icon-box i {
-      color: var(--accent);
-      font-size: 0.9rem;
-    }
-
-    .skills-scroll {
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding-bottom: 16px;
-      margin-bottom: 4px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      cursor: grab;
-    }
-
-    .skills-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-    .skills-scroll:active {
-      cursor: grabbing;
-    }
-
-    .skills-scroll-bar {
-      position: relative;
-      height: 3px;
-      background: var(--border);
-      border-radius: 3px;
-      margin-top: 4px;
-      overflow: hidden;
-    }
-
-    .skills-scroll-bar-fill {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 30%;
-      background: var(--accent);
-      border-radius: 3px;
-      transition: transform 0.15s ease-out, width 0.15s ease-out;
-      box-shadow: 0 0 8px rgba(255, 219, 110, 0.4);
-    }
-
-    .skill-card-scroll {
-      flex: 0 0 auto;
-      width: 100px;
-      background: var(--bg-inner);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-md);
-      padding: 16px 10px;
-      text-align: center;
-      transition: var(--transition);
-      cursor: default;
-      scroll-snap-align: start;
-      user-select: none;
-    }
-
-    .skill-card-scroll:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--accent-line);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .skill-card-scroll i {
-      color: var(--accent);
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-      display: block;
-      transition: var(--transition);
-    }
-
-    .skill-card-scroll:hover i {
-      transform: scale(1.15);
-      filter: drop-shadow(0 0 8px rgba(255, 219, 110, 0.6));
-    }
-
-    .skill-card-scroll span {
-      font-size: 0.7rem;
-      color: var(--text-soft);
-      font-weight: 500;
-      line-height: 1.3;
       display: block;
     }
 
@@ -1188,6 +1168,9 @@
       .skill-card-scroll span {
         font-size: 0.65rem;
       }
+      .skills-title-plain {
+        font-size: 1.2rem;
+      }
       
       .portfolio-grid { grid-template-columns: 1fr; }
       
@@ -1296,6 +1279,7 @@
 
     <div class="main-card">
 
+      <!-- ABOUT TAB -->
       <div class="tab-content active" id="tab-about">
         <h2 class="section-heading">About Me</h2>
 
@@ -1343,8 +1327,66 @@
 
           </div>
         </div>
+
+        <!-- ========================================
+             ✅ SKILLS — Horizontal Scroll (About ট্যাবে)
+             ======================================== -->
+        <div class="skills-section-about">
+          <h4 class="skills-title-plain">Skills</h4>
+
+          <div class="skills-scroll" id="otherSkillsScroll">
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-truck-monster"></i>
+              <span>Heavy equipment</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-desktop"></i>
+              <span>SCADA &amp; HMI</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-arrow-down-short-wide"></i>
+              <span>FEFO</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-broom"></i>
+              <span>Housekeeping</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-boxes-packing"></i>
+              <span>5S</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-fire-extinguisher"></i>
+              <span>Firefighting</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-people-group"></i>
+              <span>Teamwork</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-comments"></i>
+              <span>Communication</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-brain"></i>
+              <span>Artificial Intelligence</span>
+            </div>
+            <div class="skill-card-scroll">
+              <i class="fa-solid fa-code"></i>
+              <span>Web development</span>
+            </div>
+          </div>
+
+          <div class="skills-scroll-bar">
+            <div class="skills-scroll-bar-fill" id="skillsScrollBarFill"></div>
+          </div>
+        </div>
+        <!-- ========================================
+             ✅ END SKILLS
+             ======================================== -->
       </div>
 
+      <!-- RESUME TAB -->
       <div class="tab-content" id="tab-resume">
         <h2 class="section-heading">Resume</h2>
         <p class="section-intro">A timeline built close to the production line — from apprenticeship to Junior Officer.</p>
@@ -1445,6 +1487,7 @@
         </div>
       </div>
 
+      <!-- PORTFOLIO TAB -->
       <div class="tab-content" id="tab-portfolio">
         <h2 class="section-heading">Skills &amp; Expertise</h2>
         <p class="section-intro">Hands-on capabilities across coating, compliance, safety, and team operations.</p>
@@ -1514,69 +1557,9 @@
             <div class="skill-card"><i class="fa-solid fa-code"></i><span>Web development</span></div>
           </div>
         </div>
-
-        <!-- ========================================
-             ✅ OTHER SKILLS — Horizontal Scroll Strip
-             ======================================== -->
-        <div class="other-skills-section">
-          <h4 class="other-skills-title">
-            <span class="icon-box"><i class="fa-solid fa-star"></i></span>
-            Other Skills
-          </h4>
-
-          <div class="skills-scroll" id="otherSkillsScroll">
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-truck-monster"></i>
-              <span>Heavy equipment</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-desktop"></i>
-              <span>SCADA &amp; HMI</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-arrow-down-short-wide"></i>
-              <span>FEFO</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-broom"></i>
-              <span>Housekeeping</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-boxes-packing"></i>
-              <span>5S</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-fire-extinguisher"></i>
-              <span>Firefighting</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-people-group"></i>
-              <span>Teamwork</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-comments"></i>
-              <span>Communication</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-brain"></i>
-              <span>Artificial Intelligence</span>
-            </div>
-            <div class="skill-card-scroll">
-              <i class="fa-solid fa-code"></i>
-              <span>Web development</span>
-            </div>
-          </div>
-
-          <div class="skills-scroll-bar">
-            <div class="skills-scroll-bar-fill" id="skillsScrollBarFill"></div>
-          </div>
-        </div>
-        <!-- ========================================
-             ✅ END OTHER SKILLS
-             ======================================== -->
-
       </div>
 
+      <!-- BLOG TAB -->
       <div class="tab-content" id="tab-blog">
         <h2 class="section-heading">Blog</h2>
         <p class="section-intro">Field notes from the production floor — practical lessons, observations, and reflections.</p>
@@ -1608,6 +1591,7 @@
         </div>
       </div>
 
+      <!-- CONTACT TAB -->
       <div class="tab-content" id="tab-contact">
         <h2 class="section-heading">Contact</h2>
         <p class="section-intro">For professional conversations, connect directly through the details below.</p>
@@ -1778,7 +1762,7 @@
     })();
 
     // ========================================
-    // ✅ Other Skills — Scroll Progress Bar
+    // ✅ Skills — Scroll Progress Bar
     // ========================================
     (function initSkillsScroll() {
       const scroller = document.getElementById('otherSkillsScroll');
