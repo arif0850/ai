@@ -98,7 +98,7 @@
     }
 
     /* ========================================
-       ✅ LAYOUT WRAPPER — NARROW (900px)
+       LAYOUT WRAPPER — NARROW (900px)
        ======================================== */
     .app-wrapper {
       max-width: 900px;
@@ -109,7 +109,7 @@
     }
 
     /* ========================================
-       ✅ PROFILE HEADER CARD
+       PROFILE HEADER CARD
        ======================================== */
     .profile-card {
       background: var(--bg-card);
@@ -129,12 +129,11 @@
       background: linear-gradient(90deg, transparent, var(--accent-line), transparent);
     }
 
-    /* Top row */
     .profile-top {
       display: flex;
       align-items: center;
       gap: 24px;
-      padding-right: 100px; /* ✅ Chevron-এর জন্য জায়গা */
+      padding-right: 100px;
     }
 
     .profile-photo {
@@ -170,9 +169,7 @@
       letter-spacing: 0.01em;
     }
 
-    /* ========================================
-       ✅ CHEVRON DROPDOWN — TOP RIGHT CORNER
-       ======================================== */
+    /* Chevron */
     .profile-chevron {
       position: absolute;
       top: 24px;
@@ -194,11 +191,6 @@
       z-index: 5;
     }
 
-    .profile-chevron span {
-      display: inline-block;
-      line-height: 1;
-    }
-
     .profile-chevron i {
       font-size: 0.72rem;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -210,7 +202,6 @@
       border-color: var(--accent-line);
     }
 
-    /* ✅ Chevron খোলা অবস্থায় */
     .profile-card.open .profile-chevron {
       background: var(--accent);
       color: #121212;
@@ -221,7 +212,6 @@
       transform: rotate(180deg);
     }
 
-    /* ✅ Collapsible details wrapper */
     .profile-details-wrapper {
       max-height: 0;
       overflow: hidden;
@@ -238,14 +228,12 @@
       margin-top: 20px;
     }
 
-    /* Divider */
     .profile-divider {
       height: 1px;
       background: var(--border-soft);
       margin: 22px 0;
     }
 
-    /* Details grid */
     .profile-details {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -302,7 +290,6 @@
 
     .detail-value a:hover { color: var(--accent); }
 
-    /* Social Icons Row */
     .social-row {
       display: flex;
       gap: 14px;
@@ -332,9 +319,7 @@
 
     .social-btn i { font-size: 1.05rem; }
 
-    /* Focus states */
-    .profile-chevron:focus-visible,
-    .profile-top:focus-visible {
+    .profile-chevron:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
       border-radius: 10px;
@@ -352,7 +337,6 @@
       min-height: 400px;
     }
 
-    /* Tab Content */
     .tab-content {
       display: none;
       animation: fadeInUp 0.4s ease;
@@ -365,7 +349,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Section heading */
     .section-heading {
       font-size: 1.75rem;
       font-weight: 700;
@@ -406,9 +389,7 @@
 
     .about-text p:last-child { margin-bottom: 0; }
 
-    /* ========================================
-       ✅ WHAT I'M DOING — SINGLE COLUMN, HORIZONTAL
-       ======================================== */
+    /* What I'm Doing */
     .what-doing {
       margin-top: 40px;
     }
@@ -423,7 +404,7 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: 1fr;   /* ✅ এক কলাম */
+      grid-template-columns: 1fr;
       gap: 14px;
     }
 
@@ -447,7 +428,6 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
-    /* ✅ আইকন — বর্গাকার গোল্ডেন বর্ডার বক্স, বাম দিকে */
     .service-icon {
       width: 52px;
       height: 52px;
@@ -466,7 +446,6 @@
       font-size: 1.3rem;
     }
 
-    /* ✅ টেক্সট গ্রুপ */
     .service-text {
       flex: 1;
       min-width: 0;
@@ -487,7 +466,7 @@
     }
 
     /* ========================================
-       TIMELINE (Resume)
+       TIMELINE
        ======================================== */
     .timeline-group {
       margin-bottom: 40px;
@@ -614,13 +593,8 @@
       background: var(--accent);
     }
 
-    /* ========================================
-       SKILLS
-       ======================================== */
-    .skills-category {
-      margin-bottom: 32px;
-    }
-
+    /* Skills */
+    .skills-category { margin-bottom: 32px; }
     .skills-category:last-child { margin-bottom: 0; }
 
     .skills-category-title {
@@ -688,9 +662,7 @@
       display: block;
     }
 
-    /* ========================================
-       PORTFOLIO
-       ======================================== */
+    /* Portfolio */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -746,71 +718,63 @@
     }
 
     /* ========================================
-       CONTACT — Map + Form
+       ✅ CONTACT — Google Maps Embed (Dark Themed)
        ======================================== */
-    .map-block {
+    .map-wrapper {
+      position: relative;
       border-radius: var(--radius-md);
       overflow: hidden;
-      background: var(--bg-inner);
       border: 1px solid var(--border);
-      height: 220px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
       margin-bottom: 32px;
-      background-image: 
-        linear-gradient(rgba(18,18,18,0.85), rgba(18,18,18,0.85)),
-        url('https://www.transparenttextures.com/patterns/cubes.png');
-      background-size: cover;
+      background: var(--bg-inner);
     }
 
-    .map-content {
-      text-align: center;
-      color: var(--text-soft);
-      padding: 20px;
-    }
-
-    .map-content i {
-      font-size: 2.2rem;
-      color: var(--accent);
-      margin-bottom: 12px;
+    .map-wrapper iframe {
       display: block;
+      width: 100%;
+      height: 300px;
+      border: 0;
+      /* ✅ ডার্ক থিমে ম্যাপ রূপান্তর */
+      filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.05) saturate(0.9);
+      transition: filter 0.3s ease;
     }
 
-    .map-content h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 6px;
+    .map-wrapper:hover iframe {
+      filter: invert(90%) hue-rotate(180deg) brightness(0.9) contrast(1.05) saturate(1);
     }
 
-    .map-content p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    .map-btn {
+    /* ম্যাপের উপরে "Open in Google Maps" বাটন */
+    .map-open-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 5;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent);
-      color: #121212;
-      padding: 10px 22px;
+      background: rgba(18, 18, 18, 0.92);
+      color: var(--accent);
+      border: 1px solid var(--accent-line);
+      padding: 8px 16px;
       border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 700;
+      font-size: 0.78rem;
+      font-weight: 600;
       text-decoration: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       transition: var(--transition);
     }
 
-    .map-btn:hover {
-      background: #ffd84a;
+    .map-open-btn:hover {
+      background: var(--accent);
+      color: #121212;
       transform: translateY(-2px);
       box-shadow: var(--shadow-glow);
     }
 
+    .map-open-btn i { font-size: 0.78rem; }
+
+    /* Contact form */
     .form-heading {
       font-size: 1.35rem;
       font-weight: 700;
@@ -1079,7 +1043,7 @@
         gap: 16px;
         flex-wrap: nowrap;
         padding-right: 0;
-        padding-top: 44px; /* ✅ Chevron-এর জন্য উপরে জায়গা */
+        padding-top: 44px;
       }
       
       .profile-photo {
@@ -1091,7 +1055,6 @@
       .profile-info h1 { font-size: 1.35rem; }
       .profile-title-badge { font-size: 0.72rem; padding: 6px 12px; }
       
-      /* ✅ Chevron মোবাইলে ছোট */
       .profile-chevron {
         top: 18px;
         right: 18px;
@@ -1106,7 +1069,6 @@
       
       .section-heading { font-size: 1.4rem; }
       
-      /* ✅ Services — mobile-এও horizontal layout, একটু ছোট */
       .service-card {
         padding: 16px 18px;
         gap: 14px;
@@ -1151,6 +1113,18 @@
         grid-template-columns: 1fr;
         gap: 14px;
       }
+      
+      /* ✅ মোবাইলে ম্যাপের উচ্চতা কম */
+      .map-wrapper iframe {
+        height: 240px;
+      }
+      
+      .map-open-btn {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 0.72rem;
+      }
     }
 
     @media (max-width: 420px) {
@@ -1178,13 +1152,11 @@
          ======================================== -->
     <div class="profile-card">
 
-      <!-- ✅ Chevron টগল — একদম উপরে ডান কোণায় -->
       <button class="profile-chevron" id="profileChevron" aria-label="Toggle profile details" type="button" aria-expanded="false" aria-controls="profileDetails">
         <span id="chevronLabel">Details</span>
         <i class="fa-solid fa-chevron-down"></i>
       </button>
 
-      <!-- Top row: Photo + Info -->
       <div class="profile-top">
         <img src="assets/profile.jpg" alt="Md. Ariful Islam" class="profile-photo"
              onerror="this.style.display='none';">
@@ -1194,7 +1166,6 @@
         </div>
       </div>
 
-      <!-- Collapsible details area -->
       <div class="profile-details-wrapper" id="profileDetails">
         <div class="profile-divider"></div>
 
@@ -1218,7 +1189,6 @@
 
         <div class="profile-divider"></div>
 
-        <!-- Social icons -->
         <div class="social-row">
           <a href="https://www.linkedin.com/in/md-ariful-islam-226816407" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
             <i class="fa-brands fa-linkedin-in"></i>
@@ -1241,11 +1211,11 @@
     </div>
 
     <!-- ========================================
-         MAIN CONTENT CARD (Tabbed)
+         MAIN CONTENT CARD
          ======================================== -->
     <div class="main-card">
 
-      <!-- ============ ABOUT TAB ============ -->
+      <!-- ABOUT TAB -->
       <div class="tab-content active" id="tab-about">
         <h2 class="section-heading">About Me</h2>
 
@@ -1255,7 +1225,6 @@
           <p>From apprenticeship through production operation and coating-area supervision, the work has stayed close to the process: prepare well, operate carefully, document clearly, and help the next shift succeed.</p>
         </div>
 
-        <!-- ✅ What I'm Doing — single column, horizontal cards -->
         <div class="what-doing">
           <h3 class="what-doing-title">What I'm Doing</h3>
           <div class="services-grid">
@@ -1296,12 +1265,11 @@
         </div>
       </div>
 
-      <!-- ============ RESUME TAB ============ -->
+      <!-- RESUME TAB -->
       <div class="tab-content" id="tab-resume">
         <h2 class="section-heading">Resume</h2>
         <p class="section-intro">A timeline built close to the production line — from apprenticeship to Junior Officer.</p>
 
-        <!-- Education -->
         <div class="timeline-group">
           <h3 class="timeline-group-title">
             <span class="icon-box"><i class="fa-solid fa-graduation-cap"></i></span>
@@ -1327,7 +1295,6 @@
           </div>
         </div>
 
-        <!-- Experience -->
         <div class="timeline-group">
           <h3 class="timeline-group-title">
             <span class="icon-box"><i class="fa-solid fa-briefcase"></i></span>
@@ -1385,7 +1352,6 @@
           </div>
         </div>
 
-        <!-- Languages -->
         <div class="timeline-group">
           <h3 class="timeline-group-title">
             <span class="icon-box"><i class="fa-solid fa-language"></i></span>
@@ -1400,12 +1366,11 @@
         </div>
       </div>
 
-      <!-- ============ PORTFOLIO TAB ============ -->
+      <!-- PORTFOLIO TAB -->
       <div class="tab-content" id="tab-portfolio">
         <h2 class="section-heading">Skills &amp; Expertise</h2>
         <p class="section-intro">Hands-on capabilities across coating, compliance, safety, and team operations.</p>
 
-        <!-- Coating & Production -->
         <div class="skills-category">
           <h4 class="skills-category-title">
             <span class="icon-box"><i class="fa-solid fa-industry"></i></span>
@@ -1422,7 +1387,6 @@
           </div>
         </div>
 
-        <!-- Quality, GMP & Safety -->
         <div class="skills-category">
           <h4 class="skills-category-title">
             <span class="icon-box"><i class="fa-solid fa-shield-heart"></i></span>
@@ -1447,7 +1411,6 @@
           </div>
         </div>
 
-        <!-- People & Operations -->
         <div class="skills-category">
           <h4 class="skills-category-title">
             <span class="icon-box"><i class="fa-solid fa-users"></i></span>
@@ -1463,7 +1426,6 @@
           </div>
         </div>
 
-        <!-- Also Exploring -->
         <div class="skills-category">
           <h4 class="skills-category-title">
             <span class="icon-box"><i class="fa-solid fa-compass"></i></span>
@@ -1476,7 +1438,7 @@
         </div>
       </div>
 
-      <!-- ============ BLOG TAB ============ -->
+      <!-- BLOG TAB -->
       <div class="tab-content" id="tab-blog">
         <h2 class="section-heading">Blog</h2>
         <p class="section-intro">Field notes from the production floor — practical lessons, observations, and reflections.</p>
@@ -1502,18 +1464,17 @@
         <div class="reference-box" style="margin-top: 32px;">
           <h4>Read all posts</h4>
           <p>Visit the full blog for more field notes on pharmaceutical manufacturing and process discipline.</p>
-          <a href="blog.html" class="map-btn" style="margin-top: 16px;">
+          <a href="blog.html" class="map-btn" style="margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #121212; padding: 10px 22px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; text-decoration: none;">
             <i class="fa-solid fa-book-open"></i> Open Blog
           </a>
         </div>
       </div>
 
-      <!-- ============ CONTACT TAB ============ -->
+      <!-- CONTACT TAB -->
       <div class="tab-content" id="tab-contact">
         <h2 class="section-heading">Contact</h2>
         <p class="section-intro">For professional conversations, connect directly through the details below.</p>
 
-        <!-- Contact info blocks -->
         <div class="contact-info-grid">
           <div class="contact-info-item">
             <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
@@ -1545,19 +1506,19 @@
           </div>
         </div>
 
-        <!-- Map block -->
-        <div class="map-block">
-          <div class="map-content">
-            <i class="fa-solid fa-map-location-dot"></i>
-            <h4>Rajendrapur, Gazipur</h4>
-            <p>Bangladesh — Potent Product Facility</p>
-            <a href="https://maps.google.com/?q=Rajendrapur+Gazipur+Bangladesh" target="_blank" rel="noopener noreferrer" class="map-btn">
-              <i class="fa-solid fa-diamond-turn-right"></i> Open in Google Maps
-            </a>
-          </div>
+        <!-- ✅ Google Maps Embed — Dark Themed -->
+        <div class="map-wrapper">
+          <a href="https://www.google.com/maps?q=24.098794875307735,90.35921707767761" target="_blank" rel="noopener noreferrer" class="map-open-btn">
+            <i class="fa-solid fa-diamond-turn-right"></i> Open in Google Maps
+          </a>
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3642.076789809465!2d90.35921707767761!3d24.098794875307735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjTCsDA1JzU1LjYiTiA5MMKwMjEnNDIuNSJF!5e0!3m2!1sbn!2sbd!4v1790860185405!5m2!1sbn!2sbd" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
         </div>
 
-        <!-- Contact form -->
         <h3 class="form-heading">Send a Message</h3>
         <form class="contact-form" action="mailto:arifspramanik@gmail.com" method="post" enctype="text/plain">
           <input type="text" name="name" class="form-input" placeholder="Full name" required>
@@ -1611,7 +1572,7 @@
 
   <script>
     // ========================================
-    // ✅ PROFILE DROPDOWN TOGGLE
+    // PROFILE DROPDOWN TOGGLE
     // ========================================
     (function initProfileDropdown() {
       const profileCard = document.querySelector('.profile-card');
@@ -1629,7 +1590,7 @@
     })();
 
     // ========================================
-    // ✅ TAB SWITCHING
+    // TAB SWITCHING
     // ========================================
     (function initTabs() {
       const tabs = document.querySelectorAll('.nav-tab');
@@ -1658,9 +1619,7 @@
       }
     })();
 
-    // ========================================
     // Set year
-    // ========================================
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
