@@ -98,10 +98,10 @@
     }
 
     /* ========================================
-       LAYOUT WRAPPER
+       ✅ LAYOUT WRAPPER — NARROW (900px)
        ======================================== */
     .app-wrapper {
-      max-width: 1000px;
+      max-width: 900px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -109,12 +109,12 @@
     }
 
     /* ========================================
-       PROFILE HEADER CARD
+       ✅ PROFILE HEADER CARD
        ======================================== */
     .profile-card {
       background: var(--bg-card);
       border-radius: var(--radius-lg);
-      padding: 28px;
+      padding: 28px 32px;
       box-shadow: var(--shadow-card);
       border: 1px solid var(--border-soft);
       position: relative;
@@ -134,9 +134,7 @@
       display: flex;
       align-items: center;
       gap: 24px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
+      padding-right: 100px; /* ✅ Chevron-এর জন্য জায়গা */
     }
 
     .profile-photo {
@@ -172,26 +170,37 @@
       letter-spacing: 0.01em;
     }
 
-    /* ✅ Chevron button */
+    /* ========================================
+       ✅ CHEVRON DROPDOWN — TOP RIGHT CORNER
+       ======================================== */
     .profile-chevron {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: 10px;
       background: var(--bg-inner);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
-      flex-shrink: 0;
-      margin-left: auto;
       transition: var(--transition);
       font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      z-index: 5;
+    }
+
+    .profile-chevron span {
+      display: inline-block;
+      line-height: 1;
     }
 
     .profile-chevron i {
-      font-size: 1rem;
+      font-size: 0.72rem;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -201,7 +210,7 @@
       border-color: var(--accent-line);
     }
 
-    /* ✅ Chevron খোলা অবস্থায় ঘুরে যাবে 180° */
+    /* ✅ Chevron খোলা অবস্থায় */
     .profile-card.open .profile-chevron {
       background: var(--accent);
       color: #121212;
@@ -328,7 +337,7 @@
     .profile-top:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
-      border-radius: 12px;
+      border-radius: 10px;
     }
 
     /* ========================================
@@ -397,7 +406,9 @@
 
     .about-text p:last-child { margin-bottom: 0; }
 
-    /* What I'm Doing grid */
+    /* ========================================
+       ✅ WHAT I'M DOING — SINGLE COLUMN, HORIZONTAL
+       ======================================== */
     .what-doing {
       margin-top: 40px;
     }
@@ -412,55 +423,67 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
+      grid-template-columns: 1fr;   /* ✅ এক কলাম */
+      gap: 14px;
     }
 
     .service-card {
       background: var(--bg-inner);
       border-radius: var(--radius-md);
-      padding: 28px 22px;
-      text-align: center;
+      padding: 20px 22px;
       border: 1px solid var(--border-soft);
       transition: var(--transition);
       cursor: default;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      text-align: left;
     }
 
     .service-card:hover {
       background: var(--bg-card-hover);
-      transform: translateY(-4px);
+      transform: translateY(-2px);
       border-color: var(--accent-line);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
+    /* ✅ আইকন — বর্গাকার গোল্ডেন বর্ডার বক্স, বাম দিকে */
     .service-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 18px;
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      margin: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid var(--accent);
-      border-radius: 14px;
+      border: 1.5px solid var(--accent);
+      border-radius: 12px;
+      flex-shrink: 0;
     }
 
     .service-icon i {
       color: var(--accent);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
+    }
+
+    /* ✅ টেক্সট গ্রুপ */
+    .service-text {
+      flex: 1;
+      min-width: 0;
     }
 
     .service-card h3 {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       letter-spacing: -0.01em;
     }
 
     .service-card p {
       font-size: 0.85rem;
       color: var(--text-muted);
-      line-height: 1.65;
+      line-height: 1.6;
     }
 
     /* ========================================
@@ -1055,6 +1078,8 @@
       .profile-top {
         gap: 16px;
         flex-wrap: nowrap;
+        padding-right: 0;
+        padding-top: 44px; /* ✅ Chevron-এর জন্য উপরে জায়গা */
       }
       
       .profile-photo {
@@ -1066,19 +1091,39 @@
       .profile-info h1 { font-size: 1.35rem; }
       .profile-title-badge { font-size: 0.72rem; padding: 6px 12px; }
       
+      /* ✅ Chevron মোবাইলে ছোট */
       .profile-chevron {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
+        top: 18px;
+        right: 18px;
+        padding: 6px 11px;
+        font-size: 0.72rem;
+        gap: 6px;
       }
       
-      .profile-chevron i { font-size: 0.9rem; }
+      .profile-chevron i { font-size: 0.65rem; }
       
       .main-card { padding: 22px; }
       
       .section-heading { font-size: 1.4rem; }
       
-      .services-grid { grid-template-columns: 1fr; }
+      /* ✅ Services — mobile-এও horizontal layout, একটু ছোট */
+      .service-card {
+        padding: 16px 18px;
+        gap: 14px;
+      }
+      
+      .service-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 10px;
+      }
+      
+      .service-icon i { font-size: 1.1rem; }
+      
+      .service-card h3 { font-size: 0.95rem; }
+      .service-card p { font-size: 0.82rem; }
+      
       .skills-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
       .skill-card { padding: 14px 10px; }
       .skill-card i { font-size: 1.2rem; margin-bottom: 8px; }
@@ -1129,22 +1174,24 @@
   <div class="app-wrapper">
 
     <!-- ========================================
-         PROFILE HEADER CARD — WITH DROPDOWN
+         PROFILE HEADER CARD
          ======================================== -->
     <div class="profile-card">
 
-      <!-- Top row: Photo + Info + Chevron -->
-      <div class="profile-top" id="profileToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="profileDetails">
+      <!-- ✅ Chevron টগল — একদম উপরে ডান কোণায় -->
+      <button class="profile-chevron" id="profileChevron" aria-label="Toggle profile details" type="button" aria-expanded="false" aria-controls="profileDetails">
+        <span id="chevronLabel">Details</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+
+      <!-- Top row: Photo + Info -->
+      <div class="profile-top">
         <img src="assets/profile.jpg" alt="Md. Ariful Islam" class="profile-photo"
              onerror="this.style.display='none';">
         <div class="profile-info">
           <h1>Md. Ariful Islam</h1>
           <span class="profile-title-badge">Coating Technician · Junior Officer</span>
         </div>
-
-        <button class="profile-chevron" aria-label="Toggle profile details" type="button">
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
       </div>
 
       <!-- Collapsible details area -->
@@ -1208,29 +1255,43 @@
           <p>From apprenticeship through production operation and coating-area supervision, the work has stayed close to the process: prepare well, operate carefully, document clearly, and help the next shift succeed.</p>
         </div>
 
+        <!-- ✅ What I'm Doing — single column, horizontal cards -->
         <div class="what-doing">
           <h3 class="what-doing-title">What I'm Doing</h3>
           <div class="services-grid">
+
             <div class="service-card">
               <div class="service-icon"><i class="fa-solid fa-pills"></i></div>
-              <h3>Sugar &amp; Film Coating</h3>
-              <p>Operational expertise in solid dosage coating processes with a quality-first mindset.</p>
+              <div class="service-text">
+                <h3>Sugar &amp; Film Coating</h3>
+                <p>Operational expertise in solid dosage coating processes with a quality-first mindset.</p>
+              </div>
             </div>
+
             <div class="service-card">
               <div class="service-icon"><i class="fa-solid fa-gears"></i></div>
-              <h3>Machine Operation</h3>
-              <p>Hands-on operation and parameter optimization on IMA, Glatt, and Solace equipment.</p>
+              <div class="service-text">
+                <h3>Machine Operation</h3>
+                <p>Hands-on operation and parameter optimization on IMA, Glatt, and Solace equipment.</p>
+              </div>
             </div>
+
             <div class="service-card">
               <div class="service-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-              <h3>Process Control</h3>
-              <p>Batch execution, monitoring, and accurate logging of all production data.</p>
+              <div class="service-text">
+                <h3>Process Control</h3>
+                <p>Batch execution, monitoring, and accurate logging of all production data.</p>
+              </div>
             </div>
+
             <div class="service-card">
               <div class="service-icon"><i class="fa-solid fa-shield-halved"></i></div>
-              <h3>GMP Compliance</h3>
-              <p>Strict adherence to cGMP, SOP, EHS, and cleanroom gowning protocols.</p>
+              <div class="service-text">
+                <h3>GMP Compliance</h3>
+                <p>Strict adherence to cGMP, SOP, EHS, and cleanroom gowning protocols.</p>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -1554,43 +1615,17 @@
     // ========================================
     (function initProfileDropdown() {
       const profileCard = document.querySelector('.profile-card');
-      const toggle = document.getElementById('profileToggle');
-      const chevron = document.querySelector('.profile-chevron');
+      const chevron = document.getElementById('profileChevron');
+      const label = document.getElementById('chevronLabel');
 
-      if (!profileCard || !toggle) return;
+      if (!profileCard || !chevron) return;
 
-      function toggleProfile() {
+      chevron.addEventListener('click', (e) => {
+        e.stopPropagation();
         const isOpen = profileCard.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', isOpen);
-      }
-
-      // Click on the top row (photo/name/title area)
-      toggle.addEventListener('click', (e) => {
-        // Chevron button-এ ক্লিক হলে double trigger হবে না
-        if (e.target.closest('.profile-chevron')) return;
-        toggleProfile();
+        chevron.setAttribute('aria-expanded', isOpen);
+        label.textContent = isOpen ? 'Hide' : 'Details';
       });
-
-      // Click on chevron button
-      if (chevron) {
-        chevron.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggleProfile();
-        });
-      }
-
-      // Keyboard accessibility
-      toggle.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleProfile();
-        }
-      });
-
-      // ডিফল্টে বন্ধ থাকবে
-      // চাইলে নিচের দুটি লাইন uncomment করলে ডিফল্ট খোলা থাকবে:
-      // profileCard.classList.add('open');
-      // toggle.setAttribute('aria-expanded', 'true');
     })();
 
     // ========================================
