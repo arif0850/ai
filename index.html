@@ -151,7 +151,6 @@
       letter-spacing: 0.01em;
     }
 
-    /* ✅ SHOW CONTACTS — Corner placement with gradient */
     .profile-chevron {
       position: absolute;
       top: 0;
@@ -192,7 +191,6 @@
       box-shadow: -4px 4px 20px rgba(255, 219, 110, 0.25);
     }
 
-    /* ✅ খোলা অবস্থায় গোল্ডেন গ্রেডিয়েন্ট */
     .profile-card.open .profile-chevron {
       background: linear-gradient(135deg, #ffdb6e 0%, #ffc94a 100%);
       color: #121212;
@@ -814,10 +812,15 @@
       margin-top: 6px;
     }
 
-    .form-submit:hover {
+    .form-submit:hover:not(:disabled) {
       background: #ffd84a;
       transform: translateY(-2px);
       box-shadow: var(--shadow-glow);
+    }
+
+    .form-submit:disabled {
+      cursor: not-allowed;
+      opacity: 0.9;
     }
 
     .contact-info-grid {
@@ -1019,7 +1022,6 @@
       .profile-info h1 { font-size: 1.35rem; }
       .profile-title-badge { font-size: 0.72rem; padding: 6px 12px; }
       
-      /* ✅ মোবাইলে Show Contacts ছোট */
       .profile-chevron {
         padding: 10px 16px;
         font-size: 0.72rem;
@@ -1459,15 +1461,46 @@
         </div>
 
         <h3 class="form-heading">Send a Message</h3>
-        <form class="contact-form" action="mailto:arifspramanik@gmail.com" method="post" enctype="text/plain">
+
+        <!-- ================================================================
+             🔴🔴🔴  WEB3FORMS CONTACT FORM  🔴🔴🔴
+             
+             ▼▼▼  আপনার ACCESS KEY নিচের লাইনে বসানো আছে  ▼▼▼
+             
+             🔍 ভবিষ্যতে Key বদলাতে চাইলে: 
+                 Ctrl+F দিয়ে সার্চ করুন  →  access_key
+                 অথবা                     →  WEB3FORMS ACCESS KEY
+                 অথবা                     →  a1f51da8
+             
+             🌐 Web3Forms Dashboard: https://app.web3forms.com
+             ================================================================ -->
+        <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+          
+          <!-- 🔑🔑🔑 WEB3FORMS ACCESS KEY — এখানে বসান 🔑🔑🔑 -->
+          <input type="hidden" name="access_key" value="a1f51da8-eea3-4479-95e9-563590a2f4fd">
+          <!-- 🔑🔑🔑 END OF ACCESS KEY 🔑🔑🔑 -->
+          
+          <!-- Email Settings -->
+          <input type="hidden" name="from_name" value="Portfolio Contact Form">
+          <input type="hidden" name="subject" value="New message from hiarif.com">
+          <input type="hidden" name="redirect" value="false">
+          
+          <!-- Spam honeypot -->
+          <input type="checkbox" name="botcheck" style="display:none !important" tabindex="-1" autocomplete="off">
+          
+          <!-- User fields -->
           <input type="text" name="name" class="form-input" placeholder="Full name" required>
           <input type="email" name="email" class="form-input" placeholder="Email address" required>
           <input type="text" name="subject" class="form-input" placeholder="Subject" required>
           <textarea name="message" class="form-textarea" placeholder="Your Message" required></textarea>
+          
           <button type="submit" class="form-submit">
             <i class="fa-solid fa-paper-plane"></i> Send Message
           </button>
         </form>
+        <!-- ================================================================
+             🔴🔴🔴  END OF WEB3FORMS FORM  🔴🔴🔴
+             ================================================================ -->
 
         <div class="reference-box">
           <h4>References available on request</h4>
@@ -1506,6 +1539,9 @@
   </nav>
 
   <script>
+    // ========================================
+    // Profile Dropdown Toggle
+    // ========================================
     (function initProfileDropdown() {
       const profileCard = document.querySelector('.profile-card');
       const chevron = document.getElementById('profileChevron');
@@ -1521,6 +1557,9 @@
       });
     })();
 
+    // ========================================
+    // Tab Switching
+    // ========================================
     (function initTabs() {
       const tabs = document.querySelectorAll('.nav-tab');
       const contents = document.querySelectorAll('.tab-content');
@@ -1548,6 +1587,70 @@
       }
     })();
 
+    // ========================================
+    // 🔴🔴🔴 WEB3FORMS CONTACT FORM HANDLER 🔴🔴🔴
+    // 
+    // এই ফাংশন form submit করার পর:
+    //   ✅ সঠিক হলে → সবুজ "Message Sent!" দেখায়
+    //   ❌ ভুল হলে → লাল "Failed" দেখায়
+    // 
+    // 🚫 এই কোডে কিছু বদলানোর দরকার নেই
+    // ========================================
+    (function initContactForm() {
+      const form = document.getElementById('contactForm');
+      if (!form) return;
+
+      const btn = form.querySelector('.form-submit');
+      const originalHTML = btn.innerHTML;
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+        btn.disabled = true;
+        btn.style.background = '';
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Message Sent!';
+            btn.style.background = '#4ade80';
+            btn.style.color = '#121212';
+            form.reset();
+
+            setTimeout(() => {
+              btn.innerHTML = originalHTML;
+              btn.style.background = '';
+              btn.style.color = '';
+              btn.disabled = false;
+            }, 3000);
+          } else {
+            throw new Error(result.message || 'Failed');
+          }
+        } catch (error) {
+          btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Failed. Try again';
+          btn.style.background = '#ef4444';
+          btn.style.color = '#fff';
+
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+          }, 3000);
+        }
+      });
+    })();
+
+    // Set year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
