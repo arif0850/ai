@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
+# ✅ OpenAI Search Bot (ChatGPT-র জন্য)
+User-agent: OAI-SearchBot
+Allow: /
+
+# ✅ ChatGPT User Bot
+User-agent: ChatGPT-User
+Allow: /
+
+# ✅ Bing Bot (ChatGPT Bing ব্যবহার করে)
+User-agent: Bingbot
+Allow: /
+
+# ✅ GPTBot (ঐচ্ছিক — ভবিষ্যতের মডেল)
+User-agent: GPTBot
+Allow: /
+
 Sitemap: https://www.hiarif.com/sitemap.xml
