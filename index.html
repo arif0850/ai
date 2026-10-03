@@ -739,9 +739,6 @@
       display: block;
     }
 
-    /* ========================================
-       ✅ RECOMMENDATIONS / TESTIMONIALS
-       ======================================== */
     .recommendations {
       margin-top: 40px;
       padding-top: 32px;
@@ -1125,6 +1122,9 @@
       line-height: 1.65;
     }
 
+    /* ========================================
+       BOTTOM NAVIGATION — Desktop
+       ======================================== */
     .bottom-nav {
       position: fixed;
       bottom: 24px;
@@ -1296,19 +1296,24 @@
       
       .portfolio-grid { grid-template-columns: 1fr; }
       
+      /* ✅ Mobile — Compact bottom nav */
       .bottom-nav {
-        padding: 6px 8px;
-        gap: 2px;
-        bottom: 16px;
+        padding: 4px 5px;
+        gap: 1px;
+        bottom: 12px;
+        border-radius: 999px;
+        max-width: calc(100vw - 16px);
       }
       
       .nav-tab {
-        padding: 9px 14px;
-        font-size: 0.78rem;
-        gap: 6px;
+        padding: 6px 10px;
+        font-size: 0.68rem;
+        gap: 3px;
       }
       
-      .nav-tab i { font-size: 0.82rem; }
+      .nav-tab i { 
+        font-size: 0.72rem; 
+      }
       
       .contact-info-grid { grid-template-columns: 1fr; }
       .profile-details { grid-template-columns: 1fr; gap: 14px; }
@@ -1323,8 +1328,13 @@
     }
 
     @media (max-width: 420px) {
-      .nav-tab { padding: 8px 12px; font-size: 0.72rem; }
-      .nav-tab i { font-size: 0.78rem; }
+      /* ✅ Extra small — আরো compact nav */
+      .nav-tab { 
+        padding: 5px 8px; 
+        font-size: 0.62rem; 
+        gap: 2px;
+      }
+      .nav-tab i { font-size: 0.68rem; }
       .profile-photo { width: 70px; height: 70px; }
       .profile-info h1 { font-size: 1.2rem; }
       .profile-chevron { padding: 9px 14px; font-size: 0.68rem; }
@@ -1401,7 +1411,6 @@
 
     <div class="main-card">
 
-      <!-- ABOUT TAB -->
       <div class="tab-content active" id="tab-about">
         <h2 class="section-heading">About Me</h2>
 
@@ -1450,7 +1459,6 @@
           </div>
         </div>
 
-        <!-- SKILLS — Horizontal Scroll -->
         <div class="skills-section-about">
           <h4 class="skills-title-plain">Skills</h4>
 
@@ -1503,7 +1511,6 @@
         </div>
       </div>
 
-      <!-- RESUME TAB -->
       <div class="tab-content" id="tab-resume">
         <h2 class="section-heading">Resume</h2>
         <p class="section-intro">A timeline built close to the production line — from apprenticeship to Junior Officer.</p>
@@ -1603,15 +1610,11 @@
           </div>
         </div>
 
-        <!-- ========================================
-             ✅ RECOMMENDATIONS
-             ======================================== -->
         <section class="recommendations">
           <h3 class="section-title">Recommendations</h3>
 
           <div class="testimonials-grid">
             
-            <!-- Card 1 — Abul Kalam Azad -->
             <div class="testimonial-card">
               <div class="reviewer-info">
                 <img 
@@ -1634,12 +1637,8 @@
 
           </div>
         </section>
-        <!-- ========================================
-             ✅ END RECOMMENDATIONS
-             ======================================== -->
       </div>
 
-      <!-- PORTFOLIO TAB -->
       <div class="tab-content" id="tab-portfolio">
         <h2 class="section-heading">Skills &amp; Expertise</h2>
         <p class="section-intro">Hands-on capabilities across coating, compliance, safety, and team operations.</p>
@@ -1711,7 +1710,6 @@
         </div>
       </div>
 
-      <!-- BLOG TAB -->
       <div class="tab-content" id="tab-blog">
         <h2 class="section-heading">Blog</h2>
         <p class="section-intro">Field notes from the production floor — practical lessons, observations, and reflections.</p>
@@ -1743,7 +1741,6 @@
         </div>
       </div>
 
-      <!-- CONTACT TAB -->
       <div class="tab-content" id="tab-contact">
         <h2 class="section-heading">Contact</h2>
         <p class="section-intro">For professional conversations, connect directly through the details below.</p>
@@ -1795,9 +1792,7 @@
 
         <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
           
-          <!-- 🔑🔑🔑 WEB3FORMS ACCESS KEY 🔑🔑🔑 -->
           <input type="hidden" name="access_key" value="a1f51da8-eea3-4479-95e9-563590a2f4fd">
-          <!-- 🔑🔑🔑 END OF ACCESS KEY 🔑🔑🔑 -->
           
           <input type="hidden" name="from_name" value="Portfolio Contact Form">
           <input type="hidden" name="subject" value="New message from hiarif.com">
@@ -1852,7 +1847,6 @@
   </nav>
 
   <script>
-    // Profile Dropdown Toggle
     (function initProfileDropdown() {
       const profileCard = document.querySelector('.profile-card');
       const chevron = document.getElementById('profileChevron');
@@ -1868,7 +1862,6 @@
       });
     })();
 
-    // Tab Switching
     (function initTabs() {
       const tabs = document.querySelectorAll('.nav-tab');
       const contents = document.querySelectorAll('.tab-content');
@@ -1896,7 +1889,6 @@
       }
     })();
 
-    // Skills Scroll Progress Bar
     (function initSkillsScroll() {
       const scroller = document.getElementById('otherSkillsScroll');
       const barFill = document.getElementById('skillsScrollBarFill');
@@ -1937,7 +1929,6 @@
       setTimeout(updateScrollBar, 100);
     })();
 
-    // Web3Forms Contact Form Handler
     (function initContactForm() {
       const form = document.getElementById('contactForm');
       if (!form) return;
