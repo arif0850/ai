@@ -1,18 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   
-  <!-- Homepage -->
+  <!-- Homepage with Images -->
   <url>
     <loc>https://www.hiarif.com/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/profile-large.jpg</image:loc>
+      <image:title>Md. Ariful Islam - Coating Technician at Renata PLC</image:title>
+      <image:caption>Md. Ariful Islam, Junior Officer Coating Area at Renata PLC, Rajendrapur Potent Product Facility, Gazipur, Bangladesh</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/profile.jpg</image:loc>
+      <image:title>Md. Ariful Islam - Pharmaceutical Manufacturing Professional</image:title>
+      <image:caption>Portrait of Md. Ariful Islam, Coating Technician with 12+ years experience</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/hero-coating-machine.jpg</image:loc>
+      <image:title>Pharmaceutical Tablet Coating Machine</image:title>
+      <image:caption>Tablet coating machine with golden pills at Renata PLC potent product facility</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/golden-pills.jpg</image:loc>
+      <image:title>Golden Sugar Coated Pharmaceutical Tablets</image:title>
+      <image:caption>Sugar coating and film coating expertise on pharmaceutical tablets</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/control-panel.jpg</image:loc>
+      <image:title>Pharmaceutical Coating Control Panel</image:title>
+      <image:caption>Process monitoring control panel for pharmaceutical coating operations</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/spray-nozzle.jpg</image:loc>
+      <image:title>Coating Spray Nozzle Equipment</image:title>
+      <image:caption>Pharmaceutical coating spray nozzles for IMA Glatt Solace machinery</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/rolling-pills.jpg</image:loc>
+      <image:title>Batch Execution - Rolling Coated Pills</image:title>
+      <image:caption>Golden pharmaceutical pills rolling in tablet coating drum - batch execution uniformity</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/images/og-image.png</image:loc>
+      <image:title>Md. Ariful Islam - Portfolio Banner</image:title>
+      <image:caption>Portfolio banner of Md. Ariful Islam, Pharmaceutical Coating Professional</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.hiarif.com/assets/testimonials/azad.jpg</image:loc>
+      <image:title>Abul Kalam Azad - LinkedIn Recommendation</image:title>
+      <image:caption>Abul Kalam Azad, Head of Production, Oncology Unit at Healthcare Pharmaceuticals Limited</image:caption>
+    </image:image>
   </url>
   
   <!-- Blog Listing -->
   <url>
     <loc>https://www.hiarif.com/blog.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -20,21 +66,21 @@
   <!-- Blog Posts -->
   <url>
     <loc>https://www.hiarif.com/posts/coating-consistency.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://www.hiarif.com/posts/cleanroom-habits.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://www.hiarif.com/posts/safety-sticker.html</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
