@@ -7,7 +7,8 @@
       "color": "#ffdb6e",
       "keywords": [
         "coating", "sugar", "film", "tablet", "ima", "glatt",
-        "solace", "spray", "pan", "dosage", "coated", "layer"
+        "solace", "spray", "pan", "dosage", "coated", "layer",
+        "drum", "compression", "granulation", "capsule"
       ]
     },
     {
@@ -18,7 +19,8 @@
       "keywords": [
         "gmp", "cgmp", "sop", "compliance", "validation",
         "audit", "regulatory", "fda", "who", "pq", "documentation",
-        "batch record", "protocol", "qualification"
+        "batch record", "protocol", "qualification", "inspection",
+        "deviation", "capa", "change control", "quality"
       ]
     },
     {
@@ -29,7 +31,8 @@
       "keywords": [
         "machine", "equipment", "maintenance", "calibration",
         "qualification", "troubleshooting", "install", "repair",
-        "operation", "setup", "downtime"
+        "operation", "setup", "downtime", "spare", "bearing",
+        "motor", "pump", "sensor", "control panel", "scada", "hmi"
       ]
     },
     {
@@ -39,7 +42,11 @@
       "color": "#f87171",
       "keywords": [
         "safety", "ehs", "loto", "ppe", "fire", "emergency",
-        "first aid", "rescue", "hazard", "containment", "exposure"
+        "first aid", "rescue", "hazard", "containment", "exposure",
+        "respiratory", "respirator", "papr", "hood", "gowning",
+        "protection", "breathing", "airflow", "occupational health",
+        "3m", "versaflo", "jupiter", "filter", "battery", "mask",
+        "contamination", "toxic", "chemical", "spill", "accident"
       ]
     },
     {
