@@ -1,0 +1,53 @@
+{
+  "categories": [
+    {
+      "id": "coating",
+      "name": "Coating Operations",
+      "icon": "fa-pills",
+      "color": "#ffdb6e",
+      "keywords": [
+        "coating", "sugar", "film", "tablet", "ima", "glatt",
+        "solace", "spray", "pan", "dosage", "coated", "layer"
+      ]
+    },
+    {
+      "id": "gmp",
+      "name": "GMP & Compliance",
+      "icon": "fa-shield-halved",
+      "color": "#4ade80",
+      "keywords": [
+        "gmp", "cgmp", "sop", "compliance", "validation",
+        "audit", "regulatory", "fda", "who", "pq", "documentation",
+        "batch record", "protocol", "qualification"
+      ]
+    },
+    {
+      "id": "equipment",
+      "name": "Equipment & Maintenance",
+      "icon": "fa-gears",
+      "color": "#60a5fa",
+      "keywords": [
+        "machine", "equipment", "maintenance", "calibration",
+        "qualification", "troubleshooting", "install", "repair",
+        "operation", "setup", "downtime"
+      ]
+    },
+    {
+      "id": "safety",
+      "name": "Safety & EHS",
+      "icon": "fa-helmet-safety",
+      "color": "#f87171",
+      "keywords": [
+        "safety", "ehs", "loto", "ppe", "fire", "emergency",
+        "first aid", "rescue", "hazard", "containment", "exposure"
+      ]
+    },
+    {
+      "id": "notes",
+      "name": "Field Notes",
+      "icon": "fa-pen-fancy",
+      "color": "#a78bfa",
+      "keywords": []
+    }
+  ]
+}
