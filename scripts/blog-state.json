@@ -1,14 +1,5 @@
 {
-  "last_update_id": 249125297,
-  "pending": {
-    "p1791468215": {
-      "title": "ACG Blender.",
-      "content": "This is a test post to verify that the state save bug is fixed.\n\nThe new workflow now:\n- Purges duplicate pending entries\n- Cleans stale pending on startup\n- Uses git pull --rebase to avoid conflicts\n- Warns if image upload fails\n\n- Bold text works\n- *Italic text works*\n- [Link support](https://hiarif.com)\n\nLet's see if this publishes cleanly.",
-      "slug": "acg-blender",
-      "category": "coating",
-      "image_file_id": "AgACAgUAAyEFAAMBCJrlhAADB2rHol3YpONr3OK0zPEJnVoP0jtiAAJ2E2sbEXg5VtHtzT6aom6HAQADAgADeQADPQQ",
-      "created_at": "2026-10-08T14:03:35.357197"
-    }
-  },
+  "last_update_id": 249125298,
+  "pending": {},
   "last_photo_id": null
 }
