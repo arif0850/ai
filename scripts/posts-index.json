@@ -19,6 +19,21 @@
       ]
     },
     {
+      "slug": "auto-publish-test-v4",
+      "title": "Auto Publish Test v4",
+      "excerpt": "Testing the new auto-publish flow with no confirmation.",
+      "date": "2026-10-08",
+      "category": "notes",
+      "image": "",
+      "keywords": [
+        "testing",
+        "auto",
+        "publish",
+        "flow",
+        "confirmation"
+      ]
+    },
+    {
       "slug": "cleanroom-habits",
       "title": "Cleanroom Habits",
       "excerpt": "Small daily disciplines that protect product integrity in a potent-product environment.",
