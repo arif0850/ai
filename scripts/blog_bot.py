@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Advanced Blog Bot
-Features: Preview + Approve, Delete, Categories, Auto SEO, Pic, Posts Index
-Runs on GitHub Actions every 10 minutes.
+Blog Bot with Channel Support
+- Reads from Telegram Channel (bot as admin)
+- Sends preview to user DM
+- Auto-categorize + Auto SEO
 """
 
 import os
@@ -18,7 +19,8 @@ from collections import Counter
 # CONFIG
 # ============================================================
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')          # User DM
+TELEGRAM_CHANNEL_ID = os.environ.get('TELEGRAM_CHANNEL_ID')    # Channel
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_REPO = 'arif0850/ai'
 GITHUB_API = 'https://api.github.com'
@@ -59,10 +61,12 @@ def load_state():
                 data = json.load(f)
                 if 'pending' not in data:
                     data['pending'] = {}
+                if 'last_photo_id' not in data:
+                    data['last_photo_id'] = None
                 return data
         except Exception as e:
             log(f"State load error: {e}")
-    return {'last_update_id': 0, 'pending': {}}
+    return {'last_update_id': 0, 'pending': {}, 'last_photo_id': None}
 
 def save_state(state):
     with open(STATE_FILE, 'w') as f:
@@ -71,10 +75,10 @@ def save_state(state):
 # ============================================================
 # TELEGRAM
 # ============================================================
-def tg_send(text, reply_markup=None, parse_mode='HTML'):
+def tg_send(chat_id, text, reply_markup=None, parse_mode='HTML'):
     try:
         payload = {
-            'chat_id': TELEGRAM_CHAT_ID,
+            'chat_id': chat_id,
             'text': text,
             'parse_mode': parse_mode,
             'disable_web_page_preview': True,
@@ -118,7 +122,7 @@ def get_updates(last_update_id):
         r = requests.get(f'{TELEGRAM_API}/getUpdates', params={
             'offset': last_update_id + 1,
             'timeout': 5,
-            'allowed_updates': json.dumps(['message', 'callback_query']),
+            'allowed_updates': json.dumps(['message', 'callback_query', 'channel_post']),
         }, timeout=15)
         r.raise_for_status()
         return r.json().get('result', [])
@@ -243,7 +247,6 @@ def markdown_to_html(text):
 # CATEGORIES
 # ============================================================
 def load_categories():
-    """Load categories.json from local file (checked out from repo)."""
     try:
         if Path(CATEGORIES_FILE).exists():
             with open(CATEGORIES_FILE, 'r', encoding='utf-8') as f:
@@ -253,24 +256,19 @@ def load_categories():
     return []
 
 def detect_category(title, content):
-    """Detect best category from title + content keywords."""
     cats = load_categories()
     if not cats:
         return 'notes'
-
     text = (title + ' ' + content).lower()
     text_words = set(re.findall(r'\b\w+\b', text))
-
     best_cat = 'notes'
     best_score = 0
-
     for cat in cats:
         if cat['id'] == 'notes':
             continue
         keywords = cat.get('keywords', [])
         if not keywords:
             continue
-
         score = 0
         for kw in keywords:
             kw_lower = kw.lower()
@@ -281,11 +279,9 @@ def detect_category(title, content):
                 score += 2
             elif kw_lower in text:
                 score += 1
-
         if score > best_score:
             best_score = score
             best_cat = cat['id']
-
     log(f"Category detected: {best_cat} (score: {best_score})")
     return best_cat
 
@@ -297,7 +293,7 @@ def get_category_name(cat_id):
     return 'Field Notes'
 
 # ============================================================
-# HTML GENERATOR (Auto SEO)
+# HTML GENERATOR
 # ============================================================
 def generate_html(post, slug, image_paths):
     now = datetime.now()
@@ -308,22 +304,17 @@ def generate_html(post, slug, image_paths):
     keywords = extract_keywords(post['content'])
     wc = word_count(post['content'])
     rt = reading_time(wc)
-
     og_image = DEFAULT_OG_IMAGE
     if image_paths:
         first = image_paths[0]
         og_image = first if first.startswith('http') else f'{SITE_URL}/{first}'
-
     content_html = markdown_to_html(post['content'])
-
     images_html = ''
     if image_paths:
         for img in image_paths:
             src = img if img.startswith('http') else f'../{img}'
             images_html += f'\n<div class="post-image"><img src="{src}" alt="{post["title"]}" loading="lazy"></div>'
-
     keywords_meta = ', '.join(keywords)
-
     schema_json = json.dumps({
         "@context": "https://schema.org",
         "@type": "BlogPosting",
@@ -350,7 +341,6 @@ def generate_html(post, slug, image_paths):
   <meta name="author" content="{AUTHOR_NAME}">
   <meta name="keywords" content="{keywords_meta}">
   <link rel="canonical" href="{url}">
-
   <meta property="og:type" content="article">
   <meta property="og:title" content="{post['title']}">
   <meta property="og:description" content="{description}">
@@ -358,30 +348,24 @@ def generate_html(post, slug, image_paths):
   <meta property="og:image" content="{og_image}">
   <meta property="og:site_name" content="{AUTHOR_NAME}">
   <meta property="article:published_time" content="{date_iso}">
-
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{post['title']}">
   <meta name="twitter:description" content="{description}">
   <meta name="twitter:image" content="{og_image}">
-
   <meta name="theme-color" content="#121212">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
   <script type="application/ld+json">
 {schema_json}
   </script>
-
   <style>
-    :root {{
-      --bg-main: #121212; --bg-card: #1e1e1e; --bg-inner: #232323;
+    :root {{ --bg-main: #121212; --bg-card: #1e1e1e; --bg-inner: #232323;
       --accent: #ffdb6e; --text-main: #ffffff; --text-soft: #e5e5e5;
       --text-muted: #a3a3a3; --border: #2f2f2f;
-      --radius-md: 14px; --radius-lg: 20px;
-    }}
+      --radius-md: 14px; --radius-lg: 20px; }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{ font-family: 'Inter', -apple-system, sans-serif;
       background: var(--bg-main); color: var(--text-main);
@@ -438,7 +422,6 @@ def generate_html(post, slug, image_paths):
     <a href="../blog.html" class="back-link">
       <i class="fa-solid fa-arrow-left"></i> Back to Blog
     </a>
-
     <article>
       <header class="post-header">
         <div class="post-date">{date_str}</div>
@@ -454,7 +437,6 @@ def generate_html(post, slug, image_paths):
         {content_html}
       </div>
     </article>
-
     <footer class="post-footer">
       <a href="../blog.html">
         <i class="fa-solid fa-book-open"></i> Read More Posts
@@ -498,7 +480,7 @@ def gh_commit_file(path, content, message):
                      headers=gh_headers(), json=payload, timeout=20)
     if r.status_code in [200, 201]:
         return True
-    log(f"Commit error {path}: {r.status_code} — {r.text[:200]}")
+    log(f"Commit error {path}: {r.status_code}")
     return False
 
 def gh_commit_image(path, image_bytes, message):
@@ -601,24 +583,11 @@ def remove_from_posts_index(slug):
     return save_posts_index(index, f'Remove {slug} from posts index')
 
 # ============================================================
-# BOT COMMANDS
+# PENDING POST BUILDER
 # ============================================================
-def cmd_newpost(message, text, state):
-    parsed = parse_post(text)
-    if not parsed:
-        tg_send("❌ <b>Format ভুল</b>\n\n"
-                "সঠিক format:\n\n"
-                "<code>/newpost\nTitle: Your Title\n\n"
-                "Content here...\n---END---</code>")
-        return
-
+def build_pending_and_preview(parsed, image_file_id, state):
     slug = slugify(parsed['title'])
     post_id = f"p{int(datetime.now().timestamp())}"
-
-    image_file_id = None
-    if 'photo' in message:
-        image_file_id = message['photo'][-1]['file_id']
-
     category = detect_category(parsed['title'], parsed['content'])
     cat_name = get_category_name(category)
 
@@ -656,36 +625,118 @@ def cmd_newpost(message, text, state):
         ]]
     }
 
-    tg_send(preview, reply_markup=keyboard)
+    tg_send(TELEGRAM_CHAT_ID, preview, reply_markup=keyboard)
 
 
-def cmd_list(state):
-    pending = state.get('pending', {})
-    if not pending:
-        tg_send("📭 কোনো pending post নেই।")
+# ============================================================
+# CHANNEL HANDLER (Main Flow)
+# ============================================================
+def handle_channel_post(post, state):
+    chat_id = str(post.get('chat', {}).get('id', ''))
+
+    if TELEGRAM_CHANNEL_ID and chat_id != str(TELEGRAM_CHANNEL_ID):
+        log(f"Ignoring channel post from {chat_id}")
         return
-    lines = ["📋 <b>Pending Posts</b>\n"]
-    for pid, p in pending.items():
-        lines.append(f"• <code>{pid}</code> — {p['title']}")
-    tg_send('\n'.join(lines))
+
+    text = (post.get('text') or post.get('caption') or '').strip()
+    has_photo = 'photo' in post
+
+    # Case 1: Photo + /newpost caption (short post)
+    if has_photo and text.lower().startswith('/newpost'):
+        parsed = parse_post(text)
+        if parsed:
+            img_id = post['photo'][-1]['file_id']
+            build_pending_and_preview(parsed, img_id, state)
+            state['last_photo_id'] = None
+        return
+
+    # Case 2: /newpost text (long post)
+    if text.lower().startswith('/newpost'):
+        parsed = parse_post(text)
+        if parsed:
+            img_id = state.get('last_photo_id')
+            build_pending_and_preview(parsed, img_id, state)
+            state['last_photo_id'] = None
+        return
+
+    # Case 3: /skip
+    if text.lower() in ['/skip', '/nophoto']:
+        state['last_photo_id'] = None
+        return
+
+    # Case 4: Photo only
+    if has_photo:
+        state['last_photo_id'] = post['photo'][-1]['file_id']
+        log(f"Photo stored for next post")
+        return
 
 
-def cmd_delete(text):
-    parts = text.split()
-    if len(parts) < 2:
-        tg_send("❌ <code>/delete slug-name</code> দিন।")
+# ============================================================
+# USER DM HANDLER (Fallback)
+# ============================================================
+def handle_message(message, state):
+    chat_id = str(message.get('chat', {}).get('id', ''))
+    if chat_id != str(TELEGRAM_CHAT_ID):
         return
-    slug = parts[1].strip().lower()
-    existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
-    if not existing:
-        tg_send(f"❌ <b>{slug}</b> খুঁজে পাওয়া যায়নি।")
+
+    text = message.get('text') or message.get('caption', '')
+    if not text:
         return
-    keyboard = {'inline_keyboard': [[
-        {'text': '✅ Yes, Delete', 'callback_data': f'delyes:{slug}'},
-        {'text': '❌ Cancel', 'callback_data': f'delno:{slug}'},
-    ]]}
-    tg_send(f"🗑️ <b>Delete Post?</b>\n\nSlug: <code>{slug}</code>\n\n"
-            "এইটা permanent delete হবে।", reply_markup=keyboard)
+
+    text_low = text.strip().lower()
+
+    if text_low.startswith('/newpost'):
+        parsed = parse_post(text)
+        if parsed:
+            img_id = None
+            if 'photo' in message:
+                img_id = message['photo'][-1]['file_id']
+            else:
+                img_id = state.get('last_photo_id')
+                state['last_photo_id'] = None
+            build_pending_and_preview(parsed, img_id, state)
+
+    elif text_low.startswith('/delete'):
+        parts = text.split()
+        if len(parts) < 2:
+            tg_send(TELEGRAM_CHAT_ID, "❌ <code>/delete slug-name</code> দিন।")
+            return
+        slug = parts[1].strip().lower()
+        existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
+        if not existing:
+            tg_send(TELEGRAM_CHAT_ID, f"❌ <b>{slug}</b> খুঁজে পাওয়া যায়নি।")
+            return
+        keyboard = {'inline_keyboard': [[
+            {'text': '✅ Yes, Delete', 'callback_data': f'delyes:{slug}'},
+            {'text': '❌ Cancel', 'callback_data': f'delno:{slug}'},
+        ]]}
+        tg_send(TELEGRAM_CHAT_ID,
+                f"🗑️ <b>Delete Post?</b>\n\nSlug: <code>{slug}</code>",
+                reply_markup=keyboard)
+
+    elif text_low.startswith('/list'):
+        pending = state.get('pending', {})
+        if not pending:
+            tg_send(TELEGRAM_CHAT_ID, "📭 কোনো pending post নেই।")
+            return
+        lines = ["📋 <b>Pending Posts</b>\n"]
+        for pid, p in pending.items():
+            lines.append(f"• <code>{pid}</code> — {p['title']}")
+        tg_send(TELEGRAM_CHAT_ID, '\n'.join(lines))
+
+    elif text_low.startswith('/help') or text_low == '/start':
+        tg_send(TELEGRAM_CHAT_ID,
+            "🤖 <b>Blog Bot Commands</b>\n\n"
+            "📢 <b>Channel-এ পোস্ট করুন:</b>\n"
+            "• Photo আগে পাঠান → তারপর /newpost text\n"
+            "• অথবা Photo + Caption (short post)\n\n"
+            "📝 <code>/newpost</code> format:\n"
+            "<code>/newpost\nTitle: Title\n\nContent\n---END---</code>\n\n"
+            "🗑️ <code>/delete slug</code>\n"
+            "📋 <code>/list</code>\n"
+            "❓ <code>/help</code>"
+        )
+
 
 # ============================================================
 # PUBLISH & DELETE
@@ -776,40 +827,6 @@ def handle_callback(cq, state):
         tg_edit_text(msg_id, "✅ Delete cancelled.")
 
 # ============================================================
-# MESSAGE HANDLER
-# ============================================================
-def handle_message(message, state):
-    chat_id = str(message.get('chat', {}).get('id', ''))
-    if chat_id != str(TELEGRAM_CHAT_ID):
-        return
-
-    text = message.get('text') or message.get('caption', '')
-    if not text:
-        return
-
-    text_low = text.strip().lower()
-
-    if text_low.startswith('/newpost'):
-        cmd_newpost(message, text, state)
-
-    elif text_low.startswith('/delete'):
-        cmd_delete(text)
-
-    elif text_low.startswith('/list'):
-        cmd_list(state)
-
-    elif text_low.startswith('/help') or text_low == '/start':
-        tg_send(
-            "🤖 <b>Blog Bot Commands</b>\n\n"
-            "📝 <code>/newpost</code> — নতুন পোস্ট\n"
-            "   Format:\n"
-            "   <code>/newpost\nTitle: Title\n\nContent\n---END---</code>\n\n"
-            "🗑️ <code>/delete slug</code> — Delete\n"
-            "📋 <code>/list</code> — Pending দেখুন\n"
-            "❓ <code>/help</code> — এই মেনু"
-        )
-
-# ============================================================
 # MAIN
 # ============================================================
 def main():
@@ -825,6 +842,7 @@ def main():
     last_id = state.get('last_update_id', 0)
     log(f"Last update ID: {last_id}")
     log(f"Pending posts: {len(state.get('pending', {}))}")
+    log(f"Channel ID config: {TELEGRAM_CHANNEL_ID or 'NOT SET'}")
 
     updates = get_updates(last_id)
     log(f"Found {len(updates)} new update(s)")
@@ -835,6 +853,8 @@ def main():
         try:
             if 'message' in u:
                 handle_message(u['message'], state)
+            elif 'channel_post' in u:
+                handle_channel_post(u['channel_post'], state)
             elif 'callback_query' in u:
                 handle_callback(u['callback_query'], state)
         except Exception as e:
