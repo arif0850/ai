@@ -8,7 +8,6 @@
   <meta name="author" content="Md. Ariful Islam">
   <meta name="keywords" content="Md. Ariful Islam, Coating Technician, Pharmaceutical Manufacturing, Renata PLC, Sugar Coating, Film Coating, cGMP, WHO-PQ, Solid Dosage, Rajendrapur, Gazipur, Bangladesh">
   
-  <!-- ===== Open Graph ===== -->
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Md. Ariful Islam | Pharmaceutical Coating & Production Professional">
   <meta property="og:description" content="12+ years of experience in pharmaceutical coating, solid dosage manufacturing, and GMP compliance.">
@@ -20,7 +19,6 @@
   <meta property="og:image:alt" content="Md. Ariful Islam - Pharmaceutical Coating & Production Professional">
   <meta property="og:locale" content="en_US">
   
-  <!-- ===== Twitter Card ===== -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Md. Ariful Islam | Pharmaceutical Coating & Production Professional">
   <meta name="twitter:description" content="12+ years of experience in pharmaceutical coating, solid dosage manufacturing, and GMP compliance.">
@@ -48,9 +46,6 @@
     defer>
   </script>
 
-  <!-- ============================================================
-       ✅ PERSON SCHEMA — Google Knowledge Panel & Image Search
-       ============================================================ -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -81,43 +76,20 @@
       "postalCode": "1700",
       "addressCountry": "BD"
     },
-    "nationality": {
-      "@type": "Country",
-      "name": "Bangladesh"
-    },
     "sameAs": [
       "https://www.linkedin.com/in/md-ariful-islam-226816407",
       "https://www.hiarif.com"
     ],
     "knowsAbout": [
-      "Sugar Coating",
-      "Film Coating",
-      "Tablet Coating",
-      "Pharmaceutical Manufacturing",
-      "Solid Dosage Manufacturing",
-      "GMP Compliance",
-      "cGMP",
-      "Process Control",
-      "Coating Machinery",
-      "IMA Coating Equipment",
-      "Glatt Equipment",
-      "Solace Equipment",
-      "OQ PQ Qualification",
-      "Cleanroom Operations",
-      "Potent Product Handling"
-    ],
-    "hasOccupation": {
-      "@type": "Occupation",
-      "name": "Coating Technician",
-      "occupationalCategory": "Pharmaceutical Manufacturing",
-      "skills": "Sugar Coating, Film Coating, GMP Compliance, Machine Operation"
-    }
+      "Sugar Coating", "Film Coating", "Tablet Coating",
+      "Pharmaceutical Manufacturing", "Solid Dosage Manufacturing",
+      "GMP Compliance", "cGMP", "Process Control",
+      "IMA Coating Equipment", "Glatt Equipment", "Solace Equipment",
+      "OQ PQ Qualification", "Cleanroom Operations", "Potent Product Handling"
+    ]
   }
   </script>
 
-  <!-- ============================================================
-       ✅ WEBSITE SCHEMA — Site-level info
-       ============================================================ -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -134,15 +106,12 @@
   }
   </script>
 
-  <!-- ============================================================
-       ✅ PROFILE PAGE SCHEMA — For contact page
-       ============================================================ -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     "dateCreated": "2026-10-04T00:00:00+06:00",
-    "dateModified": "2026-10-04T00:00:00+06:00",
+    "dateModified": "2026-10-08T00:00:00+06:00",
     "mainEntity": {
       "@type": "Person",
       "name": "Md. Ariful Islam",
@@ -1235,46 +1204,140 @@
     .linkedin-link:hover { color: #ffd84a; text-decoration: underline; }
     .linkedin-link i { font-size: 0.85rem; }
 
-    .portfolio-grid {
+    /* ========================================
+       ✅ BLOG TAB — Dynamic Grid
+       ======================================== */
+    .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 18px;
     }
 
-    .portfolio-card {
-      background: var(--bg-inner);
-      border-radius: var(--radius-md);
-      padding: 24px;
-      border: 1px solid var(--border-soft);
-      transition: var(--transition);
-      display: flex; flex-direction: column; gap: 14px;
-      text-decoration: none;
+    .blog-loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
-    .portfolio-card:hover {
-      background: var(--bg-card-hover);
+    .blog-loading i {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .blog-loading p {
+      margin-top: 8px;
+    }
+
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-inner);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    .blog-card:hover {
       border-color: var(--accent-line);
       transform: translateY(-4px);
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     }
 
-    .portfolio-card .p-icon {
-      width: 46px; height: 46px;
-      background: var(--accent-soft);
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; justify-content: center;
+    .blog-thumb {
+      height: 160px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #232323 0%, #1a1a1a 100%);
     }
 
-    .portfolio-card .p-icon i { color: var(--accent); font-size: 1.15rem; }
-
-    .portfolio-card h3 {
-      font-size: 1.02rem; font-weight: 700;
-      color: var(--text-main); letter-spacing: -0.01em;
+    .blog-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
     }
 
-    .portfolio-card p {
-      font-size: 0.87rem; color: var(--text-muted);
-      line-height: 1.65; flex: 1;
+    .blog-card:hover .blog-thumb img {
+      transform: scale(1.05);
+    }
+
+    .blog-thumb-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--accent);
+      opacity: 0.4;
+    }
+
+    .blog-cat-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(18, 18, 18, 0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--accent-line);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .blog-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 8px;
+    }
+
+    .blog-date {
+      font-size: 0.68rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+
+    .blog-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .blog-excerpt {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .blog-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 4px;
     }
 
     .map-wrapper {
@@ -1620,8 +1683,11 @@
       .testimonial-card { padding: 20px; }
       .reviewer-avatar { width: 46px; height: 46px; }
       
-      .portfolio-grid { grid-template-columns: 1fr; }
+      /* Blog mobile */
+      .blog-grid { grid-template-columns: 1fr; gap: 14px; }
+      .blog-thumb { height: 150px; }
       
+      /* Bottom nav */
       .bottom-nav {
         padding: 5px 6px;
         gap: 2px;
@@ -2181,26 +2247,16 @@
         </div>
       </div>
 
+      <!-- BLOG TAB -->
       <div class="tab-content" id="tab-blog">
         <h2 class="section-heading">Blog</h2>
         <p class="section-intro">Field notes from the production floor — practical lessons, observations, and reflections.</p>
 
-        <div class="portfolio-grid">
-          <a href="posts/coating-consistency.html" class="portfolio-card">
-            <div class="p-icon"><i class="fa-solid fa-pills"></i></div>
-            <h3>Coating Consistency</h3>
-            <p>What keeps a coating run stable, batch after batch, when the line is running at full speed.</p>
-          </a>
-          <a href="posts/cleanroom-habits.html" class="portfolio-card">
-            <div class="p-icon"><i class="fa-solid fa-vest"></i></div>
-            <h3>Cleanroom Habits</h3>
-            <p>Small daily disciplines that protect product integrity in a potent-product environment.</p>
-          </a>
-          <a href="posts/safety-sticker.html" class="portfolio-card">
-            <div class="p-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <h3>The Safety Sticker</h3>
-            <p>Why the smallest visual cues on equipment can make the largest difference in safety.</p>
-          </a>
+        <div class="blog-grid" id="blogGrid">
+          <div class="blog-loading">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+            <p>Loading latest posts...</p>
+          </div>
         </div>
 
         <div class="reference-box" style="margin-top: 32px;">
@@ -2398,6 +2454,129 @@
       window.addEventListener('resize', updateScrollBar, { passive: true });
 
       setTimeout(updateScrollBar, 100);
+    })();
+
+    // ========================================
+    // ✅ Dynamic Blog Loading
+    // ========================================
+    (function initDynamicBlog() {
+      const blogGrid = document.getElementById('blogGrid');
+      if (!blogGrid) return;
+
+      // Category images for thumbnails (fallback)
+      const CATEGORY_IMAGES = {
+        'coating':   'assets/images/hero-coating-machine.jpg',
+        'gmp':       'assets/images/control-panel.jpg',
+        'equipment': 'assets/images/spray-nozzle.jpg',
+        'safety':    'assets/images/golden-pills.jpg',
+        'notes':     'assets/images/rolling-pills.jpg'
+      };
+
+      const CATEGORY_META = {
+        'coating':   { name: 'Coating Operations', icon: 'fa-pills' },
+        'gmp':       { name: 'GMP & Compliance', icon: 'fa-shield-halved' },
+        'equipment': { name: 'Equipment & Maintenance', icon: 'fa-gears' },
+        'safety':    { name: 'Safety & EHS', icon: 'fa-helmet-safety' },
+        'notes':     { name: 'Field Notes', icon: 'fa-pen-fancy' }
+      };
+
+      const MAX_POSTS = 4;
+
+      function getThumb(post) {
+        if (post.image && post.image.trim()) {
+          return post.image;
+        }
+        return CATEGORY_IMAGES[post.category] || CATEGORY_IMAGES['notes'];
+      }
+
+      function getCatMeta(catId) {
+        return CATEGORY_META[catId] || CATEGORY_META['notes'];
+      }
+
+      function formatDate(iso) {
+        try {
+          const d = new Date(iso);
+          if (isNaN(d.getTime())) return iso;
+          return d.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+        } catch (e) {
+          return iso;
+        }
+      }
+
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text || '';
+        return div.innerHTML;
+      }
+
+      function render(posts) {
+        if (!posts || posts.length === 0) {
+          blogGrid.innerHTML = `
+            <div class="blog-loading">
+              <i class="fa-solid fa-inbox"></i>
+              <p>এখনো কোনো ব্লগ পোস্ট নেই।</p>
+            </div>
+          `;
+          return;
+        }
+
+        const sorted = [...posts].sort((a, b) =>
+          new Date(b.date || 0) - new Date(a.date || 0)
+        );
+        const latest = sorted.slice(0, MAX_POSTS);
+
+        blogGrid.innerHTML = latest.map(post => {
+          const cat = getCatMeta(post.category);
+          const thumb = getThumb(post);
+          const title = escapeHtml(post.title);
+          const excerpt = escapeHtml(post.excerpt);
+          const dateStr = formatDate(post.date);
+          const url = `posts/${post.slug}.html`;
+
+          return `
+            <a href="${url}" class="blog-card">
+              <div class="blog-thumb">
+                <span class="blog-cat-tag">${escapeHtml(cat.name)}</span>
+                <img src="${thumb}"
+                     alt="${title}"
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <i class="fa-solid ${cat.icon} blog-thumb-placeholder" style="display:none;"></i>
+              </div>
+              <div class="blog-body">
+                <div class="blog-date">${dateStr}</div>
+                <h3>${title}</h3>
+                <p class="blog-excerpt">${excerpt}</p>
+                <span class="blog-read">
+                  Read article <i class="fa-solid fa-arrow-right"></i>
+                </span>
+              </div>
+            </a>
+          `;
+        }).join('');
+      }
+
+      fetch('scripts/posts-index.json?t=' + Date.now())
+        .then(r => {
+          if (!r.ok) throw new Error('Failed to load posts-index.json');
+          return r.json();
+        })
+        .then(data => {
+          render(data.posts || []);
+        })
+        .catch(err => {
+          console.error('Blog load error:', err);
+          blogGrid.innerHTML = `
+            <div class="blog-loading">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <p>পোস্ট লোড করা যায়নি।</p>
+            </div>
+          `;
+        });
     })();
 
     (function initContactForm() {
