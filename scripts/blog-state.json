@@ -1,5 +1,8 @@
 {
-  "last_update_id": 249125304,
+  "last_update_id": 249125288,
   "pending": {},
-  "last_photo_id": null
+  "last_photo_id": null,
+  "settings": {
+    "notify_channel": true
+  }
 }
