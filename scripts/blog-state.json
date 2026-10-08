@@ -1,5 +1,14 @@
 {
-  "last_update_id": 249125292,
-  "pending": {},
+  "last_update_id": 249125294,
+  "pending": {
+    "p1791467869": {
+      "title": "Test Isopropyl",
+      "content": "This is a test post to verify that the state save bug is fixed.\n\nThe new workflow now:\n- Purges duplicate pending entries\n- Cleans stale pending on startup\n- Uses git pull --rebase to avoid conflicts\n- Warns if image upload fails\n\n- Bold text works\n- *Italic text works*\n- [Link support](https://hiarif.com)\n\nLet's see if this publishes cleanly.",
+      "slug": "test-isopropyl",
+      "category": "coating",
+      "image_file_id": null,
+      "created_at": "2026-10-08T13:57:49.993710"
+    }
+  },
   "last_photo_id": null
 }
