@@ -4,475 +4,468 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog | Md. Ariful Islam</title>
-  <meta name="description" content="Field notes on cleanroom discipline, coating operations, and the habits behind quality.">
+  <meta name="description" content="Field notes from the pharmaceutical production floor — practical lessons, observations, and reflections by Md. Ariful Islam.">
+  <meta name="author" content="Md. Ariful Islam">
   
-  <meta name="theme-color" content="#0D9488">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog | Md. Ariful Islam">
+  <meta property="og:description" content="Field notes from the pharmaceutical production floor.">
+  <meta property="og:url" content="https://www.hiarif.com/blog.html">
+  <meta property="og:image" content="https://www.hiarif.com/assets/images/og-image.png">
   
+  <meta name="theme-color" content="#121212">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <script 
-    src="https://cdn.counter.dev/script.js" 
-    data-id="b4eb4197-a4a3-45b8-b112-b3c97ae49a1f" 
-    data-utcoffset="6"
-    defer>
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
     :root {
-      --primary: #0F172A;
-      --accent: #0D9488;
-      --accent-light: #CCFBF1;
-      --text-main: #0F172A;
-      --text-muted: #64748B;
-      --bg-main: #FFFFFF;
-      --bg-alt: #F8FAFC;
-      --border: #E2E8F0;
-      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --transition: all 0.25s ease;
-      --letter-wide: 0.12em;
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --bg-main: #121212;
+      --bg-card: #1e1e1e;
+      --bg-inner: #232323;
+      --accent: #ffdb6e;
+      --accent-soft: rgba(255, 219, 110, 0.12);
+      --accent-line: rgba(255, 219, 110, 0.25);
+      --text-main: #ffffff;
+      --text-soft: #e5e5e5;
+      --text-muted: #a3a3a3;
+      --text-dim: #737373;
+      --border: #2f2f2f;
+      --border-soft: #262626;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      font-family: var(--font-family);
-      font-size: 16px;
-      line-height: 1.6;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-main);
       color: var(--text-main);
-      background-color: var(--bg-main);
+      line-height: 1.6;
+      padding: 40px 20px 100px;
+      min-height: 100vh;
+      letter-spacing: -0.01em;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
-
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
     }
     
-    .nav-container { 
-      display: flex; justify-content: space-between; 
-      align-items: center; height: 72px;
-    }
-    
-    .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-    .logo-icon {
-      width: 38px; height: 38px; background: var(--accent); color: white;
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 0.95rem;
-    }
-    .logo-text { display: flex; flex-direction: column; }
-    .logo-text span:first-child { 
-      font-weight: 700; font-size: 0.95rem; 
-      color: var(--primary); line-height: 1.2;
-    }
-    .logo-text span:last-child { 
-      font-size: 0.62rem; color: var(--text-muted); 
-      letter-spacing: 0.08em; text-transform: uppercase;
-      font-weight: 600;
-    }
-    
-    .nav-links { display: flex; gap: 1.75rem; align-items: center; }
-    .nav-links a { 
-      font-size: 0.82rem; font-weight: 600; 
-      color: var(--text-muted); text-transform: uppercase; 
-      letter-spacing: 0.05em; text-decoration: none;
-      transition: var(--transition);
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-
-    .hamburger { 
-      display: none; flex-direction: column; gap: 5px; 
-      cursor: pointer; padding: 5px; background: none; border: none;
-    }
-    .hamburger span { 
-      display: block; width: 24px; height: 2px; 
-      background: var(--primary); transition: var(--transition);
-    }
-
-    .page-header {
-      padding: 4rem 0 2.5rem;
-      background: var(--bg-alt);
-      border-bottom: 1px solid var(--border);
-    }
+    .container { max-width: 1000px; margin: 0 auto; }
     
     .back-link {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-size: 0.82rem; font-weight: 600;
-      color: var(--accent); text-decoration: none;
-      margin-bottom: 1.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 30px;
       transition: var(--transition);
     }
-    .back-link:hover { gap: 0.65rem; }
+    .back-link:hover { transform: translateX(-4px); }
     
-    .section-label {
-      font-size: 0.72rem; font-weight: 700; 
-      letter-spacing: var(--letter-wide);
-      text-transform: uppercase; color: var(--accent); 
-      margin-bottom: 0.75rem; display: block;
+    .page-header {
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-soft);
     }
     
-    .section-title {
-      font-size: 2.5rem; font-weight: 800; 
-      color: var(--primary); margin-bottom: 1rem; 
-      line-height: 1.15; letter-spacing: -0.03em;
+    .page-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
     }
     
-    .section-subtitle {
-      font-size: 1rem; color: var(--text-muted); 
-      max-width: 640px; line-height: 1.7;
-    }
-
-    .blog-section { padding: 4rem 0 5rem; background: var(--bg-main); }
-    
-    .blog-grid { 
-      display: grid; 
-      grid-template-columns: 1fr; 
-      gap: 1.75rem; 
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
     }
     
-    .blog-card {
-      background: var(--bg-main); border: 1px solid var(--border);
-      border-radius: 12px; overflow: hidden;
-      display: flex; flex-direction: column;
-      text-decoration: none; color: inherit;
+    /* ====================================
+       Category Filter Bar
+       ==================================== */
+    .category-bar {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .category-bar::-webkit-scrollbar { display: none; }
+    
+    .cat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--bg-inner);
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
       transition: var(--transition);
-      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     
-    .blog-card:hover {
-      border-color: rgba(13, 148, 136, 0.4);
-      box-shadow: var(--shadow-lg);
+    .cat-pill:hover {
+      border-color: var(--accent-line);
+      color: var(--accent);
+    }
+    
+    .cat-pill.active {
+      background: var(--accent);
+      color: #121212;
+      border-color: var(--accent);
+    }
+    
+    .cat-pill i { font-size: 0.85rem; }
+    
+    .cat-count {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    
+    .cat-pill.active .cat-count {
+      background: rgba(0, 0, 0, 0.15);
+    }
+    
+    /* ====================================
+       Posts Grid
+       ==================================== */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .post-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+    
+    .post-card:hover {
+      border-color: var(--accent-line);
       transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
     }
     
-    .blog-card-img-wrap {
-      width: 100%; height: 220px; overflow: hidden;
-      background: var(--bg-alt);
+    .post-thumb {
+      height: 180px;
+      background: linear-gradient(135deg, #232323 0%, #1a1a1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
     }
     
-    .blog-card img { 
-      width: 100%; height: 100%; object-fit: cover;
-      display: block; transition: transform 0.4s ease;
+    .post-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
     }
     
-    .blog-card:hover img { transform: scale(1.05); }
-    
-    .blog-card-content { 
-      padding: 1.75rem; flex: 1; 
-      display: flex; flex-direction: column; 
+    .post-card:hover .post-thumb img {
+      transform: scale(1.05);
     }
     
-    .blog-date { 
-      font-size: 0.7rem; color: var(--text-muted); 
-      text-transform: uppercase; letter-spacing: 0.08em; 
-      margin-bottom: 0.75rem; font-weight: 700;
+    .post-thumb-placeholder {
+      color: var(--accent);
+      font-size: 2.5rem;
+      opacity: 0.4;
     }
     
-    .blog-card h3 { 
-      font-size: 1.2rem; font-weight: 700; 
-      color: var(--primary); margin-bottom: 0.75rem; 
-      line-height: 1.4;
+    .post-cat-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(18, 18, 18, 0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--accent-line);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
     
-    .blog-card p { 
-      font-size: 0.92rem; color: var(--text-muted); 
-      flex: 1; margin-bottom: 1.5rem; line-height: 1.65;
+    .post-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
     }
     
-    .read-more { 
-      font-size: 0.8rem; font-weight: 700; 
-      color: var(--accent); text-transform: uppercase; 
-      letter-spacing: 0.06em; display: flex; 
-      align-items: center; gap: 0.4rem;
+    .post-date {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
     }
     
-    .blog-card:hover .read-more { gap: 0.75rem; }
-
-    /* Loading & Empty States */
-    .loading-state,
-    .empty-state,
-    .error-state {
-      text-align: center; padding: 5rem 2rem;
-      color: var(--text-muted); font-size: 0.95rem;
-      background: var(--bg-alt); border-radius: 12px;
-      border: 1px dashed var(--border);
+    .post-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.35;
+      color: var(--text-main);
+    }
+    
+    .post-excerpt {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    
+    .post-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+    
+    .empty-state {
       grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
     }
     
-    .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 1.5rem;
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      display: block;
     }
     
-    @keyframes spin { to { transform: rotate(360deg); } }
-    
-    .empty-state svg {
-      width: 64px; height: 64px;
-      margin: 0 auto 1.5rem;
-      fill: var(--text-muted);
-      opacity: 0.4; display: block;
+    .loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
     }
     
-    .empty-state h3 {
-      font-size: 1.15rem; font-weight: 700;
-      color: var(--primary); margin-bottom: 0.5rem;
-    }
-
-    footer {
-      background: var(--bg-alt); color: var(--text-muted);
-      padding: 2rem 0; font-size: 0.82rem;
-      border-top: 1px solid var(--border);
-    }
-    
-    .footer-content { 
-      display: flex; justify-content: space-between;
-      align-items: center; flex-wrap: wrap; gap: 1rem;
-    }
-    
-    .footer-content a {
-      color: var(--text-muted); text-decoration: none;
-      transition: var(--transition);
-    }
-    .footer-content a:hover { color: var(--accent); }
-
-    @media (min-width: 768px) {
-      .blog-grid { grid-template-columns: 1fr 1fr; }
-    }
-    
-    @media (min-width: 1024px) {
-      .blog-grid { grid-template-columns: 1fr 1fr 1fr; }
-      .blog-card-img-wrap { height: 200px; }
-    }
-    
-    @media (max-width: 767px) {
-      .nav-links {
-        display: none; flex-direction: column;
-        position: absolute; top: 72px; left: 0; right: 0;
-        background: var(--bg-main); padding: 1.5rem;
-        border-bottom: 1px solid var(--border);
-        box-shadow: var(--shadow-lg); gap: 1rem;
-      }
-      .nav-links.active { display: flex; }
-      .hamburger { display: flex; }
-      
-      .page-header { padding: 3rem 0 2rem; }
-      .section-title { font-size: 1.85rem; }
-      .footer-content { flex-direction: column; text-align: center; }
+    @media (max-width: 640px) {
+      body { padding: 24px 16px 80px; }
+      .page-title { font-size: 1.8rem; }
+      .posts-grid { grid-template-columns: 1fr; gap: 16px; }
+      .cat-pill { padding: 8px 14px; font-size: 0.78rem; }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+    </a>
 
-  <header>
-    <div class="container nav-container">
-      <a href="index.html" class="logo">
-        <div class="logo-icon">AI</div>
-        <div class="logo-text">
-          <span>Md. Ariful Islam</span>
-          <span>Pharma Manufacturing</span>
-        </div>
-      </a>
-      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="index.html#about">About</a>
-        <a href="index.html#experience">Experience</a>
-        <a href="index.html#expertise">Expertise</a>
-        <a href="index.html#skills">Skills</a>
-        <a href="blog.html" class="active">Blog</a>
-        <a href="index.html#education">Education</a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
+    <header class="page-header">
+      <h1 class="page-title">Field Notes</h1>
+      <p class="page-subtitle">
+        Practical lessons, observations, and reflections from the pharmaceutical production floor.
+      </p>
+    </header>
+
+    <div class="category-bar" id="categoryBar">
+      <!-- Loaded by JS -->
     </div>
-  </header>
 
-  <main>
-    <div class="page-header">
-      <div class="container">
-        <a href="index.html" class="back-link">← Back to Home</a>
-        <span class="section-label">Field Notes</span>
-        <h1 class="section-title">A working journal for better batches.</h1>
-        <p class="section-subtitle">Short notes on cleanroom discipline, coating operations, and the habits behind quality.</p>
+    <div class="posts-grid" id="postsGrid">
+      <div class="loading">
+        <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 12px; display: block;"></i>
+        Loading posts...
       </div>
     </div>
-
-    <section class="blog-section">
-      <div class="container">
-        <div class="blog-grid" id="blog-grid">
-          <div class="loading-state">
-            <div class="spinner"></div>
-            <p>Loading posts...</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-content">
-      <p>&copy; <span id="year"></span> Md. Ariful Islam. All rights reserved.</p>
-      <a href="index.html">← Back to Home</a>
-    </div>
-  </footer>
+  </div>
 
   <script>
     // ========================================
-    // AUTO-DETECT BLOG POSTS
-    // posts/ ফোল্ডারের সব HTML ফাইল অটো পড়বে
+    // BLOG CONFIG
     // ========================================
-    
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const CONFIG = {
+      postsIndex: 'scripts/posts-index.json',
+      categories: 'scripts/categories.json'
+    };
 
-    // Mobile menu
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
+    let allPosts = [];
+    let categories = [];
+    let activeCategory = 'all';
 
     // ========================================
-    // GitHub Configuration
+    // LOAD DATA
     // ========================================
-    const GITHUB_USER = 'arif0850';
-    const GITHUB_REPO = 'ai'; // আপনার repo-র নাম দিন
-    const POSTS_FOLDER = 'posts';
-
-    // ========================================
-    // Load posts
-    // ========================================
-    loadPosts();
-
-    async function loadPosts() {
-      const grid = document.getElementById('blog-grid');
-      
+    async function loadData() {
       try {
-        // Step 1: GitHub API থেকে posts/ ফোল্ডারের ফাইল লিস্ট
-        const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${POSTS_FOLDER}`;
-        const response = await fetch(apiUrl);
+        const [postsRes, catsRes] = await Promise.all([
+          fetch(CONFIG.postsIndex),
+          fetch(CONFIG.categories)
+        ]);
         
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts folder');
-        }
+        const postsData = await postsRes.json();
+        const catsData = await catsRes.json();
         
-        const files = await response.json();
+        allPosts = postsData.posts || [];
+        categories = catsData.categories || [];
         
-        // Step 2: শুধু HTML ফাইলগুলো ফিল্টার
-        const htmlFiles = files.filter(file => 
-          file.type === 'file' && file.name.endsWith('.html')
-        );
+        // Sort posts by date (newest first)
+        allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
         
-        if (htmlFiles.length === 0) {
-          showEmpty();
-          return;
-        }
-        
-        // Step 3: প্রতিটি ফাইলের meta data পড়া
-        const posts = await Promise.all(
-          htmlFiles.map(file => fetchPostMeta(file))
-        );
-        
-        // Step 4: Invalid post গুলো ফিল্টার
-        const validPosts = posts.filter(p => p && p.title);
-        
-        // Step 5: Date অনুযায়ী sort (নতুন আগে)
-        validPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        // Step 6: Render
-        renderPosts(validPosts);
+        renderCategories();
+        renderPosts();
         
       } catch (err) {
-        console.error('Failed to load posts:', err);
-        showError();
+        console.error('Load error:', err);
+        document.getElementById('postsGrid').innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p>পোস্ট লোড করা যায়নি। পরে আবার চেষ্টা করুন।</p>
+          </div>
+        `;
       }
     }
 
     // ========================================
-    // প্রতিটি পোস্টের meta tags পড়া
+    // CATEGORIES
     // ========================================
-    async function fetchPostMeta(file) {
-      try {
-        // GitHub raw content URL
-        const rawUrl = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${POSTS_FOLDER}/${file.name}`;
-        const response = await fetch(rawUrl);
+    function renderCategories() {
+      const bar = document.getElementById('categoryBar');
+      const totalCount = allPosts.length;
+      
+      let html = `
+        <button class="cat-pill active" data-cat="all">
+          <i class="fa-solid fa-layer-group"></i>
+          All Posts
+          <span class="cat-count">${totalCount}</span>
+        </button>
+      `;
+      
+      categories.forEach(cat => {
+        const count = allPosts.filter(p => p.category === cat.id).length;
+        if (count === 0 && cat.id !== 'notes') return; // skip empty cats (except notes)
         
-        if (!response.ok) return null;
-        
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // Meta tags থেকে তথ্য নিন (fallback: title ট্যাগ)
-        const title = getMeta(doc, 'post-title') || doc.querySelector('title')?.textContent?.split('|')[0]?.trim() || '';
-        const date = getMeta(doc, 'post-date') || '';
-        const summary = getMeta(doc, 'post-summary') || getMeta(doc, 'description') || '';
-        const image = getMeta(doc, 'post-image') || getMeta(doc, 'og:image') || '';
-        
-        return {
-          fileName: file.name,
-          url: `posts/${file.name}`,
-          title,
-          date,
-          summary,
-          image
-        };
-      } catch (err) {
-        console.warn(`Failed to parse ${file.name}:`, err);
-        return null;
+        html += `
+          <button class="cat-pill" data-cat="${cat.id}">
+            <i class="fa-solid ${cat.icon}"></i>
+            ${cat.name}
+            <span class="cat-count">${count}</span>
+          </button>
+        `;
+      });
+      
+      bar.innerHTML = html;
+      
+      bar.querySelectorAll('.cat-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          bar.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeCategory = pill.getAttribute('data-cat');
+          renderPosts();
+        });
+      });
+    }
+
+    // ========================================
+    // POSTS
+    // ========================================
+    function getCategory(id) {
+      return categories.find(c => c.id === id) || {
+        id: 'notes',
+        name: 'Field Notes',
+        icon: 'fa-pen-fancy',
+        color: '#a78bfa'
+      };
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+
+    function renderPosts() {
+      const grid = document.getElementById('postsGrid');
+      
+      let filtered = allPosts;
+      if (activeCategory !== 'all') {
+        filtered = allPosts.filter(p => p.category === activeCategory);
       }
-    }
-
-    // Meta tag helper
-    function getMeta(doc, name) {
-      const el = doc.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
-      return el ? el.getAttribute('content') : null;
-    }
-
-    // ========================================
-    // Posts render
-    // ========================================
-    function renderPosts(posts) {
-      const grid = document.getElementById('blog-grid');
       
-      const fallbackImg = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iMjUwIiB2aWV3Qm94PSIwIDAgNDAwIDI1MCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyNTAiIGZpbGw9IiNmMWY1ZjkiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5NGEzYjgiPkZpZWxkIE5vdGVzPC90ZXh0Pjwvc3ZnPg==';
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            <p>এই ক্যাটেগরিতে এখনো কোনো পোস্ট নেই।</p>
+          </div>
+        `;
+        return;
+      }
       
-      grid.innerHTML = posts.map(post => {
-        const formattedDate = formatDate(post.date);
+      grid.innerHTML = filtered.map(post => {
+        const cat = getCategory(post.category);
+        const imgSrc = post.image 
+          ? (post.image.startsWith('http') ? post.image : post.image)
+          : '';
+        
+        const thumbContent = imgSrc
+          ? `<img src="${imgSrc}" alt="${escapeHtml(post.title)}" loading="lazy">`
+          : `<i class="fa-solid ${cat.icon} post-thumb-placeholder"></i>`;
+        
         return `
-          <a href="${post.url}" class="blog-card">
-            <div class="blog-card-img-wrap">
-              <img src="${post.image || fallbackImg}" 
-                   alt="${escapeHtml(post.title)}" 
-                   onerror="this.onerror=null; this.src='${fallbackImg}'" 
-                   loading="lazy">
+          <a href="posts/${post.slug}.html" class="post-card">
+            <div class="post-thumb">
+              ${thumbContent}
+              <span class="post-cat-tag">${escapeHtml(cat.name)}</span>
             </div>
-            <div class="blog-card-content">
-              <div class="blog-date">${formattedDate}</div>
-              <h3>${escapeHtml(post.title)}</h3>
-              <p>${escapeHtml(post.summary)}</p>
-              <span class="read-more">Read Article ↗</span>
+            <div class="post-body">
+              <div class="post-date">${formatDate(post.date)}</div>
+              <h2 class="post-card-title">${escapeHtml(post.title)}</h2>
+              <p class="post-excerpt">${escapeHtml(post.excerpt)}</p>
+              <span class="post-read">
+                Read article <i class="fa-solid fa-arrow-right"></i>
+              </span>
             </div>
           </a>
         `;
@@ -480,45 +473,9 @@
     }
 
     // ========================================
-    // Helpers
+    // INIT
     // ========================================
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      const d = new Date(dateStr);
-      if (isNaN(d.getTime())) return dateStr;
-      return d.toLocaleDateString('en-US', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      }).toUpperCase();
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function showEmpty() {
-      document.getElementById('blog-grid').innerHTML = `
-        <div class="empty-state">
-          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h10v2H7zm0 4h7v2H7zm0-8h10v2H7z"/></svg>
-          <h3>No blog posts yet</h3>
-          <p>New posts will appear here automatically.</p>
-        </div>
-      `;
-    }
-
-    function showError() {
-      document.getElementById('blog-grid').innerHTML = `
-        <div class="error-state">
-          <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Unable to load posts</h3>
-          <p>Please check your internet connection or try again later.</p>
-        </div>
-      `;
-    }
+    loadData();
   </script>
 </body>
 </html>
