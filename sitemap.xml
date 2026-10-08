@@ -5,7 +5,7 @@
   <!-- Homepage with Images -->
   <url>
     <loc>https://www.hiarif.com/</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -58,19 +58,20 @@
   <!-- Blog Listing -->
   <url>
     <loc>https://www.hiarif.com/blog.html</loc>
-    <lastmod>2026-10-04</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
-  <!-- Blog Posts -->
+  <!-- Blog Post -->
   <url>
-    <loc>https://www.hiarif.com/posts/coating-consistency.html</loc>
-    <lastmod>2026-10-04</lastmod>
+    <loc>https://www.hiarif.com/posts/why-respiratory-protection-matters-in-high-containment-manuf.html</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
+  <!-- Blog Post -->
   <url>
     <loc>https://www.hiarif.com/posts/cleanroom-habits.html</loc>
     <lastmod>2026-10-04</lastmod>
@@ -78,18 +79,10 @@
     <priority>0.7</priority>
   </url>
   
+  <!-- Blog Post -->
   <url>
     <loc>https://www.hiarif.com/posts/safety-sticker.html</loc>
     <lastmod>2026-10-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  
-  <!-- Blog Post -->
-  <url>
-    <loc>https://www.hiarif.com/posts/why-respiratory-protection-matters-in-high-containment-manuf.html</loc>
-    <lastmod>2026-10-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
