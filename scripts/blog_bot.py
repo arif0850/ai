@@ -810,11 +810,17 @@ def handle_callback(cq, state):
         tg_edit_text(msg_id, result)
 
     elif data.startswith('cancel:'):
-        post_id = data.split(':', 1)[1]
-        tg_answer_callback(cq_id, 'Cancelled')
-        if post_id in state.get('pending', {}):
-            del state['pending'][post_id]
-        tg_edit_text(msg_id, "❌ <b>Post cancelled.</b>")
+    post_id = data.split(':', 1)[1]
+    # Answer callback first (removes loading state)
+    tg_answer_callback(cq_id, 'Cancelled ✅')
+    # Remove from pending if exists
+    if post_id in state.get('pending', {}):
+        del state['pending'][post_id]
+        log(f"Cancelled pending post: {post_id}")
+    else:
+        log(f"Cancel clicked for {post_id} (not in pending)")
+    # Update message regardless
+    tg_edit_text(msg_id, "❌ <b>Post cancelled.</b>\n\n(Post removed from queue)")
 
     elif data.startswith('delyes:'):
         slug = data.split(':', 1)[1]
