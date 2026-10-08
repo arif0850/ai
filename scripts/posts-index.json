@@ -1,13 +1,35 @@
 {
   "posts": [
     {
+      "slug": "why-respiratory-protection-matters-in-high-containment-manuf",
+      "title": "Why Respiratory Protection Matters in High Containment Manufacturing",
+      "excerpt": "In pharmaceutical manufacturing, when we work with strong or potent products, respiratory protection is very important. During production, there...",
+      "date": "2026-10-08",
+      "category": "safety",
+      "image": "posts/images/why-respiratory-protection-matters-in-high-containment-manuf.jpg",
+      "keywords": [
+        "protection",
+        "respiratory",
+        "system",
+        "pharmaceutical",
+        "manufacturing",
+        "important",
+        "proper",
+        "used"
+      ]
+    },
+    {
       "slug": "coating-consistency",
       "title": "Coating Consistency",
       "excerpt": "What keeps a coating run stable, batch after batch, when the line is running at full speed.",
       "date": "2026-10-04",
       "category": "coating",
       "image": "",
-      "keywords": ["coating", "consistency", "batch"]
+      "keywords": [
+        "coating",
+        "consistency",
+        "batch"
+      ]
     },
     {
       "slug": "cleanroom-habits",
@@ -16,7 +38,12 @@
       "date": "2026-10-04",
       "category": "gmp",
       "image": "",
-      "keywords": ["cleanroom", "gmp", "gowning", "hygiene"]
+      "keywords": [
+        "cleanroom",
+        "gmp",
+        "gowning",
+        "hygiene"
+      ]
     },
     {
       "slug": "safety-sticker",
@@ -25,7 +52,11 @@
       "date": "2026-10-04",
       "category": "safety",
       "image": "",
-      "keywords": ["safety", "equipment", "visual"]
+      "keywords": [
+        "safety",
+        "equipment",
+        "visual"
+      ]
     }
   ]
 }
