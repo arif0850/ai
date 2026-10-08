@@ -19,6 +19,24 @@
       ]
     },
     {
+      "slug": "testing-automation-after-bug-fix",
+      "title": "Testing Automation After Bug Fix",
+      "excerpt": "This is a test post to verify that the state save bug is fixed. The new workflow now: Purges duplicate pending entries Cleans stale pending on...",
+      "date": "2026-10-08",
+      "category": "coating",
+      "image": "",
+      "keywords": [
+        "pending",
+        "text",
+        "works",
+        "test",
+        "post",
+        "verify",
+        "state",
+        "save"
+      ]
+    },
+    {
       "slug": "cleanroom-habits",
       "title": "Cleanroom Habits",
       "excerpt": "Small daily disciplines that protect product integrity in a potent-product environment.",
