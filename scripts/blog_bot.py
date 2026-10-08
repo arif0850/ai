@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 Blog Bot with Channel Support
-- Reads from Telegram Channel (bot as admin)
-- Sends preview to user DM
-- Auto-categorize + Auto SEO
 """
 
 import os
@@ -19,8 +16,8 @@ from collections import Counter
 # CONFIG
 # ============================================================
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')          # User DM
-TELEGRAM_CHANNEL_ID = os.environ.get('TELEGRAM_CHANNEL_ID')    # Channel
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
+TELEGRAM_CHANNEL_ID = os.environ.get('TELEGRAM_CHANNEL_ID')
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 GITHUB_REPO = 'arif0850/ai'
 GITHUB_API = 'https://api.github.com'
@@ -629,7 +626,7 @@ def build_pending_and_preview(parsed, image_file_id, state):
 
 
 # ============================================================
-# CHANNEL HANDLER (Main Flow)
+# CHANNEL HANDLER
 # ============================================================
 def handle_channel_post(post, state):
     chat_id = str(post.get('chat', {}).get('id', ''))
@@ -641,7 +638,6 @@ def handle_channel_post(post, state):
     text = (post.get('text') or post.get('caption') or '').strip()
     has_photo = 'photo' in post
 
-    # Case 1: Photo + /newpost caption (short post)
     if has_photo and text.lower().startswith('/newpost'):
         parsed = parse_post(text)
         if parsed:
@@ -650,7 +646,6 @@ def handle_channel_post(post, state):
             state['last_photo_id'] = None
         return
 
-    # Case 2: /newpost text (long post)
     if text.lower().startswith('/newpost'):
         parsed = parse_post(text)
         if parsed:
@@ -659,12 +654,10 @@ def handle_channel_post(post, state):
             state['last_photo_id'] = None
         return
 
-    # Case 3: /skip
     if text.lower() in ['/skip', '/nophoto']:
         state['last_photo_id'] = None
         return
 
-    # Case 4: Photo only
     if has_photo:
         state['last_photo_id'] = post['photo'][-1]['file_id']
         log(f"Photo stored for next post")
@@ -672,7 +665,7 @@ def handle_channel_post(post, state):
 
 
 # ============================================================
-# USER DM HANDLER (Fallback)
+# USER DM HANDLER
 # ============================================================
 def handle_message(message, state):
     chat_id = str(message.get('chat', {}).get('id', ''))
@@ -794,6 +787,7 @@ def do_delete(slug):
         return f"✅ <b>Deleted:</b> <code>{slug}</code>"
     return "⚠️ Partially deleted. Check GitHub."
 
+
 # ============================================================
 # CALLBACK HANDLER
 # ============================================================
@@ -810,17 +804,11 @@ def handle_callback(cq, state):
         tg_edit_text(msg_id, result)
 
     elif data.startswith('cancel:'):
-    post_id = data.split(':', 1)[1]
-    # Answer callback first (removes loading state)
-    tg_answer_callback(cq_id, 'Cancelled ✅')
-    # Remove from pending if exists
-    if post_id in state.get('pending', {}):
-        del state['pending'][post_id]
-        log(f"Cancelled pending post: {post_id}")
-    else:
-        log(f"Cancel clicked for {post_id} (not in pending)")
-    # Update message regardless
-    tg_edit_text(msg_id, "❌ <b>Post cancelled.</b>\n\n(Post removed from queue)")
+        post_id = data.split(':', 1)[1]
+        tg_answer_callback(cq_id, 'Cancelled')
+        if post_id in state.get('pending', {}):
+            del state['pending'][post_id]
+        tg_edit_text(msg_id, "❌ <b>Post cancelled.</b>")
 
     elif data.startswith('delyes:'):
         slug = data.split(':', 1)[1]
@@ -831,6 +819,7 @@ def handle_callback(cq, state):
     elif data.startswith('delno:'):
         tg_answer_callback(cq_id, 'Cancelled')
         tg_edit_text(msg_id, "✅ Delete cancelled.")
+
 
 # ============================================================
 # MAIN
