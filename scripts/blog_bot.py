@@ -481,10 +481,13 @@ def gh_commit_file(path, content, message):
     return False
 
 def gh_commit_image(path, image_bytes, message):
+    existing = gh_get_file(path)
     payload = {
         'message': message,
         'content': base64.b64encode(image_bytes).decode('ascii')
     }
+    if existing:
+        payload['sha'] = existing['sha']
     r = requests.put(f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}',
                      headers=gh_headers(), json=payload, timeout=30)
     return r.status_code in [200, 201]
@@ -587,6 +590,22 @@ def build_pending_and_preview(parsed, image_file_id, state):
     post_id = f"p{int(datetime.now().timestamp())}"
     category = detect_category(parsed['title'], parsed['content'])
     cat_name = get_category_name(category)
+
+    # ═══ FIX: Purge any existing pending with same slug ═══
+    for old_pid in list(state['pending'].keys()):
+        if state['pending'][old_pid].get('slug') == slug:
+            log(f"Purging duplicate pending: {old_pid}")
+            del state['pending'][old_pid]
+
+    # ═══ FIX: Warn if slug already published ═══
+    try:
+        existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
+        if existing:
+            tg_send(TELEGRAM_CHAT_ID,
+                f"⚠️ <b>এই slug আগে publish হয়েছে:</b>\n<code>{slug}</code>\n\n"
+                "নতুন post আগেরটার উপরে overwrite করবে। চাইলে Title বদলে দিন।")
+    except Exception as e:
+        log(f"Published-slug check error: {e}")
 
     state['pending'][post_id] = {
         'title': parsed['title'],
@@ -741,13 +760,20 @@ def do_publish(state, post_id):
 
     slug = p['slug']
     image_paths = []
+    image_warning = ""
 
     if p.get('image_file_id'):
         img_bytes = download_photo(p['image_file_id'])
-        if img_bytes:
+        if not img_bytes:
+            image_warning = "\n\n⚠️ Image download failed"
+            log("Image download failed")
+        else:
             img_path = f'{IMAGES_DIR}/{slug}.jpg'
             if gh_commit_image(img_path, img_bytes, f'Add image for {slug}'):
                 image_paths.append(img_path)
+            else:
+                image_warning = "\n\n⚠️ Image upload to GitHub failed"
+                log("Image upload failed")
 
     html = generate_html(p, slug, image_paths)
     if not gh_commit_file(f'{POSTS_DIR}/{slug}.html', html,
@@ -773,7 +799,7 @@ def do_publish(state, post_id):
         f"📝 {p['title']}\n"
         f"🏷️ {get_category_name(p.get('category', 'notes'))}\n"
         f"🔗 {url}\n\n"
-        "২ মিনিটে live হবে।"
+        f"২ মিনিটে live হবে।{image_warning}"
     )
 
 
@@ -834,6 +860,23 @@ def main():
         return
 
     state = load_state()
+
+    # ═══ FIX: Cleanup stale pending (already published) ═══
+    try:
+        index = load_posts_index()
+        published_slugs = {p.get('slug') for p in index.get('posts', [])}
+        stale = []
+        for pid, p in list(state.get('pending', {}).items()):
+            if p.get('slug') in published_slugs:
+                stale.append(pid)
+        if stale:
+            log(f"Removing {len(stale)} stale pending entries")
+            for pid in stale:
+                del state['pending'][pid]
+            save_state(state)
+    except Exception as e:
+        log(f"Stale cleanup error: {e}")
+
     last_id = state.get('last_update_id', 0)
     log(f"Last update ID: {last_id}")
     log(f"Pending posts: {len(state.get('pending', {}))}")
