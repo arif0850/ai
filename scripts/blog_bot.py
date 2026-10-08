@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Blog Bot — Reads Telegram messages and creates HTML blog posts
-Runs on GitHub Actions every 10 minutes
+Advanced Blog Bot
+Features: Preview + Approve, Delete, Categories, Auto SEO, Pic, Posts Index
+Runs on GitHub Actions every 10 minutes.
 """
 
 import os
@@ -11,10 +12,11 @@ import requests
 import base64
 from datetime import datetime
 from pathlib import Path
+from collections import Counter
 
-# ========================================
-# CONFIGURATION
-# ========================================
+# ============================================================
+# CONFIG
+# ============================================================
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
@@ -23,75 +25,112 @@ GITHUB_API = 'https://api.github.com'
 TELEGRAM_API = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}'
 
 STATE_FILE = 'scripts/blog-state.json'
+POSTS_INDEX_FILE = 'scripts/posts-index.json'
+CATEGORIES_FILE = 'scripts/categories.json'
 POSTS_DIR = 'posts'
 IMAGES_DIR = 'posts/images'
 SITEMAP_FILE = 'sitemap.xml'
 
-# ========================================
+SITE_URL = 'https://www.hiarif.com'
+AUTHOR_NAME = 'Md. Ariful Islam'
+DEFAULT_OG_IMAGE = f'{SITE_URL}/assets/images/og-image.png'
+
+STOPWORDS = set("""
+a an the and or but if then else when while for to of in on at by with from as is are was were be been being have has had do does did
+this that these those it its i you he she we they them their our your my his her
+will would can could should may might must shall
+about into over under after before during through above below between
+not no nor so than too very just also only
+""".split())
+
+# ============================================================
 # LOGGER
-# ========================================
+# ============================================================
 def log(msg):
     print(f"[BLOG-BOT] {msg}")
 
-# ========================================
-# STATE MANAGEMENT
-# ========================================
+# ============================================================
+# STATE
+# ============================================================
 def load_state():
-    """Load last processed update_id"""
     if Path(STATE_FILE).exists():
         try:
             with open(STATE_FILE, 'r') as f:
-                return json.load(f)
+                data = json.load(f)
+                if 'pending' not in data:
+                    data['pending'] = {}
+                return data
         except Exception as e:
             log(f"State load error: {e}")
-    return {'last_update_id': 0}
+    return {'last_update_id': 0, 'pending': {}}
 
 def save_state(state):
-    """Save last processed update_id"""
     with open(STATE_FILE, 'w') as f:
         json.dump(state, f, indent=2)
 
-# ========================================
+# ============================================================
 # TELEGRAM
-# ========================================
-def get_updates(last_update_id):
-    """Fetch new Telegram updates"""
+# ============================================================
+def tg_send(text, reply_markup=None, parse_mode='HTML'):
     try:
-        url = f'{TELEGRAM_API}/getUpdates'
-        params = {
+        payload = {
+            'chat_id': TELEGRAM_CHAT_ID,
+            'text': text,
+            'parse_mode': parse_mode,
+            'disable_web_page_preview': True,
+        }
+        if reply_markup:
+            payload['reply_markup'] = json.dumps(reply_markup)
+        r = requests.post(f'{TELEGRAM_API}/sendMessage', data=payload, timeout=10)
+        return r.json()
+    except Exception as e:
+        log(f"tg_send error: {e}")
+        return None
+
+def tg_edit_text(message_id, text, reply_markup=None):
+    try:
+        payload = {
+            'chat_id': TELEGRAM_CHAT_ID,
+            'message_id': message_id,
+            'text': text,
+            'parse_mode': 'HTML',
+            'disable_web_page_preview': True,
+        }
+        if reply_markup:
+            payload['reply_markup'] = json.dumps(reply_markup)
+        r = requests.post(f'{TELEGRAM_API}/editMessageText', data=payload, timeout=10)
+        return r.json()
+    except Exception as e:
+        log(f"tg_edit_text error: {e}")
+        return None
+
+def tg_answer_callback(callback_id, text=''):
+    try:
+        requests.post(f'{TELEGRAM_API}/answerCallbackQuery', data={
+            'callback_query_id': callback_id,
+            'text': text,
+        }, timeout=10)
+    except Exception as e:
+        log(f"tg_answer_callback error: {e}")
+
+def get_updates(last_update_id):
+    try:
+        r = requests.get(f'{TELEGRAM_API}/getUpdates', params={
             'offset': last_update_id + 1,
             'timeout': 5,
-            'allowed_updates': ['message']
-        }
-        r = requests.get(url, params=params, timeout=15)
+            'allowed_updates': json.dumps(['message', 'callback_query']),
+        }, timeout=15)
         r.raise_for_status()
         return r.json().get('result', [])
     except Exception as e:
         log(f"getUpdates error: {e}")
         return []
 
-def send_message(text):
-    """Send confirmation message to Telegram"""
-    try:
-        url = f'{TELEGRAM_API}/sendMessage'
-        data = {
-            'chat_id': TELEGRAM_CHAT_ID,
-            'text': text,
-            'parse_mode': 'HTML'
-        }
-        requests.post(url, data=data, timeout=10)
-    except Exception as e:
-        log(f"sendMessage error: {e}")
-
 def download_photo(file_id):
-    """Download photo from Telegram and return bytes"""
     try:
-        # Get file path
         r = requests.get(f'{TELEGRAM_API}/getFile', params={'file_id': file_id}, timeout=10)
         r.raise_for_status()
         file_path = r.json()['result']['file_path']
-        
-        # Download
         dl_url = f'https://api.telegram.org/file/bot{TELEGRAM_BOT_TOKEN}/{file_path}'
         r = requests.get(dl_url, timeout=30)
         r.raise_for_status()
@@ -100,83 +139,93 @@ def download_photo(file_id):
         log(f"Photo download error: {e}")
         return None
 
-# ========================================
+# ============================================================
 # PARSER
-# ========================================
+# ============================================================
 def parse_post(text):
-    """
-    Parse Telegram message:
-    
-    /newpost
-    Title: My Blog Title
-    
-    Content here...
-    
-    ---END---
-    """
     if not text:
         return None
-    
-    # Must start with /newpost
     if not text.strip().lower().startswith('/newpost'):
         return None
-    
-    # Remove /newpost
     text = text.strip()[8:].strip()
-    
-    # Try to find Title: line
     title = None
-    lines = text.split('\n')
     content_lines = []
-    
-    for i, line in enumerate(lines):
+    for line in text.split('\n'):
         stripped = line.strip()
         if stripped.lower().startswith('title:'):
             title = stripped[6:].strip()
         else:
             content_lines.append(line)
-    
     content = '\n'.join(content_lines).strip()
-    
-    # Remove ---END--- if present
     content = re.sub(r'-{3,}\s*END\s*-{3,}', '', content, flags=re.IGNORECASE).strip()
-    
     if not title:
-        # Use first line as title
         if content:
-            title = content.split('\n')[0][:80]
+            title = content.split('\n')[0][:80].strip()
             content = '\n'.join(content.split('\n')[1:]).strip()
         else:
             return None
-    
     if not content:
         return None
-    
     return {'title': title, 'content': content}
 
+# ============================================================
+# SEO / UTILS
+# ============================================================
 def slugify(text):
-    """Convert title to URL-friendly slug"""
     text = text.lower()
     text = re.sub(r'[^\w\s-]', '', text)
     text = re.sub(r'[\s_]+', '-', text)
     text = re.sub(r'-+', '-', text).strip('-')
     return text[:60]
 
+def clean_text(text):
+    return re.sub(r'\s+', ' ', text).strip()
+
+def make_description(content, limit=155):
+    text = re.sub(r'\*\*(.+?)\*\*', r'\1', content)
+    text = re.sub(r'\*(.+?)\*', r'\1', text)
+    text = re.sub(r'\[(.+?)\]\(.+?\)', r'\1', text)
+    text = re.sub(r'^-\s+', '', text, flags=re.MULTILINE)
+    text = clean_text(text)
+    if len(text) <= limit:
+        return text
+    return text[:limit - 3].rsplit(' ', 1)[0] + '...'
+
+def extract_keywords(content, top_n=10):
+    text = re.sub(r'[^\w\s]', ' ', content.lower())
+    words = [w for w in text.split() if len(w) > 3 and w not in STOPWORDS and not w.isdigit()]
+    counts = Counter(words)
+    return [w for w, _ in counts.most_common(top_n)]
+
+def word_count(content):
+    text = re.sub(r'\*\*(.+?)\*\*', r'\1', content)
+    text = re.sub(r'\*(.+?)\*', r'\1', text)
+    text = re.sub(r'\[(.+?)\]\(.+?\)', r'\1', text)
+    return len(re.findall(r'\w+', text))
+
+def reading_time(wc):
+    minutes = max(1, round(wc / 200))
+    return f"{minutes} min read"
+
+def seo_score(post, images):
+    score = 0
+    if post['title'] and len(post['title']) < 60:
+        score += 2
+    if len(post['content']) > 300:
+        score += 2
+    if images:
+        score += 2
+    if len(extract_keywords(post['content'])) >= 5:
+        score += 2
+    if word_count(post['content']) >= 100:
+        score += 2
+    return min(10, score)
+
 def markdown_to_html(text):
-    """Simple markdown to HTML"""
-    # Escape
     html = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
-    
-    # Bold: **text**
     html = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', html)
-    
-    # Italic: *text*
     html = re.sub(r'\*(.+?)\*', r'<em>\1</em>', html)
-    
-    # Links: [text](url)
-    html = re.sub(r'\[(.+?)\]\((.+?)\)', r'<a href="\2" target="_blank">\1</a>', html)
-    
-    # Paragraphs
+    html = re.sub(r'\[(.+?)\]\((.+?)\)', r'<a href="\2" target="_blank" rel="noopener">\1</a>', html)
     paragraphs = html.split('\n\n')
     result = []
     for p in paragraphs:
@@ -184,216 +233,199 @@ def markdown_to_html(text):
         if not p:
             continue
         if p.startswith('- '):
-            items = [f'<li>{line[2:]}</li>' for line in p.split('\n') if line.strip().startswith('- ')]
+            items = [f'<li>{line[2:].strip()}</li>' for line in p.split('\n') if line.strip().startswith('- ')]
             result.append(f'<ul>{"".join(items)}</ul>')
         else:
             result.append(f'<p>{p.replace(chr(10), "<br>")}</p>')
-    
     return '\n'.join(result)
 
-# ========================================
-# HTML GENERATOR
-# ========================================
-def generate_html(post, image_path=None):
-    """Generate complete blog post HTML"""
-    date_obj = datetime.now()
-    date_str = date_obj.strftime('%B %d, %Y')
-    date_iso = date_obj.strftime('%Y-%m-%d')
-    
+# ============================================================
+# CATEGORIES
+# ============================================================
+def load_categories():
+    """Load categories.json from local file (checked out from repo)."""
+    try:
+        if Path(CATEGORIES_FILE).exists():
+            with open(CATEGORIES_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f).get('categories', [])
+    except Exception as e:
+        log(f"Categories load error: {e}")
+    return []
+
+def detect_category(title, content):
+    """Detect best category from title + content keywords."""
+    cats = load_categories()
+    if not cats:
+        return 'notes'
+
+    text = (title + ' ' + content).lower()
+    text_words = set(re.findall(r'\b\w+\b', text))
+
+    best_cat = 'notes'
+    best_score = 0
+
+    for cat in cats:
+        if cat['id'] == 'notes':
+            continue
+        keywords = cat.get('keywords', [])
+        if not keywords:
+            continue
+
+        score = 0
+        for kw in keywords:
+            kw_lower = kw.lower()
+            if ' ' in kw_lower:
+                if kw_lower in text:
+                    score += 3
+            elif kw_lower in text_words:
+                score += 2
+            elif kw_lower in text:
+                score += 1
+
+        if score > best_score:
+            best_score = score
+            best_cat = cat['id']
+
+    log(f"Category detected: {best_cat} (score: {best_score})")
+    return best_cat
+
+def get_category_name(cat_id):
+    cats = load_categories()
+    for c in cats:
+        if c['id'] == cat_id:
+            return c['name']
+    return 'Field Notes'
+
+# ============================================================
+# HTML GENERATOR (Auto SEO)
+# ============================================================
+def generate_html(post, slug, image_paths):
+    now = datetime.now()
+    date_str = now.strftime('%B %d, %Y')
+    date_iso = now.strftime('%Y-%m-%d')
+    url = f'{SITE_URL}/posts/{slug}.html'
+    description = make_description(post['content'])
+    keywords = extract_keywords(post['content'])
+    wc = word_count(post['content'])
+    rt = reading_time(wc)
+
+    og_image = DEFAULT_OG_IMAGE
+    if image_paths:
+        first = image_paths[0]
+        og_image = first if first.startswith('http') else f'{SITE_URL}/{first}'
+
     content_html = markdown_to_html(post['content'])
-    
-    image_html = ''
-    if image_path:
-        image_html = f'''
-        <div class="post-image">
-          <img src="{image_path}" alt="{post['title']}" loading="lazy">
-        </div>'''
-    
-    html = f'''<!DOCTYPE html>
+
+    images_html = ''
+    if image_paths:
+        for img in image_paths:
+            src = img if img.startswith('http') else f'../{img}'
+            images_html += f'\n<div class="post-image"><img src="{src}" alt="{post["title"]}" loading="lazy"></div>'
+
+    keywords_meta = ', '.join(keywords)
+
+    schema_json = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post['title'],
+        "description": description,
+        "image": og_image,
+        "author": {"@type": "Person", "name": AUTHOR_NAME, "url": SITE_URL},
+        "publisher": {"@type": "Person", "name": AUTHOR_NAME},
+        "datePublished": date_iso,
+        "dateModified": date_iso,
+        "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+        "wordCount": wc,
+        "keywords": keywords_meta,
+        "inLanguage": "en-US"
+    }, indent=2)
+
+    return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{post['title']} | Md. Ariful Islam</title>
-  <meta name="description" content="{post['content'][:150].replace(chr(10), ' ')}...">
-  <meta name="author" content="Md. Ariful Islam">
-  
+  <title>{post['title']} | {AUTHOR_NAME}</title>
+  <meta name="description" content="{description}">
+  <meta name="author" content="{AUTHOR_NAME}">
+  <meta name="keywords" content="{keywords_meta}">
+  <link rel="canonical" href="{url}">
+
   <meta property="og:type" content="article">
   <meta property="og:title" content="{post['title']}">
-  <meta property="og:description" content="{post['content'][:150].replace(chr(10), ' ')}...">
-  <meta property="og:url" content="https://www.hiarif.com/posts/{slugify(post['title'])}.html">
-  <meta property="og:image" content="https://www.hiarif.com/assets/images/og-image.png">
-  
+  <meta property="og:description" content="{description}">
+  <meta property="og:url" content="{url}">
+  <meta property="og:image" content="{og_image}">
+  <meta property="og:site_name" content="{AUTHOR_NAME}">
+  <meta property="article:published_time" content="{date_iso}">
+
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{post['title']}">
-  
+  <meta name="twitter:description" content="{description}">
+  <meta name="twitter:image" content="{og_image}">
+
   <meta name="theme-color" content="#121212">
-  
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
+
+  <script type="application/ld+json">
+{schema_json}
+  </script>
+
   <style>
     :root {{
-      --bg-main: #121212;
-      --bg-card: #1e1e1e;
-      --bg-inner: #232323;
-      --accent: #ffdb6e;
-      --text-main: #ffffff;
-      --text-soft: #e5e5e5;
-      --text-muted: #a3a3a3;
-      --border: #2f2f2f;
-      --radius-md: 14px;
-      --radius-lg: 20px;
+      --bg-main: #121212; --bg-card: #1e1e1e; --bg-inner: #232323;
+      --accent: #ffdb6e; --text-main: #ffffff; --text-soft: #e5e5e5;
+      --text-muted: #a3a3a3; --border: #2f2f2f;
+      --radius-md: 14px; --radius-lg: 20px;
     }}
-    
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    
-    body {{
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
-      line-height: 1.7;
-      padding: 40px 20px 100px;
-      min-height: 100vh;
-      letter-spacing: -0.01em;
-    }}
-    
-    .container {{
-      max-width: 800px;
-      margin: 0 auto;
-    }}
-    
-    .back-link {{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 30px;
-      transition: all 0.3s ease;
-    }}
-    
-    .back-link:hover {{
-      transform: translateX(-4px);
-    }}
-    
-    .post-header {{
-      margin-bottom: 40px;
-      padding-bottom: 30px;
-      border-bottom: 1px solid var(--border);
-    }}
-    
-    .post-date {{
-      font-size: 0.75rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }}
-    
-    .post-title {{
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.03em;
-      color: var(--text-main);
-    }}
-    
-    .post-content {{
-      font-size: 1.05rem;
-      color: var(--text-soft);
-    }}
-    
-    .post-content p {{
-      margin-bottom: 20px;
-      line-height: 1.8;
-    }}
-    
-    .post-content h2 {{
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin: 32px 0 16px;
-      letter-spacing: -0.02em;
-    }}
-    
-    .post-content h3 {{
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin: 24px 0 12px;
-    }}
-    
-    .post-content ul {{
-      margin: 16px 0 20px 24px;
-    }}
-    
-    .post-content li {{
-      margin-bottom: 8px;
-      color: var(--text-soft);
-    }}
-    
-    .post-content strong {{
-      color: var(--text-main);
-      font-weight: 700;
-    }}
-    
-    .post-content a {{
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
-    }}
-    
-    .post-content a:hover {{
-      border-bottom-color: var(--accent);
-    }}
-    
-    .post-image {{
-      margin: 24px 0;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }}
-    
-    .post-image img {{
-      width: 100%;
-      height: auto;
-      display: block;
-    }}
-    
-    .post-footer {{
-      margin-top: 50px;
-      padding-top: 30px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }}
-    
-    .post-footer a {{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: #121212;
-      padding: 12px 24px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }}
-    
-    .post-footer a:hover {{
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 219, 110, 0.3);
-    }}
-    
+    body {{ font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-main); color: var(--text-main);
+      line-height: 1.7; padding: 40px 20px 100px; min-height: 100vh;
+      letter-spacing: -0.01em; }}
+    .container {{ max-width: 800px; margin: 0 auto; }}
+    .back-link {{ display: inline-flex; align-items: center; gap: 8px;
+      color: var(--accent); text-decoration: none; font-size: 0.9rem;
+      font-weight: 600; margin-bottom: 30px; transition: all 0.3s ease; }}
+    .back-link:hover {{ transform: translateX(-4px); }}
+    .post-header {{ margin-bottom: 30px; padding-bottom: 30px;
+      border-bottom: 1px solid var(--border); }}
+    .post-date {{ font-size: 0.75rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      font-weight: 700; margin-bottom: 12px; }}
+    .post-title {{ font-size: 2.2rem; font-weight: 800;
+      line-height: 1.2; letter-spacing: -0.03em; color: var(--text-main); }}
+    .post-meta {{ display: flex; gap: 18px; margin-top: 16px;
+      font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; }}
+    .post-meta span {{ display: inline-flex; align-items: center; gap: 6px; }}
+    .post-content {{ font-size: 1.05rem; color: var(--text-soft); }}
+    .post-content p {{ margin-bottom: 20px; line-height: 1.8; }}
+    .post-content h2 {{ font-size: 1.5rem; font-weight: 700;
+      color: var(--text-main); margin: 32px 0 16px; letter-spacing: -0.02em; }}
+    .post-content h3 {{ font-size: 1.2rem; font-weight: 700;
+      color: var(--text-main); margin: 24px 0 12px; }}
+    .post-content ul {{ margin: 16px 0 20px 24px; }}
+    .post-content li {{ margin-bottom: 8px; color: var(--text-soft); }}
+    .post-content strong {{ color: var(--text-main); font-weight: 700; }}
+    .post-content em {{ color: var(--text-soft); font-style: italic; }}
+    .post-content a {{ color: var(--accent); text-decoration: none;
+      border-bottom: 1px solid transparent; transition: border-color 0.3s ease; }}
+    .post-content a:hover {{ border-bottom-color: var(--accent); }}
+    .post-image {{ margin: 24px 0; border-radius: var(--radius-md);
+      overflow: hidden; border: 1px solid var(--border); }}
+    .post-image img {{ width: 100%; height: auto; display: block; }}
+    .post-footer {{ margin-top: 50px; padding-top: 30px;
+      border-top: 1px solid var(--border); text-align: center; }}
+    .post-footer a {{ display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #121212; padding: 12px 24px;
+      border-radius: 999px; text-decoration: none; font-weight: 700;
+      font-size: 0.9rem; transition: all 0.3s ease; }}
+    .post-footer a:hover {{ transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 219, 110, 0.3); }}
     @media (max-width: 640px) {{
       body {{ padding: 24px 16px 80px; }}
       .post-title {{ font-size: 1.6rem; }}
@@ -406,20 +438,23 @@ def generate_html(post, image_path=None):
     <a href="../blog.html" class="back-link">
       <i class="fa-solid fa-arrow-left"></i> Back to Blog
     </a>
-    
+
     <article>
       <header class="post-header">
         <div class="post-date">{date_str}</div>
         <h1 class="post-title">{post['title']}</h1>
+        <div class="post-meta">
+          <span><i class="fa-solid fa-user"></i> {AUTHOR_NAME}</span>
+          <span><i class="fa-solid fa-clock"></i> {rt}</span>
+          <span><i class="fa-solid fa-book"></i> {wc} words</span>
+        </div>
       </header>
-      
-      {image_html}
-      
+      {images_html}
       <div class="post-content">
         {content_html}
       </div>
     </article>
-    
+
     <footer class="post-footer">
       <a href="../blog.html">
         <i class="fa-solid fa-book-open"></i> Read More Posts
@@ -428,214 +463,387 @@ def generate_html(post, image_path=None):
   </div>
 </body>
 </html>'''
-    
-    return html
 
-# ========================================
+# ============================================================
 # GITHUB API
-# ========================================
-def github_headers():
+# ============================================================
+def gh_headers():
     return {
         'Authorization': f'token {GITHUB_TOKEN}',
         'Accept': 'application/vnd.github.v3+json'
     }
 
-def get_github_file(path):
-    """Get file content from GitHub"""
-    url = f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}'
-    r = requests.get(url, headers=github_headers(), timeout=15)
-    if r.status_code == 200:
-        data = r.json()
-        return {
-            'sha': data['sha'],
-            'content': base64.b64decode(data['content']).decode('utf-8')
-        }
-    return None
+def gh_get_file(path):
+    try:
+        r = requests.get(f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}',
+                         headers=gh_headers(), timeout=15)
+        if r.status_code == 200:
+            d = r.json()
+            return {'sha': d['sha'],
+                    'content': base64.b64decode(d['content']).decode('utf-8')}
+        return None
+    except Exception as e:
+        log(f"gh_get_file error {path}: {e}")
+        return None
 
-def commit_file(path, content, message):
-    """Commit a file to GitHub"""
-    # Try to get existing file (for update)
-    existing = get_github_file(path)
-    
+def gh_commit_file(path, content, message):
+    existing = gh_get_file(path)
     payload = {
         'message': message,
         'content': base64.b64encode(content.encode('utf-8')).decode('ascii')
     }
-    
     if existing:
         payload['sha'] = existing['sha']
-    
-    url = f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}'
-    r = requests.put(url, headers=github_headers(), json=payload, timeout=20)
-    
+    r = requests.put(f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}',
+                     headers=gh_headers(), json=payload, timeout=20)
     if r.status_code in [200, 201]:
         return True
-    else:
-        log(f"Commit error {path}: {r.status_code} — {r.text[:200]}")
-        return False
+    log(f"Commit error {path}: {r.status_code} — {r.text[:200]}")
+    return False
 
-def commit_image(path, image_bytes, message):
-    """Commit an image to GitHub"""
+def gh_commit_image(path, image_bytes, message):
     payload = {
         'message': message,
         'content': base64.b64encode(image_bytes).decode('ascii')
     }
-    
-    url = f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}'
-    r = requests.put(url, headers=github_headers(), json=payload, timeout=30)
-    
-    if r.status_code in [200, 201]:
-        return True
-    return False
+    r = requests.put(f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}',
+                     headers=gh_headers(), json=payload, timeout=30)
+    return r.status_code in [200, 201]
 
-def update_sitemap(new_url, lastmod):
-    """Add new post URL to sitemap"""
-    sitemap = get_github_file(SITEMAP_FILE)
-    if not sitemap:
-        log("Sitemap not found")
-        return False
-    
-    content = sitemap['content']
-    
-    if new_url in content:
-        log("URL already in sitemap")
+def gh_delete_file(path, message):
+    existing = gh_get_file(path)
+    if not existing:
         return True
-    
-    new_entry = f'''  <!-- Blog Post -->
+    payload = {'message': message, 'sha': existing['sha']}
+    r = requests.delete(f'{GITHUB_API}/repos/{GITHUB_REPO}/contents/{path}',
+                        headers=gh_headers(), json=payload, timeout=20)
+    return r.status_code in [200, 201]
+
+# ============================================================
+# SITEMAP
+# ============================================================
+def sitemap_add(slug, date_iso):
+    url = f'{SITE_URL}/posts/{slug}.html'
+    s = gh_get_file(SITEMAP_FILE)
+    if not s:
+        return False
+    content = s['content']
+    if url in content:
+        return True
+    entry = f'''  <!-- Blog Post -->
   <url>
-    <loc>{new_url}</loc>
-    <lastmod>{lastmod}</lastmod>
+    <loc>{url}</loc>
+    <lastmod>{date_iso}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
 </urlset>'''
-    
-    content = content.replace('</urlset>', new_entry)
-    
-    return commit_file(SITEMAP_FILE, content, f'Add {new_url} to sitemap')
+    content = content.replace('</urlset>', entry)
+    return gh_commit_file(SITEMAP_FILE, content, f'Add {slug} to sitemap')
 
-def update_blog_listing(post_title, post_url, date_str, excerpt):
-    """Add new post to blog.html"""
-    blog = get_github_file('blog.html')
-    if not blog:
-        log("blog.html not found")
-        return False
-    
-    content = blog['content']
-    
-    # Check if already added
-    if post_url in content:
-        log("URL already in blog.html")
+def sitemap_remove(slug):
+    url = f'{SITE_URL}/posts/{slug}.html'
+    s = gh_get_file(SITEMAP_FILE)
+    if not s:
         return True
-    
-    log("blog.html found but auto-update needs manual template")
-    # We'll skip auto-update for blog.html to avoid breaking
-    # User can manually add to blog.html or we can add later
-    return True
+    content = s['content']
+    if url not in content:
+        return True
+    pattern = re.compile(
+        r'\s*<!-- Blog Post -->\s*<url>\s*<loc>' + re.escape(url) +
+        r'</loc>.*?</url>', re.DOTALL)
+    content = pattern.sub('', content)
+    return gh_commit_file(SITEMAP_FILE, content, f'Remove {slug} from sitemap')
 
-# ========================================
+# ============================================================
+# POSTS INDEX
+# ============================================================
+def load_posts_index():
+    idx = gh_get_file(POSTS_INDEX_FILE)
+    if idx:
+        try:
+            return json.loads(idx['content'])
+        except Exception as e:
+            log(f"posts-index parse error: {e}")
+    return {'posts': []}
+
+def save_posts_index(index, message):
+    return gh_commit_file(
+        POSTS_INDEX_FILE,
+        json.dumps(index, indent=2, ensure_ascii=False),
+        message
+    )
+
+def add_to_posts_index(slug, title, content, category, image_path):
+    index = load_posts_index()
+    index['posts'] = [p for p in index['posts'] if p.get('slug') != slug]
+    excerpt = make_description(content, limit=150)
+    keywords = extract_keywords(content, top_n=8)
+    index['posts'].append({
+        'slug': slug,
+        'title': title,
+        'excerpt': excerpt,
+        'date': datetime.now().strftime('%Y-%m-%d'),
+        'category': category,
+        'image': image_path or '',
+        'keywords': keywords
+    })
+    index['posts'].sort(key=lambda p: p.get('date', ''), reverse=True)
+    return save_posts_index(index, f'Add {slug} to posts index')
+
+def remove_from_posts_index(slug):
+    index = load_posts_index()
+    original = len(index['posts'])
+    index['posts'] = [p for p in index['posts'] if p.get('slug') != slug]
+    if len(index['posts']) == original:
+        return True
+    return save_posts_index(index, f'Remove {slug} from posts index')
+
+# ============================================================
+# BOT COMMANDS
+# ============================================================
+def cmd_newpost(message, text, state):
+    parsed = parse_post(text)
+    if not parsed:
+        tg_send("❌ <b>Format ভুল</b>\n\n"
+                "সঠিক format:\n\n"
+                "<code>/newpost\nTitle: Your Title\n\n"
+                "Content here...\n---END---</code>")
+        return
+
+    slug = slugify(parsed['title'])
+    post_id = f"p{int(datetime.now().timestamp())}"
+
+    image_file_id = None
+    if 'photo' in message:
+        image_file_id = message['photo'][-1]['file_id']
+
+    category = detect_category(parsed['title'], parsed['content'])
+    cat_name = get_category_name(category)
+
+    state['pending'][post_id] = {
+        'title': parsed['title'],
+        'content': parsed['content'],
+        'slug': slug,
+        'category': category,
+        'image_file_id': image_file_id,
+        'created_at': datetime.now().isoformat(),
+    }
+
+    wc = word_count(parsed['content'])
+    rt = reading_time(wc)
+    keywords = extract_keywords(parsed['content'])
+    desc = make_description(parsed['content'])
+    score = seo_score(parsed, [image_file_id] if image_file_id else [])
+
+    preview = (
+        f"📝 <b>Preview Ready</b>\n\n"
+        f"<b>Title:</b> {parsed['title']}\n"
+        f"<b>Category:</b> {cat_name}\n"
+        f"<b>Slug:</b> <code>{slug}</code>\n\n"
+        f"<b>Words:</b> {wc}  •  <b>Reading:</b> {rt}\n"
+        f"<b>Images:</b> {'✅ 1' if image_file_id else '❌ None'}\n"
+        f"<b>SEO Score:</b> {score}/10\n\n"
+        f"<b>Keywords:</b> {', '.join(keywords[:6])}\n\n"
+        f"<b>Description:</b>\n<i>{desc}</i>"
+    )
+
+    keyboard = {
+        'inline_keyboard': [[
+            {'text': '✅ Approve', 'callback_data': f'approve:{post_id}'},
+            {'text': '❌ Cancel', 'callback_data': f'cancel:{post_id}'},
+        ]]
+    }
+
+    tg_send(preview, reply_markup=keyboard)
+
+
+def cmd_list(state):
+    pending = state.get('pending', {})
+    if not pending:
+        tg_send("📭 কোনো pending post নেই।")
+        return
+    lines = ["📋 <b>Pending Posts</b>\n"]
+    for pid, p in pending.items():
+        lines.append(f"• <code>{pid}</code> — {p['title']}")
+    tg_send('\n'.join(lines))
+
+
+def cmd_delete(text):
+    parts = text.split()
+    if len(parts) < 2:
+        tg_send("❌ <code>/delete slug-name</code> দিন।")
+        return
+    slug = parts[1].strip().lower()
+    existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
+    if not existing:
+        tg_send(f"❌ <b>{slug}</b> খুঁজে পাওয়া যায়নি।")
+        return
+    keyboard = {'inline_keyboard': [[
+        {'text': '✅ Yes, Delete', 'callback_data': f'delyes:{slug}'},
+        {'text': '❌ Cancel', 'callback_data': f'delno:{slug}'},
+    ]]}
+    tg_send(f"🗑️ <b>Delete Post?</b>\n\nSlug: <code>{slug}</code>\n\n"
+            "এইটা permanent delete হবে।", reply_markup=keyboard)
+
+# ============================================================
+# PUBLISH & DELETE
+# ============================================================
+def do_publish(state, post_id):
+    p = state.get('pending', {}).get(post_id)
+    if not p:
+        return "❌ Post পাওয়া যায়নি (সম্ভবত expire)।"
+
+    slug = p['slug']
+    image_paths = []
+
+    if p.get('image_file_id'):
+        img_bytes = download_photo(p['image_file_id'])
+        if img_bytes:
+            img_path = f'{IMAGES_DIR}/{slug}.jpg'
+            if gh_commit_image(img_path, img_bytes, f'Add image for {slug}'):
+                image_paths.append(img_path)
+
+    html = generate_html(p, slug, image_paths)
+    if not gh_commit_file(f'{POSTS_DIR}/{slug}.html', html,
+                          f'Add blog post: {p["title"]}'):
+        return "❌ HTML commit করতে ব্যর্থ।"
+
+    sitemap_add(slug, datetime.now().strftime('%Y-%m-%d'))
+
+    image_for_index = image_paths[0] if image_paths else ''
+    add_to_posts_index(
+        slug=slug,
+        title=p['title'],
+        content=p['content'],
+        category=p.get('category', 'notes'),
+        image_path=image_for_index
+    )
+
+    del state['pending'][post_id]
+    url = f'{SITE_URL}/posts/{slug}.html'
+
+    return (
+        f"✅ <b>Published!</b>\n\n"
+        f"📝 {p['title']}\n"
+        f"🏷️ {get_category_name(p.get('category', 'notes'))}\n"
+        f"🔗 {url}\n\n"
+        "২ মিনিটে live হবে।"
+    )
+
+
+def do_delete(slug):
+    ok = True
+    ok &= gh_delete_file(f'{POSTS_DIR}/{slug}.html', f'Delete post {slug}')
+    gh_delete_file(f'{IMAGES_DIR}/{slug}.jpg', f'Delete image {slug}')
+    sitemap_remove(slug)
+    remove_from_posts_index(slug)
+    if ok:
+        return f"✅ <b>Deleted:</b> <code>{slug}</code>"
+    return "⚠️ Partially deleted. Check GitHub."
+
+# ============================================================
+# CALLBACK HANDLER
+# ============================================================
+def handle_callback(cq, state):
+    data = cq.get('data', '')
+    cq_id = cq.get('id')
+    msg = cq.get('message', {})
+    msg_id = msg.get('message_id')
+
+    if data.startswith('approve:'):
+        post_id = data.split(':', 1)[1]
+        tg_answer_callback(cq_id, 'Publishing...')
+        result = do_publish(state, post_id)
+        tg_edit_text(msg_id, result)
+
+    elif data.startswith('cancel:'):
+        post_id = data.split(':', 1)[1]
+        tg_answer_callback(cq_id, 'Cancelled')
+        if post_id in state.get('pending', {}):
+            del state['pending'][post_id]
+        tg_edit_text(msg_id, "❌ <b>Post cancelled.</b>")
+
+    elif data.startswith('delyes:'):
+        slug = data.split(':', 1)[1]
+        tg_answer_callback(cq_id, 'Deleting...')
+        result = do_delete(slug)
+        tg_edit_text(msg_id, result)
+
+    elif data.startswith('delno:'):
+        tg_answer_callback(cq_id, 'Cancelled')
+        tg_edit_text(msg_id, "✅ Delete cancelled.")
+
+# ============================================================
+# MESSAGE HANDLER
+# ============================================================
+def handle_message(message, state):
+    chat_id = str(message.get('chat', {}).get('id', ''))
+    if chat_id != str(TELEGRAM_CHAT_ID):
+        return
+
+    text = message.get('text') or message.get('caption', '')
+    if not text:
+        return
+
+    text_low = text.strip().lower()
+
+    if text_low.startswith('/newpost'):
+        cmd_newpost(message, text, state)
+
+    elif text_low.startswith('/delete'):
+        cmd_delete(text)
+
+    elif text_low.startswith('/list'):
+        cmd_list(state)
+
+    elif text_low.startswith('/help') or text_low == '/start':
+        tg_send(
+            "🤖 <b>Blog Bot Commands</b>\n\n"
+            "📝 <code>/newpost</code> — নতুন পোস্ট\n"
+            "   Format:\n"
+            "   <code>/newpost\nTitle: Title\n\nContent\n---END---</code>\n\n"
+            "🗑️ <code>/delete slug</code> — Delete\n"
+            "📋 <code>/list</code> — Pending দেখুন\n"
+            "❓ <code>/help</code> — এই মেনু"
+        )
+
+# ============================================================
 # MAIN
-# ========================================
+# ============================================================
 def main():
     log("=" * 50)
     log(f"Blog Bot Run — {datetime.now().isoformat()}")
     log("=" * 50)
-    
+
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        log("ERROR: Missing Telegram credentials")
+        log("ERROR: Missing credentials")
         return
-    
+
     state = load_state()
     last_id = state.get('last_update_id', 0)
     log(f"Last update ID: {last_id}")
-    
+    log(f"Pending posts: {len(state.get('pending', {}))}")
+
     updates = get_updates(last_id)
     log(f"Found {len(updates)} new update(s)")
-    
-    if not updates:
-        log("No new messages")
-        return
-    
-    processed_count = 0
-    new_last_id = last_id
-    
-    for update in updates:
-        update_id = update.get('update_id', 0)
-        new_last_id = max(new_last_id, update_id)
-        
-        message = update.get('message', {})
-        chat_id = str(message.get('chat', {}).get('id', ''))
-        
-        # Only accept from our own chat
-        if chat_id != str(TELEGRAM_CHAT_ID):
-            log(f"Ignoring message from chat {chat_id}")
-            continue
-        
-        # Get text (either direct text or caption for photos)
-        text = message.get('text') or message.get('caption', '')
-        
-        if not text or not text.strip().lower().startswith('/newpost'):
-            continue
-        
-        log(f"Processing /newpost...")
-        
-        parsed = parse_post(text)
-        if not parsed:
-            send_message("❌ <b>Error:</b> Could not parse post. Format:\n\n<code>/newpost\nTitle: My Title\n\nContent...</code>")
-            continue
-        
-        slug = slugify(parsed['title'])
-        post_url = f'https://www.hiarif.com/posts/{slug}.html'
-        post_path = f'posts/{slug}.html'
-        
-        # Handle photo
-        image_path = None
-        if 'photo' in message:
-            log("Downloading photo...")
-            # Get largest photo
-            photo = message['photo'][-1]
-            img_bytes = download_photo(photo['file_id'])
-            
-            if img_bytes:
-                # Determine extension (default jpg)
-                ext = 'jpg'
-                img_filename = f'{slug}.{ext}'
-                img_path = f'{IMAGES_DIR}/{img_filename}'
-                
-                if commit_image(img_path, img_bytes, f'Add image for {slug}'):
-                    image_path = f'../{img_path}'
-                    log(f"Image saved: {img_path}")
-        
-        # Generate HTML
-        html = generate_html(parsed, image_path)
-        
-        # Commit post
-        if commit_file(post_path, html, f'Add blog post: {parsed["title"]}'):
-            log(f"Post created: {post_path}")
-            
-            # Update sitemap
-            date_iso = datetime.now().strftime('%Y-%m-%d')
-            update_sitemap(post_url, date_iso)
-            
-            processed_count += 1
-            
-            send_message(f'''✅ <b>Post Published!</b>
-            
-📝 {parsed['title']}
-🔗 {post_url}
 
-সাইটে ২ মিনিটে live হবে।
-<i>(GitHub Pages auto-deploy)</i>''')
-        else:
-            send_message(f"❌ <b>Failed:</b> Could not commit post.")
-    
-    # Save state
-    state['last_update_id'] = new_last_id
+    new_last = last_id
+    for u in updates:
+        new_last = max(new_last, u.get('update_id', 0))
+        try:
+            if 'message' in u:
+                handle_message(u['message'], state)
+            elif 'callback_query' in u:
+                handle_callback(u['callback_query'], state)
+        except Exception as e:
+            log(f"Handler error: {e}")
+
+    state['last_update_id'] = new_last
     save_state(state)
-    
-    log(f"Processed {processed_count} new post(s)")
     log("Done!")
+
 
 if __name__ == '__main__':
     main()
