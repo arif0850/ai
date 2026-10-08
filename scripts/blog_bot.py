@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
-Blog Bot with Channel Support
+Blog Bot v4 — Auto-publish, No Confirmation
+- /newpost → directly publishes
+- /delete slug → directly deletes
+- Optional channel notification (/notify on|off)
 """
 
 import os
@@ -60,10 +63,17 @@ def load_state():
                     data['pending'] = {}
                 if 'last_photo_id' not in data:
                     data['last_photo_id'] = None
+                if 'settings' not in data:
+                    data['settings'] = {'notify_channel': True}
                 return data
         except Exception as e:
             log(f"State load error: {e}")
-    return {'last_update_id': 0, 'pending': {}, 'last_photo_id': None}
+    return {
+        'last_update_id': 0,
+        'pending': {},
+        'last_photo_id': None,
+        'settings': {'notify_channel': True}
+    }
 
 def save_state(state):
     with open(STATE_FILE, 'w') as f:
@@ -72,7 +82,7 @@ def save_state(state):
 # ============================================================
 # TELEGRAM
 # ============================================================
-def tg_send(chat_id, text, reply_markup=None, parse_mode='HTML'):
+def tg_send(chat_id, text, parse_mode='HTML'):
     try:
         payload = {
             'chat_id': chat_id,
@@ -80,46 +90,18 @@ def tg_send(chat_id, text, reply_markup=None, parse_mode='HTML'):
             'parse_mode': parse_mode,
             'disable_web_page_preview': True,
         }
-        if reply_markup:
-            payload['reply_markup'] = json.dumps(reply_markup)
         r = requests.post(f'{TELEGRAM_API}/sendMessage', data=payload, timeout=10)
         return r.json()
     except Exception as e:
         log(f"tg_send error: {e}")
         return None
 
-def tg_edit_text(message_id, text, reply_markup=None):
-    try:
-        payload = {
-            'chat_id': TELEGRAM_CHAT_ID,
-            'message_id': message_id,
-            'text': text,
-            'parse_mode': 'HTML',
-            'disable_web_page_preview': True,
-        }
-        if reply_markup:
-            payload['reply_markup'] = json.dumps(reply_markup)
-        r = requests.post(f'{TELEGRAM_API}/editMessageText', data=payload, timeout=10)
-        return r.json()
-    except Exception as e:
-        log(f"tg_edit_text error: {e}")
-        return None
-
-def tg_answer_callback(callback_id, text=''):
-    try:
-        requests.post(f'{TELEGRAM_API}/answerCallbackQuery', data={
-            'callback_query_id': callback_id,
-            'text': text,
-        }, timeout=10)
-    except Exception as e:
-        log(f"tg_answer_callback error: {e}")
-
 def get_updates(last_update_id):
     try:
         r = requests.get(f'{TELEGRAM_API}/getUpdates', params={
             'offset': last_update_id + 1,
             'timeout': 5,
-            'allowed_updates': json.dumps(['message', 'callback_query', 'channel_post']),
+            'allowed_updates': json.dumps(['message', 'channel_post']),
         }, timeout=15)
         r.raise_for_status()
         return r.json().get('result', [])
@@ -207,20 +189,6 @@ def word_count(content):
 def reading_time(wc):
     minutes = max(1, round(wc / 200))
     return f"{minutes} min read"
-
-def seo_score(post, images):
-    score = 0
-    if post['title'] and len(post['title']) < 60:
-        score += 2
-    if len(post['content']) > 300:
-        score += 2
-    if images:
-        score += 2
-    if len(extract_keywords(post['content'])) >= 5:
-        score += 2
-    if word_count(post['content']) >= 100:
-        score += 2
-    return min(10, score)
 
 def markdown_to_html(text):
     html = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
@@ -583,65 +551,158 @@ def remove_from_posts_index(slug):
     return save_posts_index(index, f'Remove {slug} from posts index')
 
 # ============================================================
-# PENDING POST BUILDER
+# CHANNEL NOTIFICATION
 # ============================================================
-def build_pending_and_preview(parsed, image_file_id, state):
+def notify_channel(state, text):
+    if not TELEGRAM_CHANNEL_ID:
+        return
+    if not state.get('settings', {}).get('notify_channel', True):
+        log("Channel notification disabled")
+        return
+    tg_send(TELEGRAM_CHANNEL_ID, text)
+
+# ============================================================
+# PUBLISH (AUTO — No confirmation)
+# ============================================================
+def do_publish_auto(parsed, image_file_id, state):
+    """Publish immediately without confirmation"""
     slug = slugify(parsed['title'])
-    post_id = f"p{int(datetime.now().timestamp())}"
     category = detect_category(parsed['title'], parsed['content'])
-    cat_name = get_category_name(category)
 
-    # ═══ FIX: Purge any existing pending with same slug ═══
-    for old_pid in list(state['pending'].keys()):
-        if state['pending'][old_pid].get('slug') == slug:
-            log(f"Purging duplicate pending: {old_pid}")
-            del state['pending'][old_pid]
+    log(f"Auto-publishing: {slug}")
 
-    # ═══ FIX: Warn if slug already published ═══
-    try:
-        existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
-        if existing:
-            tg_send(TELEGRAM_CHAT_ID,
-                f"⚠️ <b>এই slug আগে publish হয়েছে:</b>\n<code>{slug}</code>\n\n"
-                "নতুন post আগেরটার উপরে overwrite করবে। চাইলে Title বদলে দিন।")
-    except Exception as e:
-        log(f"Published-slug check error: {e}")
+    image_paths = []
+    image_warning = ""
 
-    state['pending'][post_id] = {
+    # Download + commit image
+    if image_file_id:
+        img_bytes = download_photo(image_file_id)
+        if not img_bytes:
+            image_warning = "\n\n⚠️ Image download failed"
+            log("Image download failed")
+        else:
+            img_path = f'{IMAGES_DIR}/{slug}.jpg'
+            if gh_commit_image(img_path, img_bytes, f'Add image for {slug}'):
+                image_paths.append(img_path)
+            else:
+                image_warning = "\n\n⚠️ Image upload to GitHub failed"
+                log("Image upload failed")
+
+    # Build post dict
+    post_dict = {
         'title': parsed['title'],
         'content': parsed['content'],
-        'slug': slug,
-        'category': category,
-        'image_file_id': image_file_id,
-        'created_at': datetime.now().isoformat(),
     }
 
-    wc = word_count(parsed['content'])
-    rt = reading_time(wc)
-    keywords = extract_keywords(parsed['content'])
-    desc = make_description(parsed['content'])
-    score = seo_score(parsed, [image_file_id] if image_file_id else [])
+    # Generate HTML
+    html = generate_html(post_dict, slug, image_paths)
+    if not gh_commit_file(f'{POSTS_DIR}/{slug}.html', html,
+                          f'Add blog post: {parsed["title"]}'):
+        return None, "❌ HTML commit করতে ব্যর্থ।"
 
-    preview = (
-        f"📝 <b>Preview Ready</b>\n\n"
-        f"<b>Title:</b> {parsed['title']}\n"
-        f"<b>Category:</b> {cat_name}\n"
-        f"<b>Slug:</b> <code>{slug}</code>\n\n"
-        f"<b>Words:</b> {wc}  •  <b>Reading:</b> {rt}\n"
-        f"<b>Images:</b> {'✅ 1' if image_file_id else '❌ None'}\n"
-        f"<b>SEO Score:</b> {score}/10\n\n"
-        f"<b>Keywords:</b> {', '.join(keywords[:6])}\n\n"
-        f"<b>Description:</b>\n<i>{desc}</i>"
+    # Update sitemap + posts index
+    sitemap_add(slug, datetime.now().strftime('%Y-%m-%d'))
+    image_for_index = image_paths[0] if image_paths else ''
+    add_to_posts_index(
+        slug=slug,
+        title=parsed['title'],
+        content=parsed['content'],
+        category=category,
+        image_path=image_for_index
     )
 
-    keyboard = {
-        'inline_keyboard': [[
-            {'text': '✅ Approve', 'callback_data': f'approve:{post_id}'},
-            {'text': '❌ Cancel', 'callback_data': f'cancel:{post_id}'},
-        ]]
-    }
+    url = f'{SITE_URL}/posts/{slug}.html'
+    cat_name = get_category_name(category)
+    wc = word_count(parsed['content'])
+    rt = reading_time(wc)
 
-    tg_send(TELEGRAM_CHAT_ID, preview, reply_markup=keyboard)
+    # DM confirmation
+    dm_msg = (
+        f"✅ <b>Published!</b>\n\n"
+        f"📝 {parsed['title']}\n"
+        f"🏷️ {cat_name}\n"
+        f"📊 {wc} words · {rt}\n"
+        f"🔗 {url}\n\n"
+        f"২ মিনিটে live হবে।{image_warning}"
+    )
+    tg_send(TELEGRAM_CHAT_ID, dm_msg)
+
+    # Optional channel notification
+    channel_msg = (
+        f"✅ <b>New Post Published</b>\n\n"
+        f"📝 <b>{parsed['title']}</b>\n"
+        f"🏷️ {cat_name}\n"
+        f"🔗 <a href=\"{url}\">Read Post</a>"
+    )
+    notify_channel(state, channel_msg)
+
+    return slug, None
+
+
+# ============================================================
+# DELETE (AUTO — No confirmation)
+# ============================================================
+def do_delete_auto(slug, state):
+    """Delete immediately without confirmation"""
+    log(f"Auto-deleting: {slug}")
+
+    existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
+    if not existing:
+        msg = f"❌ <b>{slug}</b> খুঁজে পাওয়া যায়নি।"
+        tg_send(TELEGRAM_CHAT_ID, msg)
+        return
+
+    ok = True
+    ok &= gh_delete_file(f'{POSTS_DIR}/{slug}.html', f'Delete post {slug}')
+    gh_delete_file(f'{IMAGES_DIR}/{slug}.jpg', f'Delete image {slug}')
+    sitemap_remove(slug)
+    remove_from_posts_index(slug)
+
+    if ok:
+        dm_msg = (
+            f"✅ <b>Deleted:</b>\n"
+            f"<code>{slug}</code>\n\n"
+            f"২ মিনিটে site থেকে সরে যাবে।"
+        )
+        channel_msg = (
+            f"🗑️ <b>Post Deleted</b>\n"
+            f"<code>{slug}</code>"
+        )
+    else:
+        dm_msg = f"⚠️ Partial delete: <code>{slug}</code>\nGitHub check করুন।"
+        channel_msg = None
+
+    tg_send(TELEGRAM_CHAT_ID, dm_msg)
+    if channel_msg:
+        notify_channel(state, channel_msg)
+
+
+# ============================================================
+# SETTINGS COMMANDS
+# ============================================================
+def handle_notify_command(state, text_low):
+    """Handle /notify on|off|status"""
+    parts = text_low.split()
+    current = state.get('settings', {}).get('notify_channel', True)
+
+    if len(parts) == 1 or parts[1] == 'status':
+        status = "🟢 ON" if current else "🔴 OFF"
+        tg_send(TELEGRAM_CHAT_ID,
+                f"📢 <b>Channel Notification:</b> {status}\n\n"
+                "Toggle: <code>/notify on</code> or <code>/notify off</code>")
+        return True
+
+    if parts[1] == 'on':
+        state['settings']['notify_channel'] = True
+        tg_send(TELEGRAM_CHAT_ID, "✅ Channel notification <b>ON</b>")
+        return True
+
+    if parts[1] == 'off':
+        state['settings']['notify_channel'] = False
+        tg_send(TELEGRAM_CHAT_ID, "🔕 Channel notification <b>OFF</b>")
+        return True
+
+    return False
 
 
 # ============================================================
@@ -657,26 +718,25 @@ def handle_channel_post(post, state):
     text = (post.get('text') or post.get('caption') or '').strip()
     has_photo = 'photo' in post
 
+    # /newpost with photo caption (short post)
     if has_photo and text.lower().startswith('/newpost'):
         parsed = parse_post(text)
         if parsed:
             img_id = post['photo'][-1]['file_id']
-            build_pending_and_preview(parsed, img_id, state)
+            do_publish_auto(parsed, img_id, state)
             state['last_photo_id'] = None
         return
 
+    # /newpost as text only
     if text.lower().startswith('/newpost'):
         parsed = parse_post(text)
         if parsed:
             img_id = state.get('last_photo_id')
-            build_pending_and_preview(parsed, img_id, state)
+            do_publish_auto(parsed, img_id, state)
             state['last_photo_id'] = None
         return
 
-    if text.lower() in ['/skip', '/nophoto']:
-        state['last_photo_id'] = None
-        return
-
+    # Photo alone — store for next /newpost
     if has_photo:
         state['last_photo_id'] = post['photo'][-1]['file_id']
         log(f"Photo stored for next post")
@@ -697,6 +757,7 @@ def handle_message(message, state):
 
     text_low = text.strip().lower()
 
+    # /newpost — auto publish
     if text_low.startswith('/newpost'):
         parsed = parse_post(text)
         if parsed:
@@ -706,145 +767,61 @@ def handle_message(message, state):
             else:
                 img_id = state.get('last_photo_id')
                 state['last_photo_id'] = None
-            build_pending_and_preview(parsed, img_id, state)
+            do_publish_auto(parsed, img_id, state)
 
+    # /delete slug — auto delete
     elif text_low.startswith('/delete'):
         parts = text.split()
         if len(parts) < 2:
-            tg_send(TELEGRAM_CHAT_ID, "❌ <code>/delete slug-name</code> দিন।")
+            tg_send(TELEGRAM_CHAT_ID,
+                    "❌ Format: <code>/delete slug-name</code>")
             return
         slug = parts[1].strip().lower()
-        existing = gh_get_file(f'{POSTS_DIR}/{slug}.html')
-        if not existing:
-            tg_send(TELEGRAM_CHAT_ID, f"❌ <b>{slug}</b> খুঁজে পাওয়া যায়নি।")
-            return
-        keyboard = {'inline_keyboard': [[
-            {'text': '✅ Yes, Delete', 'callback_data': f'delyes:{slug}'},
-            {'text': '❌ Cancel', 'callback_data': f'delno:{slug}'},
-        ]]}
+        do_delete_auto(slug, state)
+
+    # /notify on|off|status
+    elif text_low.startswith('/notify'):
+        handle_notify_command(state, text_low)
+
+    # /status — settings view
+    elif text_low.startswith('/status'):
+        notify_status = "🟢 ON" if state.get('settings', {}).get('notify_channel', True) else "🔴 OFF"
         tg_send(TELEGRAM_CHAT_ID,
-                f"🗑️ <b>Delete Post?</b>\n\nSlug: <code>{slug}</code>",
-                reply_markup=keyboard)
+                f"⚙️ <b>Bot Settings</b>\n\n"
+                f"📢 Channel Notification: {notify_status}\n"
+                f"🔄 Auto-publish: 🟢 ON (always)\n"
+                f"🗑️ Auto-delete: 🟢 ON (always)\n"
+                f"📋 Pending: {len(state.get('pending', {}))}")
+
+    # /help
+    elif text_low.startswith('/help') or text_low == '/start':
+        tg_send(TELEGRAM_CHAT_ID,
+            "🤖 <b>Blog Bot v4 — Commands</b>\n\n"
+            "📢 <b>Post পাঠানোর নিয়ম:</b>\n"
+            "Channel-এ Photo + Caption, অথবা\n"
+            "Channel-এ text-only /newpost\n\n"
+            "<b>Format:</b>\n"
+            "<code>/newpost\nTitle: Your Title\n\nContent here\n---END---</code>\n\n"
+            "⚡ <b>Auto-Actions (No Confirmation):</b>\n"
+            "• <code>/newpost</code> → straight publish\n"
+            "• <code>/delete slug</code> → straight delete\n\n"
+            "⚙️ <b>Settings:</b>\n"
+            "• <code>/notify on</code> — channel updates ON\n"
+            "• <code>/notify off</code> — channel updates OFF\n"
+            "• <code>/status</code> — current settings\n"
+            "• <code>/list</code> — pending (usually empty)\n"
+            "• <code>/help</code> — this menu"
+        )
 
     elif text_low.startswith('/list'):
         pending = state.get('pending', {})
         if not pending:
-            tg_send(TELEGRAM_CHAT_ID, "📭 কোনো pending post নেই।")
+            tg_send(TELEGRAM_CHAT_ID, "📭 কোনো pending post নেই। (Auto-publish mode)")
             return
         lines = ["📋 <b>Pending Posts</b>\n"]
         for pid, p in pending.items():
             lines.append(f"• <code>{pid}</code> — {p['title']}")
         tg_send(TELEGRAM_CHAT_ID, '\n'.join(lines))
-
-    elif text_low.startswith('/help') or text_low == '/start':
-        tg_send(TELEGRAM_CHAT_ID,
-            "🤖 <b>Blog Bot Commands</b>\n\n"
-            "📢 <b>Channel-এ পোস্ট করুন:</b>\n"
-            "• Photo আগে পাঠান → তারপর /newpost text\n"
-            "• অথবা Photo + Caption (short post)\n\n"
-            "📝 <code>/newpost</code> format:\n"
-            "<code>/newpost\nTitle: Title\n\nContent\n---END---</code>\n\n"
-            "🗑️ <code>/delete slug</code>\n"
-            "📋 <code>/list</code>\n"
-            "❓ <code>/help</code>"
-        )
-
-
-# ============================================================
-# PUBLISH & DELETE
-# ============================================================
-def do_publish(state, post_id):
-    p = state.get('pending', {}).get(post_id)
-    if not p:
-        return "❌ Post পাওয়া যায়নি (সম্ভবত expire)।"
-
-    slug = p['slug']
-    image_paths = []
-    image_warning = ""
-
-    if p.get('image_file_id'):
-        img_bytes = download_photo(p['image_file_id'])
-        if not img_bytes:
-            image_warning = "\n\n⚠️ Image download failed"
-            log("Image download failed")
-        else:
-            img_path = f'{IMAGES_DIR}/{slug}.jpg'
-            if gh_commit_image(img_path, img_bytes, f'Add image for {slug}'):
-                image_paths.append(img_path)
-            else:
-                image_warning = "\n\n⚠️ Image upload to GitHub failed"
-                log("Image upload failed")
-
-    html = generate_html(p, slug, image_paths)
-    if not gh_commit_file(f'{POSTS_DIR}/{slug}.html', html,
-                          f'Add blog post: {p["title"]}'):
-        return "❌ HTML commit করতে ব্যর্থ।"
-
-    sitemap_add(slug, datetime.now().strftime('%Y-%m-%d'))
-
-    image_for_index = image_paths[0] if image_paths else ''
-    add_to_posts_index(
-        slug=slug,
-        title=p['title'],
-        content=p['content'],
-        category=p.get('category', 'notes'),
-        image_path=image_for_index
-    )
-
-    del state['pending'][post_id]
-    url = f'{SITE_URL}/posts/{slug}.html'
-
-    return (
-        f"✅ <b>Published!</b>\n\n"
-        f"📝 {p['title']}\n"
-        f"🏷️ {get_category_name(p.get('category', 'notes'))}\n"
-        f"🔗 {url}\n\n"
-        f"২ মিনিটে live হবে।{image_warning}"
-    )
-
-
-def do_delete(slug):
-    ok = True
-    ok &= gh_delete_file(f'{POSTS_DIR}/{slug}.html', f'Delete post {slug}')
-    gh_delete_file(f'{IMAGES_DIR}/{slug}.jpg', f'Delete image {slug}')
-    sitemap_remove(slug)
-    remove_from_posts_index(slug)
-    if ok:
-        return f"✅ <b>Deleted:</b> <code>{slug}</code>"
-    return "⚠️ Partially deleted. Check GitHub."
-
-
-# ============================================================
-# CALLBACK HANDLER
-# ============================================================
-def handle_callback(cq, state):
-    data = cq.get('data', '')
-    cq_id = cq.get('id')
-    msg = cq.get('message', {})
-    msg_id = msg.get('message_id')
-
-    if data.startswith('approve:'):
-        post_id = data.split(':', 1)[1]
-        tg_answer_callback(cq_id, 'Publishing...')
-        result = do_publish(state, post_id)
-        tg_edit_text(msg_id, result)
-
-    elif data.startswith('cancel:'):
-        post_id = data.split(':', 1)[1]
-        tg_answer_callback(cq_id, 'Cancelled')
-        if post_id in state.get('pending', {}):
-            del state['pending'][post_id]
-        tg_edit_text(msg_id, "❌ <b>Post cancelled.</b>")
-
-    elif data.startswith('delyes:'):
-        slug = data.split(':', 1)[1]
-        tg_answer_callback(cq_id, 'Deleting...')
-        result = do_delete(slug)
-        tg_edit_text(msg_id, result)
-
-    elif data.startswith('delno:'):
-        tg_answer_callback(cq_id, 'Cancelled')
-        tg_edit_text(msg_id, "✅ Delete cancelled.")
 
 
 # ============================================================
@@ -852,7 +829,7 @@ def handle_callback(cq, state):
 # ============================================================
 def main():
     log("=" * 50)
-    log(f"Blog Bot Run — {datetime.now().isoformat()}")
+    log(f"Blog Bot v4 Run — {datetime.now().isoformat()}")
     log("=" * 50)
 
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
@@ -861,7 +838,7 @@ def main():
 
     state = load_state()
 
-    # ═══ FIX: Cleanup stale pending (already published) ═══
+    # Cleanup stale pending (if any left from old version)
     try:
         index = load_posts_index()
         published_slugs = {p.get('slug') for p in index.get('posts', [])}
@@ -880,7 +857,8 @@ def main():
     last_id = state.get('last_update_id', 0)
     log(f"Last update ID: {last_id}")
     log(f"Pending posts: {len(state.get('pending', {}))}")
-    log(f"Channel ID config: {TELEGRAM_CHANNEL_ID or 'NOT SET'}")
+    log(f"Notify channel: {state.get('settings', {}).get('notify_channel', True)}")
+    log(f"Channel ID: {TELEGRAM_CHANNEL_ID or 'NOT SET'}")
 
     updates = get_updates(last_id)
     log(f"Found {len(updates)} new update(s)")
@@ -893,8 +871,6 @@ def main():
                 handle_message(u['message'], state)
             elif 'channel_post' in u:
                 handle_channel_post(u['channel_post'], state)
-            elif 'callback_query' in u:
-                handle_callback(u['callback_query'], state)
         except Exception as e:
             log(f"Handler error: {e}")
 
