@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "slug": "my-perspective-as-an-operator-100-vs-70-ipa-on-the-pharma-fl",
+      "title": "My Perspective as an Operator: 100% vs. 70% IPA on the Pharma Floor",
+      "excerpt": "As a pharmaceutical production worker, my daily routine revolves around equipment setup, batch safety, and maintaining strict cleanroom standards....",
+      "date": "2026-10-11",
+      "category": "coating",
+      "image": "posts/images/my-perspective-as-an-operator-100-vs-70-ipa-on-the-pharma-fl.jpg",
+      "keywords": [
+        "down",
+        "always",
+        "daily",
+        "wiping",
+        "floor",
+        "surface",
+        "contact",
+        "sterile"
+      ]
+    },
+    {
       "slug": "why-respiratory-protection-matters-in-high-containment-manuf",
       "title": "Why Respiratory Protection Matters in High Containment Manufacturing",
       "excerpt": "In pharmaceutical manufacturing, when we work with strong or potent products, respiratory protection is very important. During production, there...",
