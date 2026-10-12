@@ -1,6 +1,24 @@
 {
   "posts": [
     {
+      "slug": "bulk-volume-and-void-space-in-tablet-coating-explained",
+      "title": "Bulk Volume and Void Space in Tablet Coating Explained",
+      "excerpt": "Ever loaded a coating pan with the exact batch weight, yet the bed looked too high or too shallow? You did nothing wrong. You just met two hidden...",
+      "date": "2026-10-12",
+      "category": "coating",
+      "image": "posts/images/bulk-volume-and-void-space-in-tablet-coating-explained.jpg",
+      "keywords": [
+        "batch",
+        "tablets",
+        "space",
+        "product",
+        "volume",
+        "load",
+        "gaps",
+        "same"
+      ]
+    },
+    {
       "slug": "my-perspective-as-an-operator-100-vs-70-ipa-on-the-pharma-fl",
       "title": "My Perspective as an Operator: 100% vs. 70% IPA on the Pharma Floor",
       "excerpt": "As a pharmaceutical production worker, my daily routine revolves around equipment setup, batch safety, and maintaining strict cleanroom standards....",
