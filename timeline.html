@@ -59,7 +59,7 @@ body{
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px))
 }
-.wrap{max-width:1760px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.wrap{max-width:1800px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
 h1,h2,h3{font-family:var(--font-d);margin:0;line-height:1.2}
 h1{font-size:clamp(24px,3.4vw,40px);font-weight:700;letter-spacing:-.01em}
 h2{font-size:20px;font-weight:600}
@@ -72,7 +72,7 @@ p{margin:0}
 .legend span{display:inline-flex;align-items:center;gap:7px}
 .legend svg{flex:none}
 .scroll{overflow-x:auto;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
-#chart{min-width:2092px}
+#chart{min-width:2596px}
 #chart svg{display:block}
 .note{font-size:12.5px;color:var(--ink2);margin-top:10px}
 
@@ -137,7 +137,7 @@ p{margin:0}
     <h2>Process timeline, drawn to scale</h2>
     <div class="legend" id="legend"></div>
     <div class="scroll"><div id="chart"></div></div>
-    <p class="note">Scroll sideways on narrow screens. Hover a bar for its start, finish and basis. Faded bars are the next cycle, projected from the same durations. Dashed outlines mark assumed timing. The hatched red bars are idle time that depends on information not supplied.</p>
+    <p class="note">Scroll sideways on narrow screens. Hover a bar for its start, finish and basis. Faded bars are the next cycle. Dashed outlines mark assumed timing.</p>
   </section>
 </div>
 
@@ -146,7 +146,7 @@ p{margin:0}
 var T=function(s){var p=s.split(':');return +p[0]*60+ +p[1]};
 var fmt=function(m){return 'T+'+String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')};
 var dur=function(m){var h=Math.floor(m/60),r=m%60;return (h?h+' h':'')+(h&&r?' ':'')+(r?r+' min':'')};
-var PPH=44,LBL=214,AXMAX=42*60,W=LBL+42*PPH+30,H=884;
+var PPH=56,LBL=214,AXMAX=42*60,W=LBL+42*PPH+30,H=884;
 var X=function(m){return LBL+m/60*PPH};
 var XEND=X(AXMAX);
 
@@ -165,55 +165,55 @@ var acts=[];
 function A(lane,s,e,kind,label,name,basis,pred,par,o){var a={lane:lane,s:T(s),e:T(e),kind:kind,label:label,name:name,basis:basis,pred:pred,par:par||(lane[0]==='M'?'No, machine in use':'Yes'),ghost:false,parts:null,top:null};if(o)for(var k in o)a[k]=o[k];acts.push(a)}
 
 /* Sugar tank 1 */
-A('S1','0:00','2:30','sugar','Heat + add|2.5 h','Heat water to 80 °C, add sucrose, Acacia and remaining materials','Stated','Line clearance and weight recheck (durations not supplied)','Yes, with IMA 1 clearance');
-A('S1','2:30','12:30','sugar','Main rotation · 10 h','Main sugar solution rotation','Stated','Materials added','Yes, with color B1 and sugar B2 prep');
-A('S1','12:30','13:30','sugarmix','Color in · final mix 1 h','Add color solution, final mixing','Stated','Rotation done and color B1 done','No, tank occupied');
-A('S1','13:30','23:30','hold','Solution in use by IMA 1 · 10 h','Solution consumed during IMA 1 sugar spraying (tank held)','Assumed','Sugar B1 ready','Yes, with IMA 1 spraying');
-A('S1','23:30','37:00','sugar','Next sugar prep · earliest start if cleaning = 0','Next cycle · sugar solution preparation, IMA Tank 1','Assumed','Tank 1 emptied, cleaned, ready check and line clearance (cleaning time not supplied)','Yes',{ghost:true});
+A('S1','0:00','2:30','sugar','Heat/Add|2.5 h','Heat water to 80 °C, add sucrose, Acacia and remaining materials','Stated','Line clearance and weight recheck (durations not supplied)','Yes, with IMA 1 clearance');
+A('S1','2:30','12:30','sugar','Rotation|10 h','Main sugar solution rotation','Stated','Materials added','Yes, with color B1 and sugar B2 prep');
+A('S1','12:30','13:30','sugarmix','Mix|1 h','Add color solution, final mixing','Stated','Rotation done and color B1 done','No, tank occupied');
+A('S1','13:30','23:30','hold','In Use|10 h','Solution consumed during IMA 1 sugar spraying (tank held)','Assumed','Sugar B1 ready','Yes, with IMA 1 spraying');
+A('S1','23:30','37:00','sugar','Next Prep','Next cycle · sugar solution preparation, IMA Tank 1','Assumed','Tank 1 emptied, cleaned, ready check and line clearance (cleaning time not supplied)','Yes',{ghost:true});
 /* Color 1 */
-A('C1','2:30','12:30','color','Color B1 · stirrer 10 h','Color solution mixing, Batch 1 (8.00 kg water, 0.215 kg Ferric Oxide)','Assumed','Water and Ferric Oxide dispensed; start set so it is ready when the main rotation ends','Yes, with sugar rotation');
+A('C1','2:30','12:30','color','Color Mix|10 h','Color solution mixing, Batch 1 (8.00 kg water, 0.215 kg Ferric Oxide)','Assumed','Water and Ferric Oxide dispensed; start set so it is ready when the main rotation ends','Yes, with sugar rotation');
 /* Film 1 */
-A('F1','5:00','7:00','film','Film B1 · 2 h','Film solution preparation, Batch 1','Derived','Batch 2 sugar material addition complete (T+05:00)','Yes, with both sugar rotations');
-A('F1','29:30','31:30','film','Next film prep (est.)','Next cycle · film solution preparation, Film Tank 1','Assumed','Timed to finish when IMA 1 setup ends','Yes',{ghost:true});
+A('F1','5:00','7:00','film','Film Prep|2 h','Film solution preparation, Batch 1','Derived','Batch 2 sugar material addition complete (T+05:00)','Yes, with both sugar rotations');
+A('F1','29:30','31:30','film','Next Prep','Next cycle · film solution preparation, Film Tank 1','Assumed','Timed to finish when IMA 1 setup ends','Yes',{ghost:true});
 /* IMA 1 */
-A('M1','0:00','7:00','setup','Machine clearance + pan loading|window, durations not supplied','Machine clearance and tablet pan loading (window before film coating)','Not supplied','Line clearance','Yes, with solution prep');
-A('M1','7:00','10:00','filmcoat','Film coating · 3 h','Film coating, Batch 1','Derived','Film B1 ready (T+07:00) and machine ready','Yes, with other lanes');
-A('M1','10:00','10:30','setup','Setup 30′','Machine setup, film to sugar (spray gun change)','Stated','Film coating done');
-A('M1','10:30','13:30','wait','Waiting for sugar solution · 3 h','Planned waiting for sugar solution B1','Derived','Sugar B1 ready (T+13:30)','Room works in parallel');
-A('M1','13:30','23:30','spray','Sugar spraying · 10 h','Sugar spraying','Stated','Sugar B1 ready, setup done');
-A('M1','23:30','24:30','post','','Drying, cooling, unloading','Stated','Sugar spraying done',null,{parts:[['Drying',10],['Cooling',20],['Tablet unloading',30]],top:'Dry 10′ · Cool 20′ · Unload 30′'});
-A('M1','24:30','26:30','wip','WIP · 2 h','WIP, pan washing and drying','Stated','Tablets unloaded');
-A('M1','26:30','28:30','polish','Polish block|2 h','Reload, polish (Carnauba Wax), unload','Stated','WIP done (see open question on this block)',null,{top:'Reload + polish + unload'});
-A('M1','28:30','31:00','clean','Partial cleaning · 2.5 h','Partial cleaning','Stated','Polished tablets unloaded');
-A('M1','31:00','31:30','setup','Setup 30′','Machine setup, sugar to film','Stated','Partial cleaning done');
-A('M1','31:30','34:30','filmcoat','Next film coating · 3 h','Next cycle · film coating','Assumed','Setup done and film solution ready',null,{ghost:true});
-A('M1','34:30','35:00','setup','Setup 30′ (next)','Next cycle · machine setup, film to sugar','Stated','Film coating done',null,{ghost:true});
-A('M1','35:00','37:00','gap','! Idle ≥ 2 h|+ cleaning','Unverified idle: waiting for next sugar solution','Not supplied','Sugar solution ready no earlier than T+37:00 + c, if Tank 1 is held until consumed','Room works in parallel');
-A('M1','37:00','47:00','spray','Next sugar spraying (earliest, c = 0) ›','Next cycle · sugar spraying','Assumed','Next sugar solution ready',null,{ghost:true});
+A('M1','0:00','7:00','setup','Machine Clearance & Loading','Machine clearance and tablet pan loading (window before film coating)','Not supplied','Line clearance','Yes, with solution prep');
+A('M1','7:00','10:00','filmcoat','Film Coat|3 h','Film coating, Batch 1','Derived','Film B1 ready (T+07:00) and machine ready','Yes, with other lanes');
+A('M1','10:00','10:30','setup','30′','Machine setup, film to sugar (spray gun change)','Stated','Film coating done');
+A('M1','10:30','13:30','wait','Wait|3 h','Planned waiting for sugar solution B1','Derived','Sugar B1 ready (T+13:30)','Room works in parallel');
+A('M1','13:30','23:30','spray','Sugar Spray|10 h','Sugar spraying','Stated','Sugar B1 ready, setup done');
+A('M1','23:30','24:30','post','','Drying, cooling, unloading','Stated','Sugar spraying done',null,{parts:[['Drying',10],['Cooling',20],['Tablet unloading',30]]});
+A('M1','24:30','26:30','wip','WIP|2 h','WIP, pan washing and drying','Stated','Tablets unloaded');
+A('M1','26:30','28:30','polish','Polish|2 h','Reload, polish (Carnauba Wax), unload','Stated','WIP done (see open question on this block)');
+A('M1','28:30','31:00','clean','Clean|2.5 h','Partial cleaning','Stated','Polished tablets unloaded');
+A('M1','31:00','31:30','setup','30′','Machine setup, sugar to film','Stated','Partial cleaning done');
+A('M1','31:30','34:30','filmcoat','Film Coat|3 h','Next cycle · film coating','Assumed','Setup done and film solution ready',null,{ghost:true});
+A('M1','34:30','35:00','setup','30′','Next cycle · machine setup, film to sugar','Stated','Film coating done',null,{ghost:true});
+A('M1','35:00','37:00','gap','Idle|≥2h','Unverified idle: waiting for next sugar solution','Not supplied','Sugar solution ready no earlier than T+37:00 + c, if Tank 1 is held until consumed','Room works in parallel');
+A('M1','37:00','47:00','spray','Sugar Spray|10 h','Next cycle · sugar spraying','Assumed','Next sugar solution ready',null,{ghost:true});
 /* Sugar tank 2 */
-A('S2','2:30','5:00','sugar','Heat + add|2.5 h','Heat water to 80 °C, add sucrose, Acacia and remaining materials','Derived','Batch 1 materials added and initial mixing done (T+02:30)','Yes, with sugar B1 rotation');
-A('S2','5:00','15:00','sugar','Main rotation · 10 h','Main sugar solution rotation','Stated','Materials added','Yes, with color B2 and film B1 prep');
-A('S2','15:00','16:00','sugarmix','Color in · final mix 1 h','Add color solution, final mixing','Stated','Rotation done and color B2 done','No, tank occupied');
-A('S2','16:00','26:00','hold','Solution in use by IMA 2 · 10 h','Solution consumed during IMA 2 sugar spraying (tank held)','Assumed','Sugar B2 ready','Yes, with IMA 2 spraying');
-A('S2','26:00','39:30','sugar','Next sugar prep · earliest start if cleaning = 0','Next cycle · sugar solution preparation, IMA Tank 2','Assumed','Tank 2 emptied, cleaned, ready check and line clearance (cleaning time not supplied)','Yes',{ghost:true});
-A('C2','5:00','15:00','color','Color B2 · stirrer 10 h','Color solution mixing, Batch 2 (8.00 kg water, 0.215 kg Ferric Oxide)','Assumed','Water and Ferric Oxide dispensed; start set so it is ready when the main rotation ends','Yes, with sugar rotation');
-A('F2','7:00','9:00','film','Film B2 · 2 h','Film solution preparation, Batch 2 (slot assumed)','Assumed','Staggered after Film B1; exact slot not supplied','Yes, with both sugar rotations');
-A('F2','32:00','34:00','film','Next film prep (est.)','Next cycle · film solution preparation, Film Tank 2','Assumed','Timed to finish when IMA 2 setup ends','Yes',{ghost:true});
+A('S2','2:30','5:00','sugar','Heat/Add|2.5 h','Heat water to 80 °C, add sucrose, Acacia and remaining materials','Derived','Batch 1 materials added and initial mixing done (T+02:30)','Yes, with sugar B1 rotation');
+A('S2','5:00','15:00','sugar','Rotation|10 h','Main sugar solution rotation','Stated','Materials added','Yes, with color B2 and film B1 prep');
+A('S2','15:00','16:00','sugarmix','Mix|1 h','Add color solution, final mixing','Stated','Rotation done and color B2 done','No, tank occupied');
+A('S2','16:00','26:00','hold','In Use|10 h','Solution consumed during IMA 2 sugar spraying (tank held)','Assumed','Sugar B2 ready','Yes, with IMA 2 spraying');
+A('S2','26:00','39:30','sugar','Next Prep','Next cycle · sugar solution preparation, IMA Tank 2','Assumed','Tank 2 emptied, cleaned, ready check and line clearance (cleaning time not supplied)','Yes',{ghost:true});
+A('C2','5:00','15:00','color','Color Mix|10 h','Color solution mixing, Batch 2 (8.00 kg water, 0.215 kg Ferric Oxide)','Assumed','Water and Ferric Oxide dispensed; start set so it is ready when the main rotation ends','Yes, with sugar rotation');
+A('F2','7:00','9:00','film','Film Prep|2 h','Film solution preparation, Batch 2 (slot assumed)','Assumed','Staggered after Film B1; exact slot not supplied','Yes, with both sugar rotations');
+A('F2','32:00','34:00','film','Next Prep','Next cycle · film solution preparation, Film Tank 2','Assumed','Timed to finish when IMA 2 setup ends','Yes',{ghost:true});
 /* IMA 2 */
-A('M2','0:00','9:00','setup','Machine clearance + pan loading|window, durations not supplied','Machine clearance and tablet pan loading (window before film coating)','Not supplied','Line clearance','Yes, with solution prep');
-A('M2','9:00','12:00','filmcoat','Film coating · 3 h','Film coating, Batch 2','Assumed','Film B2 ready (T+09:00, assumed slot) and machine ready','Yes, with other lanes');
-A('M2','12:00','12:30','setup','Setup 30′','Machine setup, film to sugar (spray gun change)','Stated','Film coating done');
-A('M2','12:30','16:00','wait','Waiting for sugar solution · 3 h 30 min','Planned waiting for sugar solution B2','Derived','Sugar B2 ready (T+16:00)','Room works in parallel');
-A('M2','16:00','26:00','spray','Sugar spraying · 10 h','Sugar spraying','Stated','Sugar B2 ready, setup done');
-A('M2','26:00','27:00','post','','Drying, cooling, unloading','Stated','Sugar spraying done',null,{parts:[['Drying',10],['Cooling',20],['Tablet unloading',30]],top:'Dry 10′ · Cool 20′ · Unload 30′'});
-A('M2','27:00','29:00','wip','WIP · 2 h','WIP, pan washing and drying','Stated','Tablets unloaded');
-A('M2','29:00','31:00','polish','Polish block|2 h','Reload, polish (Carnauba Wax), unload','Stated','WIP done (see open question on this block)',null,{top:'Reload + polish + unload'});
-A('M2','31:00','33:30','clean','Partial cleaning · 2.5 h','Partial cleaning','Stated','Polished tablets unloaded');
-A('M2','33:30','34:00','setup','Setup 30′','Machine setup, sugar to film','Stated','Partial cleaning done');
-A('M2','34:00','37:00','filmcoat','Next film coating · 3 h','Next cycle · film coating','Assumed','Setup done and film solution ready',null,{ghost:true});
-A('M2','37:00','37:30','setup','Setup 30′ (next)','Next cycle · machine setup, film to sugar','Stated','Film coating done',null,{ghost:true});
-A('M2','37:30','39:30','gap','! Idle ≥ 2 h|+ cleaning','Unverified idle: waiting for next sugar solution','Not supplied','Sugar solution ready no earlier than T+39:30 + c, if Tank 2 is held until consumed','Room works in parallel');
-A('M2','39:30','49:30','spray','Next spraying ›','Next cycle · sugar spraying','Assumed','Next sugar solution ready',null,{ghost:true});
+A('M2','0:00','9:00','setup','Machine Clearance & Loading','Machine clearance and tablet pan loading (window before film coating)','Not supplied','Line clearance','Yes, with solution prep');
+A('M2','9:00','12:00','filmcoat','Film Coat|3 h','Film coating, Batch 2','Assumed','Film B2 ready (T+09:00, assumed slot) and machine ready','Yes, with other lanes');
+A('M2','12:00','12:30','setup','30′','Machine setup, film to sugar (spray gun change)','Stated','Film coating done');
+A('M2','12:30','16:00','wait','Wait|3.5 h','Planned waiting for sugar solution B2','Derived','Sugar B2 ready (T+16:00)','Room works in parallel');
+A('M2','16:00','26:00','spray','Sugar Spray|10 h','Sugar spraying','Stated','Sugar B2 ready, setup done');
+A('M2','26:00','27:00','post','','Drying, cooling, unloading','Stated','Sugar spraying done',null,{parts:[['Drying',10],['Cooling',20],['Tablet unloading',30]]});
+A('M2','27:00','29:00','wip','WIP|2 h','WIP, pan washing and drying','Stated','Tablets unloaded');
+A('M2','29:00','31:00','polish','Polish|2 h','Reload, polish (Carnauba Wax), unload','Stated','WIP done (see open question on this block)');
+A('M2','31:00','33:30','clean','Clean|2.5 h','Partial cleaning','Stated','Polished tablets unloaded');
+A('M2','33:30','34:00','setup','30′','Machine setup, sugar to film','Stated','Partial cleaning done');
+A('M2','34:00','37:00','filmcoat','Film Coat|3 h','Next cycle · film coating','Assumed','Setup done and film solution ready',null,{ghost:true});
+A('M2','37:00','37:30','setup','30′','Next cycle · machine setup, film to sugar','Stated','Film coating done',null,{ghost:true});
+A('M2','37:30','39:30','gap','Idle|≥2h','Unverified idle: waiting for next sugar solution','Not supplied','Sugar solution ready no earlier than T+39:30 + c, if Tank 2 is held until consumed','Room works in parallel');
+A('M2','39:30','49:30','spray','Sugar Spray|10 h','Next cycle · sugar spraying','Assumed','Next sugar solution ready',null,{ghost:true});
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 var svg=[];
@@ -258,13 +258,33 @@ function bar(a){
  var s='<g class="bar'+(a.ghost?' ghost':'')+'"><title>'+esc(tip)+'</title>';
  s+='<rect class="b-'+a.kind+(dashed?' dash':'')+'" x="'+x0.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="'+BH+'" rx="'+Math.min(9,w/2).toFixed(1)+'"/>';
  if(a.parts){var c=a.s;a.parts.forEach(function(p,i){c+=p[1];if(i<a.parts.length-1){var px=X(c);s+='<line x1="'+px+'" x2="'+px+'" y1="'+(y+2)+'" y2="'+(y+BH-2)+'" style="stroke:var(--surface);stroke-width:2"/>'}})}
- var lines=(a.label||'').split('|');var maxl=0;lines.forEach(function(t){if(t.length>maxl)maxl=t.length});
- var fits=a.label&&(maxl*6.3+10<=w)&&(lines.length<=2);
- var g=a.kind==='gap'?' g':'';
- if(a.label&&fits){var cx=x0+w/2;if(lines.length===1){s+='<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2+4)+'">'+esc(lines[0])+'</text>'}else{s+='<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2-2)+'">'+esc(lines[0])+'</text><text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2+11)+'">'+esc(lines[1])+'</text>'}}
- var top=a.top||(!fits&&a.label?lines.join(' · '):null);
- if(top)s+='<text class="lab" x="'+(x0+2)+'" y="'+(y-6)+'">'+esc(top)+'</text>';
- s+='</g>';svg.push(s)}
+ 
+ var lines=(a.label||'').split('|');
+ var maxl=0;lines.forEach(function(t){if(t.length>maxl)maxl=t.length});
+ var fits = a.label && (maxl * 6.3 + 8 <= w);
+ var g = a.kind==='gap' ? ' g' : '';
+ 
+ if(a.label) {
+   var cx = x0 + w/2;
+   if (lines.length === 1) {
+     if (fits) {
+       s += '<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2+4)+'">'+esc(lines[0])+'</text>';
+     }
+   } else {
+     var l1w = lines[0].length * 6.3 + 8;
+     var l2w = lines[1].length * 6.3 + 8;
+     if (w >= Math.max(l1w, l2w)) {
+       s += '<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2-2)+'">'+esc(lines[0])+'</text>';
+       s += '<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2+11)+'">'+esc(lines[1])+'</text>';
+     } else if (w >= l1w) {
+       s += '<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2+4)+'">'+esc(lines[0])+'</text>';
+     } else if (w >= l2w) {
+       s += '<text class="bt'+g+'" x="'+cx+'" y="'+(y+BH/2+4)+'">'+esc(lines[1])+'</text>';
+     }
+   }
+ }
+ s+='</g>';svg.push(s)
+}
 acts.forEach(bar);
 
 function qmark(mn,lane){var L=LN[lane],cx=X(mn),cy=L.y+BT+BH/2;svg.push('<g><title>Tank emptied here. Cleaning and ready check take c, which was not supplied.</title><circle cx="'+cx+'" cy="'+cy+'" r="10" style="fill:var(--warn-bg);stroke:var(--gap);stroke-width:1.6"/><text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" style="font:700 12px var(--font-b);fill:var(--warn)">c?</text></g>')}
